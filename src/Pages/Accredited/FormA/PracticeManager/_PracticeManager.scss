@@ -1,0 +1,16 @@
+.practice-manager-basic-details-grid {
+  display: grid;
+  grid-template-columns: minmax(100px, 180px) minmax(150px, 100%);
+  gap: 10px;
+
+  > div {
+    min-height: 27px
+  }
+}
+
+@media (max-width: 1024px) {
+  .practice-manager-basic-details-grid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}

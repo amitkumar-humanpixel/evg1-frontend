@@ -1,0 +1,130 @@
+.standard-detail-with-attach-button,
+.standard-detail {
+  display: flex;
+  align-items: flex-start;
+}
+
+.standard-texts {
+  font: $semiBoldSubTitle;
+  color: $field-color;
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+.standard-detail-with-attach-button {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.standard-detail {
+  flex: 1;
+  min-width: 70%;
+}
+
+.standard-detail-container {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.standard-detail-point {
+  font: $regularTitle;
+  color: $field-color;
+
+  ul {
+    list-style: none;
+    padding-left: 20px;
+
+    li::before {
+      content: "-";
+      padding-right: 5px;
+    }
+  }
+}
+
+.standard-detail-table {
+  border-spacing: 0.4rem 1.5rem;
+}
+
+.standard-detail-checkbox {
+  width: calc(100% - 130px);
+}
+
+.standard-detail-button {
+  width: 130px;
+}
+
+.standard-detail-remark {
+  width: 200px;
+}
+
+.attach-button {
+  width: 100%;
+  padding: 5px 25px;
+  font: $semiBoldTitle;
+  border-radius: 5px;
+
+  .material-icons {
+    margin-right: 5px;
+    font-size: 20px;
+  }
+}
+
+.standard-error-message {
+  margin: 5px 0;
+}
+
+.standard-attached-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 5px;
+  padding: 5px;
+  font: $semiBoldSubTitle;
+  background-color: $border-color;
+  border-radius: 5px;
+
+  .material-icons-round {
+    min-width: 24px;
+    padding: 2px;
+    font-size: 20px;
+    color: $error-color;
+    background-color: $background-color;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.file-name {
+  display: grid;
+  grid-template-columns: calc(100% - 30px) 30px;
+}
+
+.file-name-without-extension {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1024px) {
+  .standard-detail-checkbox {
+    width: 100%;
+  }
+
+  .standard-detail-button {
+    display: none;
+  }
+
+  .attach-button {
+    width: unset;
+    margin: 5px 0 0 80px;
+  }
+  .remarks-input {
+    width: unset;
+    margin: 5px 0 0 80px;
+  }
+}

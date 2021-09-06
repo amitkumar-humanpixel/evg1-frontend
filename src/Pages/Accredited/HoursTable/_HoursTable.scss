@@ -1,0 +1,32 @@
+.hours-table {
+  .rc-time-picker {
+    min-width: 95%;
+  }
+}
+.hour-table-day-container {
+  display: flex;
+  align-items: center;
+}
+
+.hour-table-day {
+  margin-left: 10px;
+}
+
+.total-hours {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 100%;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+.accredited-content-container table th, .accredited-content-container table td.hour-error-cell {
+  padding: 0;
+}
+
+@media (max-width: 1024px) {
+  .hour-table-day {
+    margin-left: 5px;
+  }
+}

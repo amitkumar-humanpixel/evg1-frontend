@@ -1,0 +1,20 @@
+@import '../components/common/Header/Header';
+@import 'src/components/common/Layout/Layout';
+@import 'src/components/common/SideMenu/SideMenu';
+@import '../Pages/Login/Login';
+@import '../Pages/Accredited/Accredited';
+@import '../Pages/Accredited/AccreditedStepper/AccreditedStepper';
+@import '../components/ViewDetails/ViewTableDetailsModal';
+@import '../components/UploadFileModal/UploadFileModal';
+@import '../Pages/Accredited/PostDetails/PostDetails';
+@import '../Pages/Accredited/HoursTable/HoursTable';
+@import '../Pages/Accredited/FormA/PracticeManager/PracticeManager';
+@import '../Pages/Accredited/FormA/Standards/Standards';
+@import '../Pages/Accredited/FormA/Registrar/Registrar';
+@import '../Pages/Accredited/FormA/Supervisor/Supervisor';
+@import '../Pages/Accredited/FormA1/A1Supervisor/A1Supervisor';
+@import '../Pages/Accredited/FormA1/FinalChecklist/FinalCheckList';
+@import '../Pages/Accredited/FormB/Summary/Summary';
+@import "../Pages/Accredited/FormB/Declaration/Declaration";
+@import "../Pages/AddSupervisor/AddSupervisor";
+

@@ -1,0 +1,20 @@
+@import 'src/styles/utility';
+@import 'styles/pages';
+
+html, body {
+  width: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Calibri", sans-serif;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  *::placeholder {
+    color: $placeholder-color;
+  }
+}

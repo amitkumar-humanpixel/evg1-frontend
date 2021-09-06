@@ -1,0 +1,30 @@
+.add-supervisor-modal {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+
+  .modal-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+
+  .add-supervisor {
+    margin: 20px;
+
+    .add-supervisor-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr 2fr;
+      gap: 10px 3%;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 1280px) {
+      .add-supervisor-details-grid {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+    }
+  }
+}

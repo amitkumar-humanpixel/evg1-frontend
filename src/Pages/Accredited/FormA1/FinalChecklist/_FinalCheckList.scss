@@ -1,0 +1,20 @@
+.final-checklist-grid {
+  display: grid;
+  grid-template-columns: 180px  1fr;
+  gap: 10px
+}
+
+.final-checklist {
+  margin-bottom: 10px;
+
+  .checkbox-container > div {
+    margin-left: 5px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .final-checklist-grid {
+    grid-template-columns: 1fr;
+    gap: 5px
+  }
+}

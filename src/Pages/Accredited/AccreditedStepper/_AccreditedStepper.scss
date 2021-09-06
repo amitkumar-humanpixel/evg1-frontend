@@ -1,0 +1,99 @@
+.accredited-stepper-container {
+  border-radius: 0 10px 0 0;
+  background-color: $dark-background-color;
+  overflow: hidden;
+}
+
+.accredited-stepper-wrapper {
+  padding: 20px 15px;
+  overflow-y: auto;
+}
+
+.accredited-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 12px 10px;
+  font: $semiBoldSubTitle;
+  color: $field-color;
+  border-radius: 10px;
+  cursor: pointer;
+
+  .step-name {
+    flex: 1;
+    margin-left: 5px;
+  }
+
+  .material-icons-round {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  &:hover {
+    background-color: $background-color;
+    color: $field-color;
+  }
+}
+
+.active-index-arrow {
+  transform: rotate(90deg);
+  transition: all .5s ease-in-out;
+}
+
+.sub-step-container {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.active-step {
+  background-color: #fff;
+}
+
+.completed-step {
+  color: #fff;
+  background-color: $primary-color;
+}
+
+.in-complete-step {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.completed-active-step {
+  color: $field-color;
+  background-color: #fff
+}
+
+.active-index .sub-step-container {
+  max-height: 1000px;
+  transition: all 1.5s ease-in-out;
+
+  .accredited-step.sub-step {
+    margin: 0 0 10px 15px;
+    padding: 7px 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .accredited-stepper-container {
+    position: absolute;
+    top: 48px;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: all .5s ease-in-out;
+    z-index: 3;
+  }
+
+  .open-accredited-stepper {
+    width: 245px;
+  }
+
+  accredited-stepper-wrapper {
+    padding: 10px;
+  }
+
+  .accredited-step .step-name {
+    white-space: nowrap;
+  }
+}

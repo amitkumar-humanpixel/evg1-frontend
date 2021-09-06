@@ -1,0 +1,117 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 25px;
+  font: $regularSubTitle;
+  color: #fff;
+  border-radius: 10px;
+  border: 1px solid $primary-color;
+  outline: none;
+  cursor: pointer;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.primary-button {
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
+.primary-button:hover {
+  background-color: $primary-variant-color;
+  border-color: $primary-variant-color;
+}
+
+.secondary-button {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+}
+
+.secondary-button:hover {
+  background-color: $secondary-variant-color;
+  border-color: $secondary-variant-color;
+}
+
+.bg-button {
+  color: $field-color;
+  background-color: $background-color;
+  border-color: $background-color
+}
+
+.outlined-primary-button {
+  background-color: #fff;
+  color: $primary-color;
+  border-color: $primary-color;
+}
+
+.outlined-secondary-button {
+  background-color: #fff;
+  color: $secondary-color;
+  border-color: $secondary-color;
+}
+
+.outlined-active-button {
+  background-color: #fff;
+  color: $active-color;
+  border-color: $active-color;
+}
+
+.outlined-red-button {
+  background-color: #fff;
+  color: $error-color;
+  border-color: $error-color;
+}
+
+.outlined-primary-button:hover,
+.outlined-secondary-button:hover,
+.outlined-active-button:hover,
+.outlined-red-button:hover,
+.bg-button:hover {
+  background-color: $border-color;
+}
+
+.danger-button {
+  background-color: $error-color;
+  border-color: $error-color;
+}
+
+.danger-button:hover {
+  background-color: $error-variant-color;
+  border-color: $error-variant-color;
+}
+
+.button-loader {
+  border: 3px solid grey;
+  border-radius: 50%;
+  border-top: 3px solid #fff;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+.icon-button {
+  padding: 7px;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

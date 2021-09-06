@@ -1,0 +1,61 @@
+.multi-line-inputs-container .input-container:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.form-detail-title {
+  margin-top: 5px;
+  font: $semiBoldTitle;
+  color: $field-color;
+}
+
+.form-error-message {
+  font: $regularField;
+  color: $error-color;
+}
+
+.day-hour-input-row {
+  display: flex;
+
+  > div {
+    margin-right: 10px;
+    color: $field-color;
+  }
+}
+
+.day-input {
+  font: $semiBoldSubTitle
+}
+
+.component-primary-title {
+  display: flex;
+  align-items: center;
+  font: $semiBoldTitle;
+  color: $primary-color;
+  grid-column: 3/span 2;
+}
+
+.multi-line-inputs-container > textarea {
+  width: 100%;
+  font: $regularSubTitle;
+  color: $field-color;
+  background-color: #fff;
+}
+
+.component-text-type-value {
+  margin-top: 5px;
+  padding: 7px 10px;
+  font: $semiBoldSubTitle;
+  color: $field-color;
+  background-color: $background-color;
+  border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+  .multi-line-inputs-container {
+    grid-row: unset;
+  }
+
+  .multi-line-inputs-container .input-container:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}

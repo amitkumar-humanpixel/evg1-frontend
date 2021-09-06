@@ -1,0 +1,172 @@
+.header-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 5px 20px;
+  color: #e2f3f5;
+}
+
+.page-title {
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #151d26;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100vw - 120px);
+}
+
+.user-dp {
+  position: relative;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-left: 0.625rem;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 0.625rem;
+  cursor: pointer;
+}
+
+.user-dp:hover {
+  opacity: 0.8;
+}
+
+.user-settings {
+  position: absolute;
+  top: 75px;
+  right: 30px;
+  width: 245px;
+  padding: 10px 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 30px #82828229;
+  overflow: hidden;
+  z-index: 9;
+
+  > div {
+    display: flex;
+    align-items: center;
+    padding: 8px 25px;
+    font: $semiBoldH6;
+    color: $field-color;
+    cursor: pointer;
+
+    span {
+      margin-right: 10px;
+      font-size: 24px;
+      color: $primary-color;
+    }
+  }
+
+  .user-setting-item:hover {
+    background-color: $background-color;
+  }
+}
+
+.page-header {
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header-name,
+.tab-content-header {
+  font: $boldH5;
+  color: $primary-color;
+}
+
+.page-header-button-container {
+  display: flex;
+}
+
+.user-profile-modal {
+  width: 440px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: auto;
+    padding: 20px 20px;
+
+    .user-profile-detail-wrapper {
+      display: flex;
+      color: #71bf44;
+      font: 500 14px "Calibri", sans-serif;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin: 10px 20px;
+
+      span {
+        min-width: 40px;
+        font: $semiBoldSubTitle;
+      }
+
+      .user-profile-detail-value {
+        color: $field-color;
+      }
+    }
+  }
+}
+
+/* don't display for desktop view starts here */
+.burger-menu {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .header-wrapper {
+    height: 55px;
+    align-items: center;
+    background-color: #fff;
+  }
+
+  .header-left-part {
+    display: flex;
+    align-items: center;
+  }
+
+  .burger-menu {
+    display: block;
+    margin-right: 10px;
+    font-weight: 500;
+    color: $primary-color;
+  }
+
+  .page-header {
+    padding: 10px 20px 0 20px;
+  }
+
+  .page-title {
+    margin-bottom: 0;
+    font: $boldH5;
+  }
+
+  .user-dp {
+    height: 34px;
+    width: 34px;
+  }
+
+  .user-settings {
+    top: 50px;
+    right: 15px;
+    width: 180px;
+    padding: 0;
+
+    > div {
+      padding: 8px 10px;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+.side-menu-container {
+  position: relative;
+  height: 100%;
+  padding: 0 0.45rem 1.25rem 1.25rem;
+  background-color: #fff;
+  box-shadow: 0 0 30px #82828229;
+  overflow: hidden;
+}
+
+.side-menu-logo {
+  height: 75px;
+  padding: 1.25rem 0 1.25rem 0;
+  text-align: center;
+
+  img {
+    height: 100%;
+  }
+}
+
+.menu-container {
+  padding: 0.625rem;
+  border-top: 1px solid $border-color;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  margin: 0.625rem 0;
+  padding: 0.625rem;
+  font: $semiBoldSubTitle;
+  color: $field-color;
+  border-radius: 0.625rem;
+  text-decoration: none;
+  opacity: 0.5;
+
+  .material-icons-round {
+    margin-right: 5px;
+  }
+}
+
+.active {
+  color: white;
+  background-color: $primary-color;
+  opacity: 1;
+}
+
+.side-menu-evgp-bg-logo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  filter: grayscale(100%);
+}
+
+/* don't display for desktop view starts here */
+.menu-open {
+  display: none;
+}
+
+/* don't display for desktop view ends here */
+
+@media (max-width: 1024px) {
+  .side-menu-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    padding: 0;
+    transition: all .5s ease-in-out;
+    z-index: 4;
+  }
+
+  .show-side-menu {
+    width: 245px;
+  }
+
+  .side-menu-logo {
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+    padding: 20px;
+
+    .menu-open {
+      display: block;
+      font-size: 26px;
+      color: $primary-color;
+    }
+  }
+}

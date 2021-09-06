@@ -1,0 +1,3 @@
+export const USER_REDUX_CONSTANTS = {
+  USER_LIST: 'USER_LIST',
+};

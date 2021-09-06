@@ -1,0 +1,28 @@
+.section-inner-title-button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .button {
+    padding: 10px;
+  }
+}
+
+.section-inner-title {
+  font: $boldH4;
+  color: $primary-color;
+}
+
+.registrar-details-grid {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 10px 3%;
+  margin: 10px 0;
+}
+
+@media (max-width: 1024px) {
+  .registrar-details-grid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}

@@ -1,0 +1,170 @@
+.accredited-container {
+  display: grid;
+  background-color: $background-color;
+}
+
+.accredited-container-grid {
+  grid-template-columns: 1fr 4fr;
+}
+
+.accredited-content-container {
+  padding: 0 20px 20px 20px;
+  overflow-y: auto;
+}
+
+.accredited-button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  > div {
+    display: flex;
+
+    .button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.accredited-title {
+  font: $semiBoldH4;
+  color: $field-color;
+}
+
+.accredited-title-margin {
+  margin: 20px 0 10px 0;
+}
+
+.accredited-content-container table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: .4rem;
+  font: $semiBoldTitle;
+
+  thead {
+    color: $primary-color;
+  }
+
+  th, td {
+    padding: 5px 10px;
+    text-align: left;
+  }
+
+  th {
+    padding: 0 10px 10px 10px;
+  }
+
+  td {
+    height: 100%;
+    color: $field-color;
+  }
+
+  tr:nth-child(odd) .total-hours {
+    background-color: $background-color;
+  }
+
+  tr:nth-child(even) .total-hours {
+    background-color: $dark-background-color;
+  }
+}
+
+.accredited-breadcrumb-container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  background-color: $background-color;
+  z-index: 3;
+}
+
+.detail-list-point {
+  margin: 5px 0;
+  list-style: none;
+}
+
+.add-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* don't display for desktop view starts here */
+.stepper-button {
+  display: none;
+  cursor: pointer;
+}
+
+/* don't display for desktop view ends here */
+
+@media (max-width: 1024px) {
+  .add-button-row {
+    padding: 0 10px;
+  }
+
+  .accredited-container {
+    position: relative;
+    grid-template-columns: 1fr;
+  }
+
+  .accredited-content-container {
+    padding: 0;
+
+    table {
+      th, td {
+        padding: 2px 5px;
+      }
+
+      th:first-child, td:first-child {
+        padding-left: 0;
+      }
+
+      th:last-child, td:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .accredited-breadcrumb-container {
+    padding: 10px 20px;
+  }
+
+  .accredited-title {
+    padding: 0 20px;
+    font: $semiBoldH5;
+  }
+
+  .stepper-button {
+    display: block;
+    margin-right: 10px;
+    color: $primary-color;
+  }
+
+  .accredited-breadcrumb {
+    padding-bottom: 0;
+  }
+
+  .accredited-content-wrapper {
+    margin-bottom: 90px;
+  }
+
+  .accredited-content-container table {
+    border-spacing: 0 .4rem;
+    overflow-x: auto;
+  }
+
+  .accredited-button-row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px 20px;
+    right: 0;
+    background-color: white;
+    box-shadow: 1px -3px 5px 0px $border-color;
+  }
+}

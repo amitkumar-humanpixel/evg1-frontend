@@ -1,0 +1,31 @@
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: 250px calc(100vw - 250px);
+  width: 100vw;
+  height: 100%;
+  background-color: $background-color;
+  overflow: hidden;
+}
+
+.right-side-container {
+  position: relative;
+  background-color: $background-color;
+}
+
+.page-container {
+  height: calc(100% - 75px);
+  margin-top: 75px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .layout-wrapper {
+    position: relative;
+    grid-template-columns: 1fr;
+  }
+
+  .page-container {
+    height: calc(100% - 55px);
+    margin-top: 55px;
+  }
+}

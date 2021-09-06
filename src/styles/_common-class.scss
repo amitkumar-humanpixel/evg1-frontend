@@ -1,0 +1,88 @@
+@import '../components/Input/Input';
+@import '../components/Checkbox/Checkbox';
+@import '../components/Button/Button';
+@import "../components/Table/Table";
+@import "../components/Pagination/Pagination";
+@import "../components/Loader/Loader";
+@import "../components/Modal/Modal";
+@import "../components/Switch/Switch";
+@import "../components/common/getComponentByType/getComponentByType";
+@import "../components/TriStateSwitch/TriStateSwitch";
+@import "../components/Tab/Tab";
+
+//table container
+.table-container {
+  padding: 5px 20px;
+}
+
+.common-list-container {
+  position: relative;
+  width: 100%;
+  margin-top: 0.625rem;
+  overflow-y: auto;
+  border-radius: 10px 10px 0 0;
+}
+
+//pagination
+.common-list-pagination {
+  border-bottom-left-radius: 0.625rem;
+  border-bottom-right-radius: 0.625rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font: $semiBoldTitle;
+  color: $field-color;
+}
+
+.breadcrumb-link {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.breadcrumb-arrow {
+  padding: 0 5px;
+  font-size: 16px;
+}
+
+.common-white-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+// checklist
+.checklist-checkmark {
+  margin-top: 3px;
+  left: -10px;
+}
+
+.confirmation-title {
+  margin-left: 10px;
+  font: $boldSubTitle;
+  color: $field-color;
+
+  span {
+    font: $boldTitle;
+    text-decoration: underline;
+  }
+}
+
+.confirm-checkbox {
+  margin: 15px 0 0 25px;
+}
+
+@media (max-width: 1024px) {
+  .confirm-checkbox {
+    margin: 15px 20px 0 20px;
+  }
+
+  .table-container {
+    padding: 5px 0;
+  }
+
+  .common-white-container {
+    border-radius: 0;
+  }
+}
