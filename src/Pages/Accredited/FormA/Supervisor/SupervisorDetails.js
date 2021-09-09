@@ -15,6 +15,7 @@ const SupervisorDetails = props => {
       label: `${manager?.firstName} ${manager?.lastName}`,
       value: manager?.userId,
       name: 'userId',
+      email: manager?.email,
     }));
   }, [supervisorList]);
 
@@ -108,8 +109,7 @@ const SupervisorDetails = props => {
 
   const emailChange = useCallback(
     user => {
-      const selectedSupervisor = supervisorList.find(manager => manager?.userId === user?.value);
-      dispatch(updateAccreditedSubFormArrayFields('formA', 'supervisors', index, 'email', selectedSupervisor?.email));
+      dispatch(updateAccreditedSubFormArrayFields('formA', 'supervisors', index, 'email', user?.email));
     },
     [fromModule, supervisorList],
   );

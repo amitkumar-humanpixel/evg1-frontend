@@ -36,7 +36,8 @@ const GetComponentByType = props => {
 
   const onDayHourInputChange = useCallback(
     (inputName, inputValue, label, value) => {
-      const finalTimeValue = value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
+      const finalTimeValue =
+        label === 'hours' && value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
       const finalValue = {
         ...inputValue,
         [label]: label === 'hours' ? moment(finalTimeValue, 'HH:mm').format('HH:mm') : value,

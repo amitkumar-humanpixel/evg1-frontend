@@ -13,7 +13,9 @@ import { getLoggedUserDetails } from '../Pages/Login/redux/LoginActions';
 import { getAccreditedDetails } from '../Pages/Accredited/redux/AccreditedReduxActions';
 
 const Routes = () => {
+  const oktaAuth = new OktaAuth(oktaConfig);
   const authToken = getAuthTokenFromLocalStorage();
+
   const dispatch = useDispatch();
 
   useEffect(async () => {
@@ -31,8 +33,6 @@ const Routes = () => {
       localStorage.removeItem('userDetails');
     };
   }, [authToken?.accessToken?.claims?.sub]);
-
-  const oktaAuth = new OktaAuth(oktaConfig);
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     window.location.replace(toRelativeUrl(originalUri || '/', window.location.origin));

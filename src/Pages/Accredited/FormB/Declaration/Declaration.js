@@ -11,14 +11,9 @@ const Declaration = () => {
   const { id } = useQueryParams();
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const { reviewedBy, declarationStatus, recomendationPanel, summery, previousIssues, error } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formB?.otherDetails ?? {},
@@ -47,6 +42,10 @@ const Declaration = () => {
   useEffect(() => {
     if (id) dispatch(getFormBOtherDetails(id));
   }, [id]);
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   return (
     <>

@@ -4,21 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../Modal/Modal';
 import { StringCast } from '../../helpers/StringCastingHelper';
 import { getFacilityUsers, resetFacilityUsers } from '../../Pages/Facility/redux/FacilityReduxActions';
-import Table from '../Table/Table';
 import { useWindowHeight } from '../../hooks/useWindowHeight';
 import Loader from '../Loader/Loader';
+import Table from '../Table/Table';
 
 const ViewTableDetails = props => {
   const { heading, details, onCloseModal, fromModule } = props;
   const windowHeight = useWindowHeight();
   const dispatch = useDispatch();
-  const viewModalButtons = useMemo(() => [{ title: 'Close', buttonType: 'primary', onClick: onCloseModal }], []);
 
   const { staffDetails, headers } = useSelector(({ facilityReducer }) => facilityReducer?.facilityUserList ?? {});
 
   const { isFacilityUserLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
-  const mobileHeaders = [
+  const mobileHeadersForFacilityUsers = [
     {
       label: 'User Id',
       name: 'userId',
@@ -36,6 +35,11 @@ const ViewTableDetails = props => {
     },
   ];
 
+  const viewModalButtons = useMemo(
+    () => [{ title: 'Close', buttonType: 'primary', onClick: onCloseModal }],
+    [onCloseModal],
+  );
+
   useEffect(() => {
     if (fromModule === 'facility') {
       dispatch(getFacilityUsers(details?.facilityId));
@@ -51,26 +55,30 @@ const ViewTableDetails = props => {
         {!isFacilityUserLoader ? (
           <>
             <div className="modal-details-grid">
-              {modalDetails.map(([key, value]) => (
+              {modalDetails?.map(([key, value]) => (
                 <div className="label-value-grid">
                   <span>{StringCast(key)}</span>
                   <div className="detail-value-field">{value}</div>
                 </div>
               ))}
             </div>
-            {fromModule === 'facility' && staffDetails?.length > 0 ? (
-              <div className="common-list-container" style={{ maxHeight: `${windowHeight - 236}px` }}>
-                <Table
-                  align="left"
-                  valign="center"
-                  tableClass="main-list-table"
-                  data={staffDetails}
-                  mobileHeaders={mobileHeaders}
-                  headers={headers}
-                />
-              </div>
-            ) : (
-              <div className="no-record-found">No user record found</div>
+            {fromModule === 'facility' && (
+              <>
+                {staffDetails?.length > 0 ? (
+                  <div className="common-list-container mt-20" style={{ maxHeight: `${windowHeight - 236}px` }}>
+                    <Table
+                      align="left"
+                      valign="center"
+                      tableClass="main-list-table"
+                      data={staffDetails}
+                      mobileHeaders={mobileHeadersForFacilityUsers}
+                      headers={headers}
+                    />
+                  </div>
+                ) : (
+                  <div className="no-record-found">No user record found</div>
+                )}
+              </>
             )}
           </>
         ) : (

@@ -12,7 +12,6 @@ import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 import { fileNameExtension, fileNamePrefix } from '../../../../helpers/fileNameSplit';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
-import Input from '../../../../components/Input/Input';
 
 const attachments = [
   'Orientation is provided to each registrar at commencement - please attach the registrar specific orientation checklist/materials used by the practice.',
@@ -22,17 +21,13 @@ const attachments = [
 
 const Standards = () => {
   const { id } = useQueryParams();
-  const { standards } = useSelector(({ accreditedReducer }) => accreditedReducer?.formA ?? {});
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
+  const [isEditable, setIsEditable] = useState(true);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
-  const [isEditable, setIsEditable] = useState(true);
-
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const standards = useSelector(({ accreditedReducer }) => accreditedReducer?.formA?.standards ?? {});
 
   const handleInputChange = useCallback((index, name, value) => {
     dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, name, value));
@@ -44,6 +39,10 @@ const Standards = () => {
     },
     [id],
   );
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (id) dispatch(getFormAStandardDetails(id));
@@ -115,23 +114,23 @@ const Standards = () => {
                     />
                   )}
 
-                  {useWindowWidth() < 1024 &&
-                    detail?.title ===
-                      'Have there been changes to facilities or resources since last\n' +
-                        'accreditation/reaccreditation visit? If yes, please provide detail.' && (
-                      <div className="remarks-input">
-                        <Input
-                          type="text"
-                          name="remarks"
-                          placeholder="Detail"
-                          value={detail?.remarks}
-                          onChange={e => handleInputChange(index, e.target.name, e.target.value)}
-                          disabled={!isEditable}
-                        />
-                      </div>
-                    )}
+                  {detail?.title ===
+                    'Have there been changes to facilities or resources since last\n' +
+                      'accreditation/reaccreditation visit? If yes, please provide detail.' && (
+                    <div className="remarks-input">
+                      <textarea
+                        rows={2}
+                        name="remarks"
+                        placeholder="Detail"
+                        value={detail?.remarks}
+                        onChange={e => handleInputChange(index, e.target.name, e.target.value)}
+                        disabled={!isEditable}
+                      />
+                    </div>
+                  )}
                 </div>
               </td>
+
               {attachments.includes(detail.title) && (
                 <td className="standard-detail-button">
                   <FileUploadButton
@@ -144,20 +143,20 @@ const Standards = () => {
                 </td>
               )}
 
-              {detail?.title ===
-                'Have there been changes to facilities or resources since last\n' +
-                  'accreditation/reaccreditation visit? If yes, please provide detail.' && (
-                <td className="standard-detail-remark">
-                  <Input
-                    type="text"
-                    name="remarks"
-                    placeholder="Detail"
-                    value={detail?.remarks}
-                    onChange={e => handleInputChange(index, e.target.name, e.target.value)}
-                    disabled={!isEditable}
-                  />
-                </td>
-              )}
+              {/* {detail?.title === */}
+              {/*  'Have there been changes to facilities or resources since last\n' +*/}
+              {/*    'accreditation/reaccreditation visit? If yes, please provide detail.' && ( */}
+              {/*  <td className="standard-detail-remark"> */}
+              {/*    <Input */}
+              {/*      type="text" */}
+              {/*      name="remarks" */}
+              {/*      placeholder="Detail" */}
+              {/*      value={detail?.remarks} */}
+              {/*      onChange={e => handleInputChange(index, e.target.name, e.target.value)} */}
+              {/*      disabled={!isEditable} */}
+              {/*    /> */}
+              {/*  </td> */}
+              {/* )} */}
             </tr>
           ))}
         </table>

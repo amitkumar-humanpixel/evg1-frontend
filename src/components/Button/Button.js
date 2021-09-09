@@ -28,13 +28,14 @@ Button.propTypes = {
   ]).isRequired,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
 };
 
 Button.defaultProps = {
   className: '',
   title: '',
   isLoading: false,
+  children: null,
 };
 
 export default Button;

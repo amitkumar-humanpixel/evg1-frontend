@@ -14,8 +14,6 @@ const SideMenu = props => {
 
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
-  // const role = 'Principal_Supervisor';
-
   useEffect(() => {
     const sideBar = [...SideMenuConstants];
     switch (role) {

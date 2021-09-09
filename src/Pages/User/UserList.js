@@ -17,22 +17,27 @@ const UserList = () => {
   const [isUserDetailModalOpen, setIsUserDetailModalOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState({});
 
-  const onCloseUserDetailPopup = useCallback(() => {
-    setIsUserDetailModalOpen(false);
-    setSelectedUserData([]);
-  }, [isUserDetailModalOpen]);
-
   const { page: paramPage, limit: paramLimit } = useQueryParams();
 
   const { page, limit, pages, total, data, headers } = useSelector(({ userReducer }) => userReducer?.userList ?? {});
 
   const { isUserListLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
+  const mobileHeaders = [
+    { name: 'firstName', label: 'First Name', type: 'string' },
+    { name: 'lastName', label: 'Last Name', type: 'string' },
+  ];
+
+  const onCloseUserDetailPopup = useCallback(() => {
+    setIsUserDetailModalOpen(false);
+    setSelectedUserData({});
+  }, [isUserDetailModalOpen]);
+
   const getUserListWithFilters = useCallback(
     async (params = {}) => {
       const param = {
-        page: page || 1,
-        limit: limit || 15,
+        page: page || params?.page || 1,
+        limit: limit || params?.limit || 15,
         ...params,
       };
       await dispatch(getUserList(param));
@@ -44,12 +49,15 @@ const UserList = () => {
     async newPage => {
       await getUserListWithFilters({ page: newPage, limit });
     },
-    [limit],
+    [limit, getUserListWithFilters],
   );
 
-  const onSelectLimit = useCallback(async newLimit => {
-    await getUserListWithFilters({ page: 1, limit: newLimit });
-  }, []);
+  const onSelectLimit = useCallback(
+    async newLimit => {
+      await getUserListWithFilters({ page: 1, limit: newLimit });
+    },
+    [getUserListWithFilters],
+  );
 
   const onSelectUser = useCallback(selectedUser => {
     setSelectedUserData(selectedUser);
@@ -71,11 +79,6 @@ const UserList = () => {
     },
     [page, limit],
   );
-
-  const mobileHeaders = [
-    { name: 'firstName', label: 'First Name', type: 'string' },
-    { name: 'lastName', label: 'Last Name', type: 'string' },
-  ];
 
   return (
     <div className="table-container">

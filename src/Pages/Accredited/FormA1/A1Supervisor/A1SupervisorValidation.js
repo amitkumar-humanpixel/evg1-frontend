@@ -1,6 +1,7 @@
 import moment from 'moment';
 import {
   saveAccreditedA1SupervisorDetails,
+  saveAccreditedA1SupervisorDetailsPartially,
   updateA1SupervisorTimings,
   updateAccreditedSubFormDataArrayFields,
   updateAccreditedSubFormFields,
@@ -103,12 +104,15 @@ export const a1SupervisorValidation = async (
     dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
   }
 
-  if (validated) {
+  if (data?.isAgree) {
     try {
-      await dispatch(saveAccreditedA1SupervisorDetails(id, finalData, accreditionId));
-      if (isNextClick) {
-        setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
+      if (validated) {
+        await dispatch(saveAccreditedA1SupervisorDetails(id, finalData, accreditionId));
+        if (isNextClick) {
+          setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
+        }
       }
+      if (!validated) await dispatch(saveAccreditedA1SupervisorDetailsPartially(id, finalData));
     } catch (e) {
       /**/
     }

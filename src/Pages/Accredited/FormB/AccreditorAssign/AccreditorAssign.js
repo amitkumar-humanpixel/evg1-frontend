@@ -14,14 +14,9 @@ const AccreditorAssign = () => {
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
   const { id } = useQueryParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const facilityIdForSummary = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
@@ -34,6 +29,10 @@ const AccreditorAssign = () => {
   const handleSelectChange = useCallback(e => {
     dispatch(updateAccreditedSubFormFields('formB', 'accreditorAssign', 'accreditorId', e));
   }, []);
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (facilityIdForSummary) dispatch(getFormBAccreditors(facilityIdForSummary));

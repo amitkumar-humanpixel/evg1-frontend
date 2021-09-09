@@ -17,21 +17,22 @@ const Registrar = () => {
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
 
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
+
   const { registrarList, registrars } = useSelector(({ accreditedReducer }) => accreditedReducer?.formA ?? {});
 
   const finalRegistrarList = useMemo(() => {
     const registrarsSelected = registrars?.map(e => e?.placementId?.value);
     return registrarList?.filter(e => !registrarsSelected.includes(e?.value));
   }, [registrarList, registrars]);
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (facilityId) dispatch(getRegistrarsList(facilityId));
@@ -60,7 +61,7 @@ const Registrar = () => {
         </Button>
       </div>
       {registrars?.length > 0 &&
-        registrars.map((registrar, index) => (
+        registrars?.map((registrar, index) => (
           <section className="common-white-container mb-10">
             <div className="section-inner-title-button-row">
               <div className="section-inner-title">{`Registrar ${index + 1}`}</div>

@@ -69,6 +69,7 @@ export const ACCREDITED_URLS = {
     GET_A1_SUPERVISOR_DATA: `${BASE_URL}formA1/getSupervisorDetail/`,
     GET_A1_SUPERVISORS: `${BASE_URL}formA1/supervisors/`,
     SAVE_A1_SUPERVISOR_DETAILS: `${BASE_URL}formA1/submitSupervisorDetail/`,
+    SAVE_A1_SUPERVISOR_DETAILS_PARTIALLY: `${BASE_URL}formA1/submitTempSupervisorDetail/`,
 
     // Final Checklist
     GET_FINAL_CHECKLIST_DATA: `${BASE_URL}formA1/finalCheckList/`,

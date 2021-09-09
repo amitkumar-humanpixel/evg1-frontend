@@ -72,7 +72,6 @@ export const postDetailsValidation = async (
     try {
       await dispatch(saveAccreditedPostDetails(finalData, accreditionId));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/accredited/formA/practiceManager/?id=${response}`);
     } catch (e) {
       /**/
     }

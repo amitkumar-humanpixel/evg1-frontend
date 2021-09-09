@@ -15,11 +15,8 @@ const FacilityList = () => {
 
   const [isFacilityDetailModalOpen, setIsFacilityDetailModalOpen] = useState(false);
   const [selectedFacilityData, setSelectedFacilityData] = useState({});
+
   const windowHeight = useWindowHeight();
-  const onCloseFacilityDetailPopup = useCallback(() => {
-    setIsFacilityDetailModalOpen(false);
-    setSelectedFacilityData([]);
-  }, [isFacilityDetailModalOpen]);
 
   const { page: paramPage, limit: paramLimit } = useQueryParams();
 
@@ -29,11 +26,29 @@ const FacilityList = () => {
 
   const { isFacilityListLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
+  const mobileHeaders = [
+    {
+      label: 'Facility Id',
+      name: 'facilityId',
+      type: 'string',
+    },
+    {
+      label: 'Practice Name',
+      name: 'practiceName',
+      type: 'string',
+    },
+  ];
+
+  const onCloseFacilityDetailPopup = useCallback(() => {
+    setIsFacilityDetailModalOpen(false);
+    setSelectedFacilityData({});
+  }, [isFacilityDetailModalOpen]);
+
   const getFacilityListWithFilters = useCallback(
     async (params = {}) => {
       const param = {
-        page: page || 1,
-        limit: limit || 15,
+        page: page || params?.page || 1,
+        limit: limit || params?.limit || 15,
         ...params,
       };
       await dispatch(getFacilityList(param));
@@ -45,12 +60,15 @@ const FacilityList = () => {
     async newPage => {
       await getFacilityListWithFilters({ page: newPage, limit });
     },
-    [limit],
+    [limit, getFacilityListWithFilters],
   );
 
-  const onSelectLimit = useCallback(async newLimit => {
-    await getFacilityListWithFilters({ page: 1, limit: newLimit });
-  }, []);
+  const onSelectLimit = useCallback(
+    async newLimit => {
+      await getFacilityListWithFilters({ page: 1, limit: newLimit });
+    },
+    [getFacilityListWithFilters],
+  );
 
   const onSelectFacility = useCallback(selectedFacility => {
     setSelectedFacilityData(selectedFacility);
@@ -72,19 +90,6 @@ const FacilityList = () => {
     },
     [page, limit],
   );
-
-  const mobileHeaders = [
-    {
-      label: 'Facility Id',
-      name: 'facilityId',
-      type: 'string',
-    },
-    {
-      label: 'Practice Name',
-      name: 'practiceName',
-      type: 'string',
-    },
-  ];
 
   return (
     <div className="table-container">

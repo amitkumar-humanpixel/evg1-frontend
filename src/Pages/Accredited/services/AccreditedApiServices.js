@@ -59,6 +59,8 @@ export const AccreditedApiServices = {
       ApiService.getData(`${ACCREDITED_URLS.FORM_A1.GET_A1_SUPERVISOR_DATA}${id}/${sid}`),
     saveAccreditedA1SupervisorDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A1.SAVE_A1_SUPERVISOR_DETAILS}${id}`, data),
+    saveAccreditedA1SupervisorDetailsPartially: (id, data) =>
+      ApiService.postData(`${ACCREDITED_URLS.FORM_A1.SAVE_A1_SUPERVISOR_DETAILS_PARTIALLY}${id}`, data),
 
     // final checklist
     getFinalCheckListData: id => ApiService.getData(`${ACCREDITED_URLS.FORM_A1.GET_FINAL_CHECKLIST_DATA}${id}`),

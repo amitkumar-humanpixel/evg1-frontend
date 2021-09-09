@@ -25,16 +25,11 @@ const A1Supervisor = () => {
   const dispatch = useDispatch();
   const { id, sid } = useQueryParams();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep) ?? false);
-  }, [step, subStep, accreditionSideBar]);
-
   const isMobileWidth = useWindowWidth() < 1024;
+
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const supervisor = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}`] ?? {});
 
@@ -53,13 +48,13 @@ const A1Supervisor = () => {
     },
     [sid],
   );
+
   const handleStandardInputChange = useCallback(
     (index, name, value) => {
       dispatch(updateAccreditedSubFormDataArrayFields('formA1', `${sid}`, index, 'standardsDetail', name, value));
     },
     [sid],
   );
-
   const handleInputChange = useCallback(
     (name, value) => {
       dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, name, value));
@@ -73,6 +68,10 @@ const A1Supervisor = () => {
     },
     [id, sid],
   );
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep) ?? false);
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (id && sid) dispatch(getFormA1SupervisorDetails(id, sid));

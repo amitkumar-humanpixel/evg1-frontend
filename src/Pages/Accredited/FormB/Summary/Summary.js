@@ -20,14 +20,22 @@ const Summary = () => {
   const dispatch = useDispatch();
   const { id } = useQueryParams();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const nameOfPractice = [
+    {
+      title:
+        'Statement of suitability for accreditation includes confirmation of compliance with required RACGP\n' +
+        'and EV standards by the applicant except as otherwise outlined below ',
+      width: 70,
+    },
+    {
+      title: 'Considered suitable for Accreditation with EV ',
+      width: 30,
+    },
+  ];
+
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const facilityIdForSummary = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
@@ -146,19 +154,6 @@ const Summary = () => {
     ];
     return rightPartInputs;
   }, [assessment, isEditable]);
-
-  const nameOfPractice = [
-    {
-      title:
-        'Statement of suitability for accreditation includes confirmation of compliance with required RACGP\n' +
-        'and EV standards by the applicant except as otherwise outlined below ',
-      width: 70,
-    },
-    {
-      title: 'Considered suitable for Accreditation with EV ',
-      width: 30,
-    },
-  ];
 
   const onInputChange = useCallback((name, value) => {
     dispatch(updateAccreditedSubFormFields('formB', 'summary', name, value));
@@ -300,6 +295,10 @@ const Summary = () => {
       </>
     );
   };
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (id) dispatch(getSummaryData(id));

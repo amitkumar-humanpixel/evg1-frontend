@@ -536,6 +536,23 @@ export const saveAccreditedA1SupervisorDetails = (id, data, accreditationId) => 
   };
 };
 
+export const saveAccreditedA1SupervisorDetailsPartially = (id, data) => {
+  return async () => {
+    try {
+      const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetailsPartially(
+        id,
+        data,
+      );
+      if (response?.data?.status === 'SUCCESS') {
+        successNotification('Supervisor details saved partially.');
+      }
+    } catch (e) {
+      displayErrors(e);
+      throw Error();
+    }
+  };
+};
+
 export const deleteFileFromA1Standards = (index, filePath, accreditationId, sid, fromModule) => {
   return async dispatch => {
     try {

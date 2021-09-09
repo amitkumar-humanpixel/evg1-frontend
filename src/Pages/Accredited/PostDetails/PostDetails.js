@@ -11,17 +11,12 @@ import { useQueryParams } from '../../../hooks/GetQueryParamHook';
 import { AccreditedEditableHelper } from '../../../helpers/AccreditedEditableHelper';
 
 const PostDetails = () => {
-  const dispatch = useDispatch();
   const { id } = useQueryParams();
+  const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const facilityIdForFacility = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
@@ -138,6 +133,10 @@ const PostDetails = () => {
       isEditable,
     ],
   );
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (id) dispatch(getPostDetails(id));

@@ -15,17 +15,12 @@ import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditable
 
 const PracticeManager = () => {
   const { id } = useQueryParams();
-  const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
+  const dispatch = useDispatch();
 
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
-
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
   const { practiceManagerList, practiceManager } = useSelector(
@@ -42,6 +37,7 @@ const PracticeManager = () => {
       label: `${manager?.firstName} ${manager?.lastName}`,
       value: manager?.userId,
       name: 'userId',
+      email: manager?.email,
     }));
   }, [practiceManagerList]);
 
@@ -111,8 +107,7 @@ const PracticeManager = () => {
   const onInputChange = useCallback(
     (name, value) => {
       if (name === 'userId') {
-        const selectedPracticeManager = practiceManagerList.find(manager => manager?.userId === value?.value);
-        dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', 'email', selectedPracticeManager?.email));
+        dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', 'email', value?.email));
       }
       dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', name, value));
     },
@@ -126,6 +121,10 @@ const PracticeManager = () => {
   useEffect(() => {
     if (id) dispatch(getPracticeManagerDetails(id));
   }, [id]);
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   return (
     <>

@@ -197,7 +197,7 @@ const AccreditedButtons = () => {
           default:
             break;
         }
-      } else {
+      } else if (step === 'postDetails') {
         await postDetailsValidation(
           dispatch,
           history,

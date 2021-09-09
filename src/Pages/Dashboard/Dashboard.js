@@ -16,26 +16,30 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const windowHeight = useWindowHeight();
-
   const USER_ID = localStorage.getItem('userDetails');
-
-  const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
+  const { page: paramPage, limit: paramLimit } = useQueryParams();
 
   const [tabs, setTabs] = useState([]);
 
   const [activeTab, setActiveTab] = useState(0);
-  const { page: paramPage, limit: paramLimit } = useQueryParams();
+
+  const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
   const { page, limit, pages, total, data, headers } = useSelector(({ dashboard }) => dashboard?.dashboard ?? {});
 
   const { isDashboardLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
+
+  const mobileHeaders = [
+    { name: 'practiceName', label: 'Practice Name', type: 'string' },
+    { name: 'formType', label: 'Form Type', type: 'tag' },
+  ];
 
   const getDashboardListWithFilters = useCallback(
     async (params = {}) => {
       const param = {
         userId: USER_ID ?? params?.userId,
-        page: page ?? params?.page ?? 1,
-        limit: limit ?? params?.limit ?? 15,
-        status: tabs?.[activeTab]?.value ?? params?.status ?? tabs?.[0]?.value,
+        page: page || params?.page || 1,
+        limit: limit || params?.limit || 15,
+        status: tabs?.[activeTab]?.value ?? tabs?.[0]?.value,
         ...params,
       };
       await dispatch(getDashboardList(param));
@@ -47,16 +51,19 @@ const Dashboard = () => {
     async newPage => {
       await getDashboardListWithFilters({ page: newPage, limit });
     },
-    [limit],
+    [limit, getDashboardListWithFilters],
   );
 
-  const onSelectLimit = useCallback(async newLimit => {
-    await getDashboardListWithFilters({ page: 1, limit: newLimit });
-  }, []);
+  const onSelectLimit = useCallback(
+    async newLimit => {
+      await getDashboardListWithFilters({ page: 1, limit: newLimit });
+    },
+    [getDashboardListWithFilters],
+  );
 
   const onSelectRecord = useCallback(
     selectedUser => {
-      if (selectedUser?.facilityId && (USER_ID !== null || true))
+      if (selectedUser?.facilityId && (USER_ID !== undefined || null))
         dispatch(
           changeAccreditionIdAndFacilityIdForAccreditionRedirection(
             selectedUser?.facilityId,
@@ -77,23 +84,6 @@ const Dashboard = () => {
     [tabs, getDashboardListWithFilters],
   );
 
-  const mobileHeaders = [
-    { name: 'practiceName', label: 'Practice Name', type: 'string' },
-    { name: 'formType', label: 'Form Type', type: 'tag' },
-  ];
-
-  // useEffect(async () => {
-  //   const params = {
-  //     userId: USER_ID,
-  //     page: paramPage ?? page ?? 1,
-  //     limit: paramLimit ?? limit ?? 15,
-  //     status: FINAL_TABS?.[activeTab]?.value ?? FINAL_TABS[0].value,
-  //   };
-  //   if (USER_ID) {
-  //     await getDashboardListWithFilters(params);
-  //   }
-  // }, [USER_ID]);
-
   const getTabs = useCallback(
     async userId => {
       const paramsForTabs = { userId };
@@ -106,19 +96,21 @@ const Dashboard = () => {
       if (finalTabs?.length > 0) {
         const params = {
           userId,
-          page: paramPage ?? page ?? 1,
-          limit: paramLimit ?? limit ?? 15,
+          page: paramPage || page || 1,
+          limit: paramLimit || limit || 15,
           status: tabs?.[activeTab]?.value ?? finalTabs?.[0]?.value,
         };
         await getDashboardListWithFilters(params);
       }
     },
-    [role],
+    [role, getDashboardListWithFilters],
   );
 
   useEffect(() => {
     if (USER_ID !== null || undefined) {
-      getTabs(USER_ID);
+      (async () => {
+        await getTabs(USER_ID);
+      })();
     }
   }, [USER_ID]);
 

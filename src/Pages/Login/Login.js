@@ -13,7 +13,7 @@ const Login = () => {
   const login = useCallback(async () => {
     try {
       await oktaAuth.signInWithRedirect({
-        originalUri: `${history?.location?.state?.referrer}${history?.location?.state?.search}` ?? '/',
+        originalUri: `${history?.location?.state?.referrer ?? ''}${history?.location?.state?.search ?? ''}` ?? '/',
       });
     } catch (e) {
       /**/

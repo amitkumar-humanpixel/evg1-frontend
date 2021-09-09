@@ -25,11 +25,7 @@ export const AuthenticatedRoute = ({ component, ...options }) => {
     );
   }
 
-  return (
-    // <motion.div initial={{ opacity: 0.2 }} transition={{ duration: 0.5 }} animate={{ opacity: 1 }}>
-    <Route {...options} component={component} />
-    // </motion.div>
-  );
+  return <Route {...options} component={component} />;
 };
 
 AuthenticatedRoute.propTypes = {

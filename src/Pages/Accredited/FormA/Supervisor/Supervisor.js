@@ -20,21 +20,16 @@ const Supervisor = () => {
   const [isEditable, setIsEditable] = useState(true);
   const [isAddNewSupervisorModal, setIsAddNewSupervisorModal] = useState(false);
 
-  const toggleAddNewSupervisorModal = useCallback(() => {
-    setIsAddNewSupervisorModal(!isAddNewSupervisorModal);
-  }, [isAddNewSupervisorModal]);
-
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
-
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
   const { supervisorList, supervisors } = useSelector(({ accreditedReducer }) => accreditedReducer?.formA ?? {});
+
+  const toggleAddNewSupervisorModal = useCallback(() => {
+    setIsAddNewSupervisorModal(!isAddNewSupervisorModal);
+  }, [isAddNewSupervisorModal]);
 
   const finalSupervisorsList = useMemo(() => {
     const registrarsSelected = supervisors?.map(e => e?.userId?.value);
@@ -53,6 +48,10 @@ const Supervisor = () => {
   );
 
   useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
+
+  useEffect(() => {
     if (facilityId) dispatch(getSupervisorList(facilityId));
   }, [facilityId]);
 
@@ -69,7 +68,7 @@ const Supervisor = () => {
           </Button>
         )}
         <Button buttonType="primary" className="ml-5" onClick={addSupervisor}>
-          Reaccredit Supervisor
+          Re-accredit Supervisor
         </Button>
       </div>
       {supervisors?.length > 0 &&

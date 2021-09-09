@@ -8,11 +8,13 @@ import dummy from '../../../assets/images/header/dummy.svg';
 import { SideMenuConstants } from '../SideMenu/SideMenuConstants';
 import { successNotification } from '../NotifyToaster';
 import UserProfile from './components/UserProfile';
+import { clearUserDetailsFromLocalStorage } from '../../../helpers/LocalStorageHelper';
 
 const Header = props => {
   const { onBurgerMenuClick } = props;
   const { oktaAuth, authState } = useOktaAuth();
   const userSettingsRef = useRef();
+
   const [showUserSettings, setShowUserSettings] = React.useState(false);
 
   // for accreditation title
@@ -20,17 +22,17 @@ const Header = props => {
 
   const toggleUserSettings = value => setShowUserSettings(value !== undefined ? value : e => !e);
 
-  useOnClickOutside(userSettingsRef, () => toggleUserSettings(false));
-
   const handleLogoutButtonClick = useCallback(async () => {
     try {
       await oktaAuth.signOut();
-      localStorage.removeItem('userDetails');
+      clearUserDetailsFromLocalStorage();
       successNotification('Logged out successfully!');
     } catch (e) {
       /**/
     }
   }, [oktaAuth]);
+
+  useOnClickOutside(userSettingsRef, () => toggleUserSettings(false));
 
   return (
     <div className="header-wrapper">

@@ -116,25 +116,21 @@ const Accredited = () => {
   });
 
   useEffect(() => {
-    if (!accreditionId && id) {
-      dispatch(changeAccreditionIdForAccreditionRedirection(id));
-    }
-  }, [accreditionId, id]);
-
-  useEffect(() => {
-    if (!accreditionId && !id) {
-      dispatch(getAccreditedId(USER_ID));
-    }
-  }, [accreditionId, id]);
-
-  useEffect(() => {
     if (accreditionId) {
       startGeneralLoaderOnRequest('accreditedLoader');
       setTimeout(() => {
         dispatch(getAccreditedSteps(accreditionId));
       }, 500);
+    } else if (!accreditionId && id) {
+      dispatch(changeAccreditionIdForAccreditionRedirection(id));
+      startGeneralLoaderOnRequest('accreditedLoader');
+      setTimeout(() => {
+        dispatch(getAccreditedSteps(id));
+      }, 500);
+    } else if (!accreditionId && !id) {
+      dispatch(getAccreditedId(USER_ID));
     }
-  }, [accreditionId]);
+  }, []);
 
   return (
     <>

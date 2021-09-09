@@ -19,7 +19,6 @@ export const supervisorValidation = async (
   step,
   subStep,
 ) => {
-  const errors = {};
   let validated = true;
   const finalData = data?.map(e => ({
     userId: e?.userId?.value ? parseInt(e?.userId?.value, 10) : undefined,
@@ -36,6 +35,7 @@ export const supervisorValidation = async (
   }
 
   data?.forEach((supervisor, index) => {
+    const errors = {};
     if (!supervisor?.userId || supervisor?.userId?.toString()?.trim()?.length === 0) {
       validated = false;
       errors.userId = 'Please select name!';

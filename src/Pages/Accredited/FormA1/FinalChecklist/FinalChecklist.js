@@ -15,14 +15,9 @@ const FinalChecklist = () => {
   const { id } = useQueryParams();
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const { finalCheckLists, actioned, recommendation } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formA1?.finalCheckList ?? {},
@@ -40,6 +35,10 @@ const FinalChecklist = () => {
       ),
     [],
   );
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   useEffect(() => {
     if (id) dispatch(getFinalCheckListData(id));

@@ -39,7 +39,7 @@ export const getSubStepComponent = (step, subStep) => {
       default:
         return <Summary />;
     }
-  } else return <PostDetails />;
+  } else return null;
 };
 
 export const getStepComponent = (step, subStep) => {
@@ -49,5 +49,5 @@ export const getStepComponent = (step, subStep) => {
   if (step === 'postDetails') {
     return <PostDetails />;
   }
-  return false;
+  return null;
 };

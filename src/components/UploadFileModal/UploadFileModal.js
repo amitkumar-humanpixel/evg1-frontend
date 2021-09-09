@@ -9,9 +9,10 @@ import { uploadRegistrarCSVFile } from '../../Pages/Registrar/redux/RegistrarRed
 import Modal from '../Modal/Modal';
 
 const HEADER_BY_MODULE = {
-  USER: 'User',
-  REGISTRAR: 'Registrar',
-  FACILITY: 'Facility',
+  USER: 'Upload Users',
+  REGISTRAR: 'Upload Registrars',
+  FACILITY: 'Upload Facilities',
+  FACILITY_STAFF: 'Upload Facility Staff',
 };
 
 const UploadFileModal = props => {
@@ -101,47 +102,16 @@ const UploadFileModal = props => {
     }
   }, []);
 
-  const getUploadButtons = useMemo(() => {
-    switch (module) {
-      case 'FACILITY_STAFF':
-        return (
-          <Button
-            buttonType="primary"
-            className="ml-10"
-            title="Upload Facility Staff"
-            onClick={() => setIsUpdateModal(true)}
-          />
-        );
-      case 'FACILITY':
-        return (
-          <Button
-            buttonType="primary"
-            className="ml-10"
-            title="Upload Facilities"
-            onClick={() => setIsUpdateModal(true)}
-          />
-        );
-      default:
-        return (
-          <Button
-            buttonType="primary"
-            className="ml-10"
-            title={`Upload ${HEADER_BY_MODULE[module]}`}
-            onClick={() => setIsUpdateModal(true)}
-          />
-        );
-    }
-  }, [module]);
-
   return (
     <>
-      {getUploadButtons}
+      <Button
+        buttonType="primary"
+        className="ml-10"
+        title={HEADER_BY_MODULE[module]}
+        onClick={() => setIsUpdateModal(true)}
+      />
       {isUploadModal && (
-        <Modal
-          header={`Upload ${HEADER_BY_MODULE[module]}`}
-          buttons={uploadFileModalButtons}
-          className="upload-file-modal"
-        >
+        <Modal header={HEADER_BY_MODULE[module]} buttons={uploadFileModalButtons} className="upload-file-modal">
           <div className="upload-file-wrapper" onClick={handleInputFileBlockClick}>
             <span className="material-icons-round">cloud_upload</span>
             <span className="upload-file-text">{selectedFile?.name ?? 'Upload CSV'}</span>

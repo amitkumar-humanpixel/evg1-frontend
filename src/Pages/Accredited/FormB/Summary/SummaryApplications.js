@@ -31,14 +31,9 @@ const nameOfApplicants = [
 const SummaryApplications = () => {
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
-  }, [step, subStep, accreditionSideBar]);
+  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const { summary } = useSelector(({ accreditedReducer }) => accreditedReducer?.formB ?? {});
   const { applications } = useMemo(() => summary ?? [], [summary]);
@@ -46,6 +41,10 @@ const SummaryApplications = () => {
   const handleApplicationInputChange = useCallback((index, name, value) => {
     dispatch(updateAccreditedSubFormDataArrayFields('formB', 'summary', index, 'applications', name, value));
   }, []);
+
+  useEffect(() => {
+    setIsEditable(AccreditedEditableHelper(accreditionSideBar, step, subStep));
+  }, [step, subStep, accreditionSideBar]);
 
   return (
     <section>
