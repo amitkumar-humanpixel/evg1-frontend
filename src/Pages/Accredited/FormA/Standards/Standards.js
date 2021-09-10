@@ -116,18 +116,19 @@ const Standards = () => {
 
                   {detail?.title ===
                     'Have there been changes to facilities or resources since last\n' +
-                      'accreditation/reaccreditation visit? If yes, please provide detail.' && (
-                    <div className="remarks-input">
-                      <textarea
-                        rows={2}
-                        name="remarks"
-                        placeholder="Detail"
-                        value={detail?.remarks}
-                        onChange={e => handleInputChange(index, e.target.name, e.target.value)}
-                        disabled={!isEditable}
-                      />
-                    </div>
-                  )}
+                      'accreditation/reaccreditation visit? If yes, please provide detail.' &&
+                    detail?.status === 'true' && (
+                      <div className="remarks-input">
+                        <textarea
+                          rows={2}
+                          name="remarks"
+                          placeholder="Detail"
+                          value={detail?.remarks}
+                          onChange={e => handleInputChange(index, e.target.name, e.target.value)}
+                          disabled={!isEditable}
+                        />
+                      </div>
+                    )}
                 </div>
               </td>
 
@@ -142,21 +143,6 @@ const Standards = () => {
                   />
                 </td>
               )}
-
-              {/* {detail?.title === */}
-              {/*  'Have there been changes to facilities or resources since last\n' +*/}
-              {/*    'accreditation/reaccreditation visit? If yes, please provide detail.' && ( */}
-              {/*  <td className="standard-detail-remark"> */}
-              {/*    <Input */}
-              {/*      type="text" */}
-              {/*      name="remarks" */}
-              {/*      placeholder="Detail" */}
-              {/*      value={detail?.remarks} */}
-              {/*      onChange={e => handleInputChange(index, e.target.name, e.target.value)} */}
-              {/*      disabled={!isEditable} */}
-              {/*    /> */}
-              {/*  </td> */}
-              {/* )} */}
             </tr>
           ))}
         </table>

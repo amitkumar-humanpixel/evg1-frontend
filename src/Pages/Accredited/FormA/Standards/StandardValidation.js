@@ -57,7 +57,6 @@ export const standardValidation = async (
     try {
       await dispatch(saveAccreditedStandardDetails(id, finalData, accreditionId));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/accredited/formA/supervisor/?id=${id}`);
     } catch (e) {
       /**/
     }
