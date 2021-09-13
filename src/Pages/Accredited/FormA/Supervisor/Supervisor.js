@@ -64,7 +64,7 @@ const Supervisor = () => {
       <div className="add-button-row">
         {['Accreditation_Support_Coordinator', 'Super_Admin'].includes(role) && (
           <Button buttonType="primary" onClick={toggleAddNewSupervisorModal}>
-            Add Supervisor
+            Accredit New Supervisor
           </Button>
         )}
         <Button buttonType="primary" className="ml-5" onClick={addSupervisor}>
@@ -76,9 +76,11 @@ const Supervisor = () => {
           <section className="common-white-container mb-10">
             <div className="section-inner-title-button-row">
               <div className="section-inner-title">{`Supervisor ${index + 1}`}</div>
-              <Button buttonType="danger" className="icon-button" onClick={() => deleteSupervisor(index)}>
-                <span className="material-icons-round">delete</span>
-              </Button>
+              {supervisors?.length > 1 && (
+                <Button buttonType="danger" className="icon-button" onClick={() => deleteSupervisor(index)}>
+                  <span className="material-icons-round">delete</span>
+                </Button>
+              )}
             </div>
             <SupervisorDetails
               supervisorList={finalSupervisorsList}

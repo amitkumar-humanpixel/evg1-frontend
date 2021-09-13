@@ -344,6 +344,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     }
 
     case ACCREDITED_REDUX_CONSTANTS.GET_ACCREDITED_STEPPER: {
+      const { facilityId } = state.accreditedDetails;
       const stepper = {
         ...action?.data,
         accreditionSideBar: action?.data?.accreditionSideBar?.map((step, index) => ({
@@ -363,6 +364,10 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       return {
         ...state,
         accreditedStepper: stepper,
+        accreditedDetails: {
+          ...state?.accreditedDetails,
+          facilityId: !facilityId ? action?.data?.facilityId : facilityId,
+        },
       };
     }
 

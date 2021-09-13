@@ -25,6 +25,8 @@ const AccreditedButtons = () => {
 
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
+  console.log(role);
+
   const { accreditionId, accreditionSideBar } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
   );
@@ -269,6 +271,14 @@ const AccreditedButtons = () => {
   }, [step, subStep, accreditionSideBar]);
 
   const getAccreditedRightSideButtons = useMemo(() => {
+    if (role === 'Supervisor' && step === 'formA1' && subStep !== 'finalCheckList') {
+      return (
+        <>
+          <Button buttonType="outlined-primary" title="Save" onClick={() => onClickSave(false)} />
+          <Button buttonType="primary" title="Submit" onClick={() => onClickSave(true)} />
+        </>
+      );
+    }
     if (role === 'Accreditation_Support_Coordinator' && step === 'formA1' && subStep === 'finalCheckList') {
       return (
         <>

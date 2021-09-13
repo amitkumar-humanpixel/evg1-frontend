@@ -86,8 +86,8 @@ const FileUploadButton = props => {
         } else if (!(checkExtension || checkMimeTypes)) {
           errorNotification(
             finalFileExtension?.includes('xls')
-              ? 'Only PDF, Doc, Docx, JPEG, JPG file type allowed.'
-              : 'Only PDF, Doc, Docx, JPEG, JPG, EXCEL file type allowed',
+              ? 'Only PDF, DOC, DOCX, JPEG, JPG file type allowed.'
+              : 'Only PDF, DOC, DOCX, JPEG, JPG, XLS, XLSX file type allowed',
           );
         } else {
           await uploadFile(e.target.files[0]);

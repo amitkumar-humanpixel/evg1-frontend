@@ -102,19 +102,18 @@ export const a1SupervisorValidation = async (
     validated = false;
     error.isAgree = 'Please check declaration to continue! ';
     dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
+  } else {
+    error.isAgree = undefined;
+    dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
   }
 
-  if (data?.isAgree) {
-    try {
-      if (validated) {
-        await dispatch(saveAccreditedA1SupervisorDetails(id, finalData, accreditionId));
-        if (isNextClick) {
-          setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-        }
-      }
-      if (!validated) await dispatch(saveAccreditedA1SupervisorDetailsPartially(id, finalData));
-    } catch (e) {
-      /**/
+  try {
+    if (validated && isNextClick && data?.isAgree) {
+      await dispatch(saveAccreditedA1SupervisorDetails(id, finalData, accreditionId));
+      setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
     }
+    if (!validated && !isNextClick) await dispatch(saveAccreditedA1SupervisorDetailsPartially(id, finalData));
+  } catch (e) {
+    /**/
   }
 };

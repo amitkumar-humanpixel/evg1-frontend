@@ -65,9 +65,11 @@ const Registrar = () => {
           <section className="common-white-container mb-10">
             <div className="section-inner-title-button-row">
               <div className="section-inner-title">{`Registrar ${index + 1}`}</div>
-              <Button buttonType="danger" className="icon-button" onClick={() => deleteRegistrar(index)}>
-                <span className="material-icons-round">delete</span>
-              </Button>
+              {registrars?.length > 1 && (
+                <Button buttonType="danger" className="icon-button" onClick={() => deleteRegistrar(index)}>
+                  <span className="material-icons-round">delete</span>
+                </Button>
+              )}
             </div>
             <RegistrarDetails
               registrarList={finalRegistrarList}
