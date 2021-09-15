@@ -46,6 +46,7 @@ export const a1SupervisorValidation = async (
 
   finalData.standardsDetail.forEach((detail, index) => {
     if (!detail?.status) {
+      console.log('49');
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -57,7 +58,9 @@ export const a1SupervisorValidation = async (
           'Please read and mark as checked to continue!',
         ),
       );
-    } else if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
+    }
+    if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
+      console.log('62');
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -69,7 +72,9 @@ export const a1SupervisorValidation = async (
           'Please attach relevant document!',
         ),
       );
-    } else if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
+    }
+    if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
+      console.log('75');
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -81,7 +86,9 @@ export const a1SupervisorValidation = async (
           'Please change the status',
         ),
       );
-    } else {
+    }
+    if (detail?.status === true && attachments.includes(detail?.title) && detail?.filePath) {
+      console.log('88');
       validated = true;
       dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
     }
@@ -100,20 +107,23 @@ export const a1SupervisorValidation = async (
   });
 
   if (!data?.isAgree) {
+    console.log('107');
     validated = false;
     error.isAgree = 'Please check declaration to continue! ';
     dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
   } else {
+    console.log('112');
     error.isAgree = undefined;
     dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
   }
 
   try {
     if (validated && isNextClick && data?.isAgree) {
+      console.log('119');
       await dispatch(saveAccreditedA1SupervisorDetails(id, finalData, accreditionId));
       setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
     }
-    if (!validated && !isNextClick) await dispatch(saveAccreditedA1SupervisorDetailsPartially(id, finalData));
+    if (!isNextClick) await dispatch(saveAccreditedA1SupervisorDetailsPartially(id, finalData));
   } catch (e) {
     /**/
   }
