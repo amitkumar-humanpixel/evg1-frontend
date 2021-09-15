@@ -25,8 +25,6 @@ const AccreditedButtons = () => {
 
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
-  console.log(role);
-
   const { accreditionId, accreditionSideBar } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
   );
