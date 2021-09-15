@@ -92,9 +92,9 @@ const Declaration = () => {
                 based my assessment and recommendations accordingly.
               </div>
             }
-            id="declaration-confirmation"
+            id="declarationStatus"
             name="declarationStatus"
-            checked={declarationStatus}
+            checked={declarationStatus ?? false}
             onChange={handleInputCheckChange}
             disabled={!isEditable}
           />

@@ -85,7 +85,7 @@ const FileUploadButton = props => {
           errorNotification('File size should be less than 10 mb.');
         } else if (!(checkExtension || checkMimeTypes)) {
           errorNotification(
-            finalFileExtension?.includes('xls')
+            !finalFileExtension?.includes('xls')
               ? 'Only PDF, DOC, DOCX, JPEG, JPG file type allowed.'
               : 'Only PDF, DOC, DOCX, JPEG, JPG, XLS, XLSX file type allowed',
           );

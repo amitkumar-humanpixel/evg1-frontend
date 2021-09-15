@@ -13,15 +13,28 @@ const AccreditedStepper = props => {
   const isDisabledStep = useCallback(
     stepDetails => {
       const prevStepIndex = accreditionSideBar?.findIndex(e => e?.url === stepDetails?.url) - 1;
-      return !(stepDetails?.complete || (prevStepIndex >= 0 && accreditionSideBar?.[prevStepIndex]?.complete));
+      return !(
+        stepDetails?.complete ||
+        (prevStepIndex >= 0 && accreditionSideBar?.[prevStepIndex]?.complete) ||
+        (prevStepIndex < 0 && accreditionSideBar[0]?.isEditable)
+      );
     },
     [accreditionSideBar],
   );
 
-  const isDisabledSubStep = useCallback((stepDetails, subStepDetails) => {
-    const prevStepIndex = stepDetails?.subSteps?.findIndex(e => e?.url === subStepDetails?.url) - 1;
-    return !(subStepDetails?.isComplete || (prevStepIndex >= 0 && stepDetails?.subSteps?.[prevStepIndex]?.isComplete));
-  }, []);
+  const isDisabledSubStep = useCallback(
+    (stepDetails, subStepDetails) => {
+      const prevStepIndex = accreditionSideBar?.findIndex(e => e?.url === stepDetails?.url) - 1;
+      const prevSubStepIndex = stepDetails?.subSteps?.findIndex(e => e?.url === subStepDetails?.url) - 1;
+      return !(
+        subStepDetails?.isComplete ||
+        (prevSubStepIndex >= 0 && stepDetails?.subSteps?.[prevSubStepIndex]?.isComplete) ||
+        (prevSubStepIndex < 0 && accreditionSideBar?.[prevStepIndex]?.complete) ||
+        (prevSubStepIndex < 0 && stepDetails?.subSteps?.[0]?.isEditable)
+      );
+    },
+    [accreditionSideBar],
+  );
 
   return (
     <div className={`accredited-stepper-container ${className}`} ref={accreditedRef}>

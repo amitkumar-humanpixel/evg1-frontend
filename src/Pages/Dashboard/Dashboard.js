@@ -71,9 +71,11 @@ const Dashboard = () => {
             selectedUser?.accreditionId,
           ),
         );
-      if (selectedUser?.formType) history.push(`/accredited/${selectedUser?.formType}`);
+      if (['Practice_Manager', 'Principal_Supervisor'].includes(role) && selectedUser?.formType === 'formB') {
+        history.push('/accredited/postDetails');
+      } else if (selectedUser?.formType) history.push(`/accredited/${selectedUser?.formType}`);
     },
-    [USER_ID],
+    [USER_ID, role],
   );
 
   const onClickTab = useCallback(

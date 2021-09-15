@@ -57,8 +57,7 @@ export const a1SupervisorValidation = async (
           'Please read and mark as checked to continue!',
         ),
       );
-    }
-    if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
+    } else if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -70,8 +69,7 @@ export const a1SupervisorValidation = async (
           'Please attach relevant document!',
         ),
       );
-    }
-    if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
+    } else if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -83,6 +81,9 @@ export const a1SupervisorValidation = async (
           'Please change the status',
         ),
       );
+    } else {
+      validated = true;
+      dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
     }
   });
 
