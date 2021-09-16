@@ -29,7 +29,7 @@ const AccreditedButtons = () => {
     ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
   );
 
-  const { facilityId, userId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
+  const { userId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
   const postDetails = useSelector(({ accreditedReducer }) => accreditedReducer?.postDetails ?? {});
 
@@ -59,7 +59,6 @@ const AccreditedButtons = () => {
               practiceManager,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -75,7 +74,6 @@ const AccreditedButtons = () => {
               standards,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -90,7 +88,6 @@ const AccreditedButtons = () => {
               supervisors,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -105,7 +102,6 @@ const AccreditedButtons = () => {
               registrars,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -120,7 +116,6 @@ const AccreditedButtons = () => {
               finalCheckListDetails,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -136,7 +131,6 @@ const AccreditedButtons = () => {
               id,
               sid,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -153,7 +147,6 @@ const AccreditedButtons = () => {
               summary,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -169,7 +162,6 @@ const AccreditedButtons = () => {
               accreditorAssign,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -185,7 +177,6 @@ const AccreditedButtons = () => {
               otherDetails,
               id,
               userId,
-              facilityId,
               isNextClick,
               accreditionSideBar,
               accreditionId,
@@ -203,7 +194,6 @@ const AccreditedButtons = () => {
           history,
           postDetails,
           userId,
-          facilityId,
           isNextClick,
           accreditionSideBar,
           accreditionId,
@@ -229,7 +219,6 @@ const AccreditedButtons = () => {
       otherDetails,
       id,
       userId,
-      facilityId,
       supervisorList,
     ],
   );

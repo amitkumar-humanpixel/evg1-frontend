@@ -37,9 +37,7 @@ const Summary = () => {
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
-  const facilityIdForSummary = useSelector(
-    ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
-  );
+  const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? '');
 
   const { summary, facilityPracticeManagerOptions } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formB ?? {},
@@ -53,7 +51,6 @@ const Summary = () => {
     dateOfReportComplete,
     dateOfVisit,
     classification,
-    facilityId,
     facilityName,
     address,
     accreditationWithEV,
@@ -126,7 +123,6 @@ const Summary = () => {
     [
       classification,
       address,
-      facilityId,
       facilityName,
       dateOfReportComplete,
       dateOfVisit,
@@ -305,8 +301,8 @@ const Summary = () => {
   }, [id]);
 
   useEffect(() => {
-    if (facilityIdForSummary) dispatch(getFacilityDetailsForSummary(facilityIdForSummary));
-  }, [facilityIdForSummary]);
+    if (facilityId) dispatch(getFacilityDetailsForSummary(facilityId));
+  }, [facilityId]);
 
   return (
     <>

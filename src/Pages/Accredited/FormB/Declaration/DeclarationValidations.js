@@ -7,7 +7,6 @@ export const declarationValidations = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,

@@ -7,7 +7,6 @@ export const standardValidation = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,

@@ -7,7 +7,7 @@ const oktaConfig = {
   loginRedirectionUri: `${process.env.REACT_APP_OCTA_BASE_URI}/callback`,
   logoutRedirectUri: `${process.env.REACT_APP_OCTA_BASE_URI}/login`,
   scopes: ['openid', 'profile', 'email'],
-  pkce: true,
+  pkce: false,
   disableHttpsCheck: true,
 };
 export default oktaConfig;

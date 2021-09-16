@@ -124,7 +124,7 @@ const formAStandardsConstant = [
     title: 'The registrar will continue to be provided with:',
     list: [
       'A suitably equipped room to conduct consultations with adequate technology\n' +
-      '(phone, internet & communication software)',
+        '(phone, internet & communication software)',
       'Access to up to date educational references & patient information material – online or hard copy',
       'Private space for teaching',
     ],
@@ -301,23 +301,6 @@ const initialAccreditedReducer = {
 
 export const accreditedReducer = (state = initialAccreditedReducer, action) => {
   switch (action.type) {
-    case ACCREDITED_REDUX_CONSTANTS.GET_ACCREDITED_DETAILS: {
-      const isMulti = action?.data?.length > 1;
-      return {
-        ...state,
-        accreditedDetails: {
-          ...state?.accreditedDetails,
-          facilityId: !isMulti ? action?.data?.facilityId : undefined,
-          userId: !isMulti ? action?.data?.userId : undefined,
-          // userId: !isMulti ? action?.data?.userId : undefined,
-        },
-        accreditedStepper: {
-          ...state?.accreditedStepper,
-          accreditionId: !isMulti ? action?.data?.accreditionId : undefined,
-        },
-      };
-    }
-
     case ACCREDITED_REDUX_CONSTANTS.CHANGE_ACCREDITION_DETAIL_AND_STEPPER_ID: {
       return {
         ...state,
@@ -469,17 +452,17 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         facilityName,
         accreditationBody: accreditationBody
           ? accreditationBody?.map(e => ({
-            label: _.upperCase(e),
-            value: e,
-            name: 'accreditationBody',
-          }))
+              label: _.upperCase(e),
+              value: e,
+              name: 'accreditationBody',
+            }))
           : [],
         college: college
           ? {
-            label: _.upperCase(college),
-            value: college,
-            name: 'college',
-          }
+              label: _.upperCase(college),
+              value: college,
+              name: 'college',
+            }
           : [],
         address: address || '',
         accreditationEndDate,
@@ -543,13 +526,13 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         hours:
           hour?.startTime < hour?.finishTime
             ? moment(
-              `${moment
-                .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-                .hours()}:${moment
+                `${moment
+                  .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+                  .hours()}:${moment
                   .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
                   .minutes()}`,
-              'HH:mm',
-            ).format('HH:mm')
+                'HH:mm',
+              ).format('HH:mm')
             : '00:00',
       }));
       return {
@@ -572,18 +555,18 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
           ...state.formA,
           standards: !_.isEmpty(action?.data)
             ? action?.data?.map(e =>
-              e?.title === 'The registrar will continue to be provided with:'
-                ? {
-                  ...e,
-                  list: [
-                    'A suitably equipped room to conduct consultations with adequate technology\n' +
-                    '(phone, internet & communication software)',
-                    'Access to up to date educational references & patient information material – online or hard copy',
-                    'Private space for teaching',
-                  ],
-                }
-                : e,
-            )
+                e?.title === 'The registrar will continue to be provided with:'
+                  ? {
+                      ...e,
+                      list: [
+                        'A suitably equipped room to conduct consultations with adequate technology\n' +
+                          '(phone, internet & communication software)',
+                        'Access to up to date educational references & patient information material – online or hard copy',
+                        'Private space for teaching',
+                      ],
+                    }
+                  : e,
+              )
             : [...formAStandardsConstant],
         },
       };
@@ -593,32 +576,32 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.GET_SUPERVISOR_DATA: {
       const supervisors = !_.isEmpty(action?.data)
         ? action?.data?.map(supervisor => ({
-          userId:
-            supervisor?.userId && supervisor?.username
+            userId:
+              supervisor?.userId && supervisor?.username
+                ? {
+                    label: supervisor?.username,
+                    value: supervisor?.userId,
+                    name: 'userId',
+                  }
+                : [],
+            categoryOfSupervisor: supervisor?.categoryOfSupervisor
               ? {
-                label: supervisor?.username,
-                value: supervisor?.userId,
-                name: 'userId',
-              }
+                  label: _.capitalize(supervisor?.categoryOfSupervisor),
+                  value: _.upperCase(supervisor?.categoryOfSupervisor),
+                  name: 'categoryOfSupervisor',
+                }
               : [],
-          categoryOfSupervisor: supervisor?.categoryOfSupervisor
-            ? {
-              label: _.capitalize(supervisor?.categoryOfSupervisor),
-              value: _.upperCase(supervisor?.categoryOfSupervisor),
-              name: 'categoryOfSupervisor',
-            }
-            : [],
-          contactNumber: supervisor?.contactNumber || '',
-          email: supervisor?.email || '',
-        }))
+            contactNumber: supervisor?.contactNumber || '',
+            email: supervisor?.email || '',
+          }))
         : [
-          {
-            userId: [],
-            categoryOfSupervisor: [],
-            contactNumber: '',
-            email: '',
-          },
-        ];
+            {
+              userId: [],
+              categoryOfSupervisor: [],
+              contactNumber: '',
+              email: '',
+            },
+          ];
 
       return {
         ...state,
@@ -670,26 +653,26 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.GET_REGISTRAR_DATA: {
       const registrars = !_.isEmpty(action?.data)
         ? action?.data?.map(registrar => ({
-          placementId:
-            registrar?.name && registrar?.placementId
-              ? {
-                label: registrar?.name,
-                value: registrar?.placementId,
-                name: 'placementId',
-              }
-              : [],
-          note: registrar?.note || '',
-          hoursDetails: !_.isEmpty(registrar?.hoursDetails) ? registrar?.hoursDetails : [...hoursTableData],
-          onCall: !_.isEmpty(registrar?.onCall) ? registrar?.onCall : [...hoursTableData],
-        }))
+            placementId:
+              registrar?.name && registrar?.placementId
+                ? {
+                    label: registrar?.name,
+                    value: registrar?.placementId,
+                    name: 'placementId',
+                  }
+                : [],
+            note: registrar?.note || '',
+            hoursDetails: !_.isEmpty(registrar?.hoursDetails) ? registrar?.hoursDetails : [...hoursTableData],
+            onCall: !_.isEmpty(registrar?.onCall) ? registrar?.onCall : [...hoursTableData],
+          }))
         : [
-          {
-            placementId: [],
-            note: '',
-            hoursDetails: [...hoursTableData],
-            onCall: [...hoursTableData],
-          },
-        ];
+            {
+              placementId: [],
+              note: '',
+              hoursDetails: [...hoursTableData],
+              onCall: [...hoursTableData],
+            },
+          ];
 
       return {
         ...state,
@@ -728,13 +711,13 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
               hours:
                 hour?.startTime < hour?.finishTime
                   ? moment(
-                    `${moment
-                      .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-                      .hours()}:${moment
+                      `${moment
+                        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+                        .hours()}:${moment
                         .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
                         .minutes()}`,
-                    'HH:mm',
-                  ).format('HH:mm')
+                      'HH:mm',
+                    ).format('HH:mm')
                   : '00:00',
             })),
           };
@@ -846,13 +829,13 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         hours:
           hour?.startTime < hour?.finishTime
             ? moment(
-              `${moment
-                .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-                .hours()}:${moment
+                `${moment
+                  .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+                  .hours()}:${moment
                   .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
                   .minutes()}`,
-              'HH:mm',
-            ).format('HH:mm')
+                'HH:mm',
+              ).format('HH:mm')
             : '00:00',
       }));
       return {
@@ -912,10 +895,10 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         accreditorUserId: action?.data?.accreditorDetails?.userId,
         classification: action?.data?.classification
           ? {
-            label: _.capitalize(action?.data?.classification),
-            value: action?.data?.classification,
-            name: 'classification',
-          }
+              label: _.capitalize(action?.data?.classification),
+              value: action?.data?.classification,
+              name: 'classification',
+            }
           : [],
         dateOfVisit: action?.data?.dateOfVisit || '',
         dateOfReportComplete: action?.data?.dateOfReportComplete || '',
@@ -938,10 +921,10 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     case ACCREDITED_REDUX_CONSTANTS.FORM_B.GET_FORM_B_ACCREDITORS: {
       const finalAccreditorList = !_.isEmpty(action?.data)
         ? action.data?.map(accreditor => ({
-          label: `${accreditor?.firstName} ${accreditor?.lastName}`,
-          value: accreditor?.userId,
-          name: 'accreditorId',
-        }))
+            label: `${accreditor?.firstName} ${accreditor?.lastName}`,
+            value: accreditor?.userId,
+            name: 'accreditorId',
+          }))
         : [];
       return {
         ...state,
@@ -958,10 +941,10 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     case ACCREDITED_REDUX_CONSTANTS.FORM_B.GET_FORM_B_SELECTED_ACCREDITORS: {
       const accreditorId = !_.isEmpty(action?.data)
         ? {
-          label: `${action?.data?.firstName} ${action?.data?.lastName}`,
-          value: action?.data?.userId,
-          name: 'accreditorId',
-        }
+            label: `${action?.data?.firstName} ${action?.data?.lastName}`,
+            value: action?.data?.userId,
+            name: 'accreditorId',
+          }
         : [];
       return {
         ...state,

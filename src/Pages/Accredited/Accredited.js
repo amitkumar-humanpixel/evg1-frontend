@@ -7,11 +7,7 @@ import { getStepComponent } from '../../helpers/AccreditedCompoenentHelper';
 import { useOnClickOutside } from '../../hooks/UserClickOutsideHook';
 import AccreditedStepper from './AccreditedStepper/AccreditedStepper';
 import AccreditedButtons from './AccreditedButtons';
-import {
-  changeAccreditionIdForAccreditionRedirection,
-  getAccreditedId,
-  getAccreditedSteps,
-} from './redux/AccreditedReduxActions';
+import { changeAccreditionIdForAccreditionRedirection, getAccreditedSteps } from './redux/AccreditedReduxActions';
 import Loader from '../../components/Loader/Loader';
 import { AccreditedEditableHelper } from '../../helpers/AccreditedEditableHelper';
 import { useQueryParams } from '../../hooks/GetQueryParamHook';
@@ -23,7 +19,6 @@ const Accredited = () => {
   const { step, subStep } = useParams();
   const { id } = useQueryParams();
   const accreditedRef = useRef();
-  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? null);
 
   const { accreditionId, accreditionSideBar } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
@@ -42,16 +37,16 @@ const Accredited = () => {
   const [showStepper, setShowStepper] = useState(false);
 
   const onClickStep = useCallback(
-    stepDetails => {
+    (stepDetails, isDisabledStep) => {
       if (activeStepIndex !== stepDetails.activeStepIndex) {
         const prevStepIndex = accreditionSideBar?.findIndex(e => e?.url === stepDetails?.url) - 1;
-        if (stepDetails.subSteps.length > 0 && prevStepIndex >= 0 && accreditionSideBar?.[prevStepIndex]?.complete) {
+        if (stepDetails.subSteps.length > 0 && prevStepIndex >= 0 && !isDisabledStep) {
           history.push(
             `/accredited/${stepDetails?.url}/${stepDetails?.subSteps?.[0]?.url}${
               accreditionId ? `/?id=${accreditionId}` : ''
             }${stepDetails?.subSteps?.[0]?.userId ? `&sid=${stepDetails?.subSteps?.[0]?.userId}` : ''}`,
           );
-        } else if (stepDetails?.complete) {
+        } else if (stepDetails?.complete && !isDisabledStep) {
           history.push(`/accredited/${stepDetails?.url}${accreditionId ? `/?id=${accreditionId}` : ''}`);
           if (showStepper) setShowStepper(!showStepper);
         }
@@ -61,9 +56,8 @@ const Accredited = () => {
   );
 
   const onClickSubStep = useCallback(
-    (stepDetails, subStepDetails) => {
-      const prevStepIndex = stepDetails?.subSteps?.findIndex(e => e?.url === subStepDetails?.url) - 1;
-      if (subStepDetails?.isComplete || (prevStepIndex >= 0 && stepDetails?.subSteps?.[prevStepIndex]?.isComplete)) {
+    (stepDetails, subStepDetails, isDisabledSubStep) => {
+      if (subStepDetails?.isComplete || !isDisabledSubStep) {
         history.push(
           `/accredited/${stepDetails?.url}/${subStepDetails?.url}${accreditionId && `/?id=${accreditionId}`}${
             subStepDetails?.userId ? `&sid=${subStepDetails?.userId}` : ''
@@ -123,14 +117,8 @@ const Accredited = () => {
       }, 500);
     } else if (!accreditionId && id) {
       dispatch(changeAccreditionIdForAccreditionRedirection(id));
-      startGeneralLoaderOnRequest('accreditedLoader');
-      setTimeout(() => {
-        dispatch(getAccreditedSteps(id));
-      }, 500);
-    } else if (!accreditionId && !id) {
-      dispatch(getAccreditedId(USER_ID));
     }
-  }, []);
+  }, [accreditionId]);
 
   return (
     <>

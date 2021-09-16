@@ -22,6 +22,8 @@ const UploadFileModal = props => {
   const [isUploadModal, setIsUpdateModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState({});
 
+  const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
+
   const { isCSVUploadLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
   const handleInputFileBlockClick = () => {
@@ -109,6 +111,7 @@ const UploadFileModal = props => {
         className="ml-10"
         title={HEADER_BY_MODULE[module]}
         onClick={() => setIsUpdateModal(true)}
+        isDisabled={['Accreditation_Support_Coordinator'].includes(role) && module === 'USER'}
       />
       {isUploadModal && (
         <Modal header={HEADER_BY_MODULE[module]} buttons={uploadFileModalButtons} className="upload-file-modal">

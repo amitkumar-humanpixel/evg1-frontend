@@ -13,7 +13,6 @@ export const practiceManagerValidation = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,
