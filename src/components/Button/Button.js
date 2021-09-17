@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = props => {
-  const { isLoading, title, buttonType, className, children, ...restProps } = props;
+  const { isLoading, title, buttonType, className, children, isDisabled, ...restProps } = props;
   const buttonClass = `button ${buttonType}-button ${className}`;
   return (
-    <button type="button" className={buttonClass} {...restProps} disabled={isLoading}>
+    <button type="button" className={buttonClass} {...restProps} disabled={isLoading || isDisabled}>
       {isLoading ? <span className="button-loader" /> : title || children}
     </button>
   );
@@ -29,6 +29,7 @@ Button.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   children: PropTypes.element,
+  isDisabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -36,6 +37,7 @@ Button.defaultProps = {
   title: '',
   isLoading: false,
   children: null,
+  isDisabled: false,
 };
 
 export default Button;

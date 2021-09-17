@@ -301,23 +301,6 @@ const initialAccreditedReducer = {
 
 export const accreditedReducer = (state = initialAccreditedReducer, action) => {
   switch (action.type) {
-    case ACCREDITED_REDUX_CONSTANTS.GET_ACCREDITED_DETAILS: {
-      const isMulti = action?.data?.length > 1;
-      return {
-        ...state,
-        accreditedDetails: {
-          ...state?.accreditedDetails,
-          facilityId: !isMulti ? action?.data?.facilityId : undefined,
-          userId: !isMulti ? action?.data?.userId : undefined,
-          // userId: !isMulti ? action?.data?.userId : undefined,
-        },
-        accreditedStepper: {
-          ...state?.accreditedStepper,
-          accreditionId: !isMulti ? action?.data?.accreditionId : undefined,
-        },
-      };
-    }
-
     case ACCREDITED_REDUX_CONSTANTS.CHANGE_ACCREDITION_DETAIL_AND_STEPPER_ID: {
       return {
         ...state,
@@ -344,7 +327,6 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
     }
 
     case ACCREDITED_REDUX_CONSTANTS.GET_ACCREDITED_STEPPER: {
-      const { facilityId } = state.accreditedDetails;
       const stepper = {
         ...action?.data,
         accreditionSideBar: action?.data?.accreditionSideBar?.map((step, index) => ({
@@ -366,7 +348,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         accreditedStepper: stepper,
         accreditedDetails: {
           ...state?.accreditedDetails,
-          facilityId: !facilityId ? action?.data?.facilityId : facilityId,
+          facilityId: action?.data?.facilityId,
         },
       };
     }

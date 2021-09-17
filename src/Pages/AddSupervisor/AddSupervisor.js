@@ -13,7 +13,7 @@ import Modal from '../../components/Modal/Modal';
 const AddSupervisor = props => {
   const { toggleAddNewSupervisorModal, isAddNewSupervisorModal } = props;
   const dispatch = useDispatch();
-  const USER_ID = localStorage.getItem('userDetails');
+  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? '');
   const { firstName, lastName, email, errors } = useSelector(({ addSupervisorReducer }) => addSupervisorReducer ?? {});
 
   const { addNewSupervisorLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);

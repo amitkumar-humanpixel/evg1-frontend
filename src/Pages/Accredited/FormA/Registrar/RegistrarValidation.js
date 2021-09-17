@@ -12,7 +12,6 @@ export const registrarValidation = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,

@@ -7,38 +7,6 @@ import {
   stopGeneralLoaderOnSuccessOrFail,
 } from '../../../components/GeneralLoader/redux/GeneralLoaderAction';
 
-export const getAccreditedDetails = uid => {
-  return async dispatch => {
-    try {
-      const response = await AccreditedApiServices.getAccreditedDetail(uid);
-      if (response?.data?.status === 'SUCCESS') {
-        dispatch({
-          type: ACCREDITED_REDUX_CONSTANTS.GET_ACCREDITED_DETAILS,
-          data: response?.data?.data,
-        });
-      }
-    } catch (e) {
-      /**/
-    }
-  };
-};
-
-export const getAccreditedId = uid => {
-  return async dispatch => {
-    try {
-      const response = await AccreditedApiServices.getAccreditedId(uid);
-      if (response?.data?.status === 'SUCCESS') {
-        dispatch({
-          type: ACCREDITED_REDUX_CONSTANTS.CHANGE_ACCREDITION_DETAIL_STEPPER_ID,
-          accreditionId: response?.data?.data?.accreditionId,
-        });
-      }
-    } catch (e) {
-      /**/
-    }
-  };
-};
-
 export const changeAccreditionIdAndFacilityIdForAccreditionRedirection = (facilityId, userId, accreditionId) => {
   return dispatch => {
     dispatch({
@@ -359,6 +327,20 @@ export const getSupervisorList = facilityId => {
     } catch (e) {
       displayErrors(e);
     }
+  };
+};
+
+export const deleteSupervisorDetail = (id, userId) => {
+  return async () => {
+    try {
+      const response = await AccreditedApiServices.formAApiServices.deleteSupervisorData(id, userId);
+      if (response?.data?.status === 'SUCCESS') {
+        return true;
+      }
+    } catch (e) {
+      displayErrors(e);
+    }
+    return false;
   };
 };
 

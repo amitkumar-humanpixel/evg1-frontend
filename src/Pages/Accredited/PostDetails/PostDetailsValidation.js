@@ -8,7 +8,6 @@ export const postDetailsValidation = async (
   history,
   data,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,

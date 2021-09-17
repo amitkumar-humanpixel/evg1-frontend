@@ -4,7 +4,6 @@ import {
 } from '../../redux/AccreditedReduxActions';
 import { setNextAccreditedItemUrl } from '../../../../helpers/AccreditedGoToNextStepHelper';
 import { MOBILE_NUMBER_REGEX } from '../../../../constants/RegexConstants';
-import { errorNotification } from '../../../../components/common/NotifyToaster';
 
 export const supervisorValidation = async (
   dispatch,
@@ -12,7 +11,6 @@ export const supervisorValidation = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,
@@ -25,14 +23,6 @@ export const supervisorValidation = async (
     contactNumber: e?.contactNumber,
     categoryOfSupervisor: e?.categoryOfSupervisor?.value,
   }));
-
-  if (finalData?.length > 1) {
-    const ids = finalData?.map(e => e?.userId);
-    if (new Set(ids)?.size !== ids?.length) {
-      validated = false;
-      errorNotification('Duplicate supervisors found!');
-    }
-  }
 
   data?.forEach((supervisor, index) => {
     const errors = {};

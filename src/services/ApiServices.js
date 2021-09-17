@@ -1,6 +1,11 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
-import { getAuthTokenFromLocalStorage } from '../helpers/LocalStorageHelper';
+import {
+  clearAuthTokenFromLocalStorage,
+  clearUserDetailsFromLocalStorage,
+  getAuthTokenFromLocalStorage,
+} from '../helpers/LocalStorageHelper';
+import { errorNotification } from '../components/common/NotifyToaster';
 
 const instance = axios.create({
   timeout: 10000,
@@ -51,6 +56,12 @@ instance.interceptors.response.use(
     switch (statusCode) {
       case 401:
         /* handle 401 here */
+        errorNotification('Token Expired');
+        clearUserDetailsFromLocalStorage();
+        clearAuthTokenFromLocalStorage();
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 5000);
         return false;
       case 403:
         /* handle 403 here */

@@ -56,6 +56,7 @@ export const ACCREDITED_URLS = {
     // supervisor
     GET_SUPERVISOR_DETAILS: `${BASE_URL}formA/supervisors-details/`,
     GET_SUPERVISORS: `${BASE_URL}formA/supervisors/`,
+    DELETE_SUPERVISOR: `${BASE_URL}formA/deleteSupervisor/`,
     SAVE_SUPERVISOR_DETAILS: `${BASE_URL}formA/submitSupervisors/`,
 
     // registrars

@@ -41,6 +41,8 @@ export const AccreditedApiServices = {
 
     // supervisor
     getSupervisorData: id => ApiService.getData(`${ACCREDITED_URLS.FORM_A.GET_SUPERVISOR_DETAILS}${id}`),
+    deleteSupervisorData: (id, userId) =>
+      ApiService.deleteData(`${ACCREDITED_URLS.FORM_A.DELETE_SUPERVISOR}${id}/${userId}`),
     getSuperVisors: facilityId => ApiService.getData(`${ACCREDITED_URLS.FORM_A.GET_SUPERVISORS}${facilityId}`),
     saveAccreditedSupervisorDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A.SAVE_SUPERVISOR_DETAILS}${id}`, data),

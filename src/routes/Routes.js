@@ -10,7 +10,6 @@ import { NonAuthenticatedRoute } from './NonAuthenticatedRoute';
 import oktaConfig from '../config';
 import { getAuthTokenFromLocalStorage } from '../helpers/LocalStorageHelper';
 import { getLoggedUserDetails } from '../Pages/Login/redux/LoginActions';
-import { getAccreditedDetails } from '../Pages/Accredited/redux/AccreditedReduxActions';
 
 const Routes = () => {
   const oktaAuth = new OktaAuth(oktaConfig);
@@ -24,7 +23,6 @@ const Routes = () => {
         const response = await dispatch(getLoggedUserDetails(authToken?.accessToken?.claims?.sub));
         const USER_ID = JSON.stringify(response?.userId);
         localStorage.setItem('userDetails', USER_ID);
-        if (USER_ID !== null || undefined) dispatch(getAccreditedDetails(USER_ID));
       } catch (e) {
         /**/
       }

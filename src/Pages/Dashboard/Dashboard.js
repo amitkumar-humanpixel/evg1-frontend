@@ -11,12 +11,14 @@ import Loader from '../../components/Loader/Loader';
 import Tab from '../../components/Tab/Tab';
 import Table from '../../components/Table/Table';
 import { changeAccreditionIdAndFacilityIdForAccreditionRedirection } from '../Accredited/redux/AccreditedReduxActions';
+import { startGeneralLoaderOnRequest } from '../../components/GeneralLoader/redux/GeneralLoaderAction';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const windowHeight = useWindowHeight();
-  const USER_ID = localStorage.getItem('userDetails');
+  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? '');
+
   const { page: paramPage, limit: paramLimit } = useQueryParams();
 
   const [tabs, setTabs] = useState([]);
@@ -81,7 +83,7 @@ const Dashboard = () => {
   const onClickTab = useCallback(
     async index => {
       setActiveTab(index);
-      await getDashboardListWithFilters({ status: tabs?.[index]?.value });
+      await getDashboardListWithFilters({ status: tabs?.[index]?.value, page: 1, limit: 15 });
     },
     [tabs, getDashboardListWithFilters],
   );
@@ -109,10 +111,12 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    if (USER_ID !== null || undefined) {
-      (async () => {
+    if (USER_ID?.toString()?.length > 0) {
+      startGeneralLoaderOnRequest('isDashboardLoader');
+      // waiting for localstorage to set userId for api interceptor
+      setTimeout(async () => {
         await getTabs(USER_ID);
-      })();
+      }, 500);
     }
   }, [USER_ID]);
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Button from '../../../../components/Button/Button';
 import {
   addNewSupervisor,
+  deleteSupervisorDetail,
   deleteSupervisorFromList,
   getSupervisorData,
   getSupervisorList,
@@ -41,10 +42,19 @@ const Supervisor = () => {
   }, [isEditable]);
 
   const deleteSupervisor = useCallback(
-    index => {
-      if (isEditable) dispatch(deleteSupervisorFromList(index));
+    async (index, userId) => {
+      if (isEditable && userId?.value) {
+        try {
+          await dispatch(deleteSupervisorDetail(id, userId?.value));
+          dispatch(deleteSupervisorFromList(index));
+        } catch (e) {
+          /**/
+        }
+      } else if (isEditable) {
+        dispatch(deleteSupervisorFromList(index));
+      }
     },
-    [isEditable],
+    [isEditable, id],
   );
 
   useEffect(() => {
@@ -77,7 +87,11 @@ const Supervisor = () => {
             <div className="section-inner-title-button-row">
               <div className="section-inner-title">{`Supervisor ${index + 1}`}</div>
               {supervisors?.length > 1 && (
-                <Button buttonType="danger" className="icon-button" onClick={() => deleteSupervisor(index)}>
+                <Button
+                  buttonType="danger"
+                  className="icon-button"
+                  onClick={() => deleteSupervisor(index, supervisor?.userId)}
+                >
                   <span className="material-icons-round">delete</span>
                 </Button>
               )}

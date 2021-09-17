@@ -10,7 +10,6 @@ export const accreditorAssignValidations = async (
   data,
   id,
   userId,
-  facilityId,
   isNextClick,
   accreditionSideBar,
   accreditionId,
