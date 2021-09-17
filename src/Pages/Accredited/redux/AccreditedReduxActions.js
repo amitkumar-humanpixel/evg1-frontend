@@ -484,6 +484,7 @@ export const getFormA1SupervisorDetails = (id, sid) => {
           type: ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_A1_SUPERVISOR_DETAIL,
           data: response?.data?.data,
         });
+        dispatch(getA1SupervisorData(id, sid));
       }
     } catch (e) {
       displayErrors(e);

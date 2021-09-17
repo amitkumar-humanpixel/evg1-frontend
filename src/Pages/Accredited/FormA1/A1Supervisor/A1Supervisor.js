@@ -9,7 +9,6 @@ import Checkbox from '../../../../components/Checkbox/Checkbox';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import {
   deleteFileFromA1Standards,
-  getA1SupervisorData,
   getFormA1SupervisorDetails,
   updateA1SupervisorTimings,
   updateAccreditedSubFormDataArrayFields,
@@ -75,7 +74,6 @@ const A1Supervisor = () => {
 
   useEffect(() => {
     if (id && sid) dispatch(getFormA1SupervisorDetails(id, sid));
-    if (id && sid) dispatch(getA1SupervisorData(id, sid));
   }, [id, sid]);
 
   return (
