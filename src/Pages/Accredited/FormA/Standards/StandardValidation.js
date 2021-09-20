@@ -36,6 +36,8 @@ export const standardValidation = async (
     } else if (condition?.status !== 'true' && attachments?.includes(condition.title) && condition?.filePath) {
       validated = false;
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please change the status!'));
+    } else if (condition?.status === 'true' && attachments.includes(condition?.title && condition?.file)) {
+      dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });
 
@@ -49,6 +51,15 @@ export const standardValidation = async (
     ) {
       validated = false;
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please add detail!'));
+    }
+    if (
+      condition?.title ===
+        'Have there been changes to facilities or resources since last\n' +
+          'accreditation/reaccreditation visit? If yes, please provide detail.' &&
+      condition?.status === 'true' &&
+      (condition?.remarks || condition?.remarks?.toString()?.trim()?.length > 0)
+    ) {
+      dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });
 

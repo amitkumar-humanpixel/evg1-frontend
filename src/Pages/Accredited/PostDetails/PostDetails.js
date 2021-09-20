@@ -94,9 +94,9 @@ const PostDetails = () => {
       },
       {
         type: 'input',
-        title: 'Contact Number',
+        title: 'Phone Number',
         name: 'phone',
-        placeholder: 'Enter contact number',
+        placeholder: 'e.g 0399998888',
         value: phone,
         error: errors?.phone,
         isEditable,

@@ -62,9 +62,9 @@ const PracticeManager = () => {
       },
       {
         type: 'input',
-        title: 'Contact Number',
+        title: 'Phone Number',
         name: 'contactNumber',
-        placeholder: 'Enter Contact Number',
+        placeholder: 'e.g 0399998888',
         value: contactNumber,
         error: errors?.contactNumber,
         isEditable,

@@ -21,6 +21,8 @@ const Supervisor = () => {
   const [isEditable, setIsEditable] = useState(true);
   const [isAddNewSupervisorModal, setIsAddNewSupervisorModal] = useState(false);
 
+  const { deleteSupervisorButtonLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
+
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
@@ -91,6 +93,7 @@ const Supervisor = () => {
                   buttonType="danger"
                   className="icon-button"
                   onClick={() => deleteSupervisor(index, supervisor?.userId)}
+                  isDisabled={deleteSupervisorButtonLoader}
                 >
                   <span className="material-icons-round">delete</span>
                 </Button>
