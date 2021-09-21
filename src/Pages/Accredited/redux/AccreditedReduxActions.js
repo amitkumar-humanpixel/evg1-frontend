@@ -108,7 +108,7 @@ export const uploadAccreditedFile = (data, config, formName, subFormName, index,
     try {
       const response = await AccreditedApiServices.uploadFile(data, config);
       if (response?.data?.status === 'SUCCESS' && response?.data?.fileUrl) {
-        successNotification(response?.data?.message || 'file uploaded successfully.');
+        successNotification(response?.data?.message || 'file uploaded successfully');
         if (formName === 'formA') {
           dispatch(
             updateAccreditedSubFormArrayFields(formName, subFormName, index, 'filePath', response?.data?.fileUrl),
@@ -173,7 +173,7 @@ export const saveAccreditedPostDetails = (data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.saveAccreditedPostDetails(data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification('Post Details update successfully.');
+        successNotification(response?.data?.message || 'Post details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
         // return response?.data?.data;
       }
@@ -236,7 +236,7 @@ export const saveAccreditedPracticeManagerDetails = (id, data, accreditationId) 
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedPracticeManagerDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification('Practice Manager Details update successfully.');
+        successNotification(response?.data?.message || 'Practice manager details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -269,7 +269,7 @@ export const saveAccreditedStandardDetails = (id, data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedStandardDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Standard Details update successfully.');
+        successNotification(response?.data?.message || 'Standard details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -288,7 +288,7 @@ export const deleteFileFromStandards = (index, filePath, accreditationId, fromMo
         fromModule,
       );
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message ?? 'File Deleted Successfully');
+        successNotification(response?.data?.message ?? 'File deleted successfully');
         dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'filePath', ''));
       }
     } catch (e) {
@@ -369,7 +369,7 @@ export const saveAccreditedSupervisorDetails = (id, data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedSupervisorDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Supervisor Details update successfully.');
+        successNotification(response?.data?.message || 'Supervisor details updated successfully.');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -431,7 +431,7 @@ export const saveAccreditedRegistrarDetails = (id, data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedRegistrarDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Registrar Details update successfully.');
+        successNotification(response?.data?.message || 'Registrar details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -512,7 +512,7 @@ export const saveAccreditedA1SupervisorDetails = (id, data, accreditationId) => 
     try {
       const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Supervisor Details update successfully.');
+        successNotification(response?.data?.message || 'Supervisor details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -530,7 +530,7 @@ export const saveAccreditedA1SupervisorDetailsPartially = (id, data) => {
         data,
       );
       if (response?.data?.status === 'SUCCESS') {
-        successNotification('Supervisor details saved partially.');
+        successNotification(response?.data?.message || 'Supervisor details saved partially');
       }
     } catch (e) {
       displayErrors(e);
@@ -548,7 +548,7 @@ export const deleteFileFromA1Standards = (index, filePath, accreditationId, sid,
         fromModule,
       );
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message ?? 'File Deleted Successfully');
+        successNotification(response?.data?.message ?? 'File deleted successfully');
         dispatch(updateAccreditedSubFormDataArrayFields('formA1', `${sid}`, index, 'standardsDetail', 'filePath', ''));
       }
     } catch (e) {
@@ -580,7 +580,7 @@ export const saveAccreditedFinalCheckListDetails = (id, data, accreditationId) =
     try {
       const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedFinalChecklistDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'CheckList Details update successfully.');
+        successNotification(response?.data?.message || 'CheckList details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -665,7 +665,7 @@ export const saveAccreditedAssignAccreditedDetails = (id, data, accreditationId)
     try {
       const response = await AccreditedApiServices.formBApiServices.saveAccreditedAssignAccreditorDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Details update successfully.');
+        successNotification(response?.data?.message || 'Details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -680,7 +680,7 @@ export const saveAccreditedSummaryDetails = (id, data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.formBApiServices.saveAccreditedSummaryDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Summary Details update successfully.');
+        successNotification(response?.data?.message || 'Summary details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -713,7 +713,7 @@ export const saveAccreditedDeclarationDetails = (id, data, accreditationId) => {
     try {
       const response = await AccreditedApiServices.formBApiServices.saveDeclarationDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Other Details update successfully.');
+        successNotification(response?.data?.message || 'Other details updated successfully');
         dispatch(getAccreditedSteps(accreditationId));
       }
     } catch (e) {
@@ -736,7 +736,7 @@ export const resubmitAccreditedForm = id => {
     try {
       const response = await AccreditedApiServices.resubmitAccreditedForm(id);
       if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message ?? 'Accredited re-submitted successfully.');
+        successNotification(response?.data?.message ?? 'Accredited re-submitted successfully');
         return true;
       }
     } catch (e) {

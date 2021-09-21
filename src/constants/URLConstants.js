@@ -32,7 +32,6 @@ export const REGISTRAR_URLS = {
 
 export const ACCREDITED_URLS = {
   GET_ACCREDITED_DETAILS: `${BASE_URL}accredited/`,
-  GET_ACCREDITED_ID: `${BASE_URL}accredited/getAccreditionId/`,
   GET_ACCREDITED_STEPPER: `${BASE_URL}accredited/accreditionSideBar/`,
   UPLOAD_FILE: `${BASE_URL}fileUploader/file`,
   DELETE_FILE: `${BASE_URL}fileUploader/file/`,

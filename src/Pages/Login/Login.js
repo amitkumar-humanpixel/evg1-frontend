@@ -11,6 +11,7 @@ const Login = () => {
   const history = useHistory();
 
   const login = useCallback(async () => {
+    localStorage.removeItem('userDetails');
     try {
       await oktaAuth.signInWithRedirect({
         originalUri: `${history?.location?.state?.referrer ?? ''}${history?.location?.state?.search ?? ''}` ?? '/',

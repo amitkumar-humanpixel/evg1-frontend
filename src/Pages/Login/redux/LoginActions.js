@@ -21,8 +21,8 @@ export const getLoggedUserDetails = email => {
           type: LOGIN_REDUX_CONSTANTS.GET_LOGGED_USER,
           data: response?.data?.data,
         });
+        return response?.data?.data;
       }
-      return response?.data?.data;
     } catch (e) {
       displayErrors(e);
     }

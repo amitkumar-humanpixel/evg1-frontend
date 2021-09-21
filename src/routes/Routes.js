@@ -8,7 +8,7 @@ import { ROUTE_CONSTANTS } from './RouteConstants';
 import { AuthenticatedRoute } from './AuthenticatedRoute';
 import { NonAuthenticatedRoute } from './NonAuthenticatedRoute';
 import oktaConfig from '../config';
-import { getAuthTokenFromLocalStorage } from '../helpers/LocalStorageHelper';
+import { clearUserDetailsFromLocalStorage, getAuthTokenFromLocalStorage } from '../helpers/LocalStorageHelper';
 import { getLoggedUserDetails } from '../Pages/Login/redux/LoginActions';
 
 const Routes = () => {
@@ -21,8 +21,13 @@ const Routes = () => {
     if (authToken?.accessToken?.claims?.sub) {
       try {
         const response = await dispatch(getLoggedUserDetails(authToken?.accessToken?.claims?.sub));
-        const USER_ID = JSON.stringify(response?.userId);
-        localStorage.setItem('userDetails', USER_ID);
+        if (response?.userId !== undefined) {
+          const USER_ID = JSON.stringify(response?.userId);
+          localStorage.setItem('userDetails', USER_ID);
+        } else {
+          await oktaAuth.signOut();
+          clearUserDetailsFromLocalStorage();
+        }
       } catch (e) {
         /**/
       }
