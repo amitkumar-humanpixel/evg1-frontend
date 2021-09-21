@@ -57,9 +57,9 @@ const SupervisorDetails = props => {
       },
       {
         type: 'input',
-        title: 'Contact Number',
+        title: 'Phone Number',
         name: 'contactNumber',
-        placeholder: 'Enter Contact Number',
+        placeholder: 'e.g 0399998888',
         value: contactNumber,
         error: errors?.contactNumber,
         isEditable,
@@ -98,9 +98,9 @@ const SupervisorDetails = props => {
       },
       {
         type: 'text',
-        title: 'Contact Number',
+        title: 'Phone Number',
         name: 'contactNumber',
-        placeholder: 'Enter Contact Number',
+        placeholder: 'e.g 0399998888',
         value: contactNumber,
         isEditable,
       },

@@ -50,6 +50,7 @@ export const registrarValidation = async (
       errors.placementId = 'Please select name!';
       dispatch(updateAccreditedSubFormArrayFields('formA', 'registrars', index, 'errors', errors));
     }
+
     registrar?.hoursDetails?.forEach(hour => {
       if (hour?.isChecked === true && hour?.hours === '0:0') {
         validated = false;
@@ -64,9 +65,11 @@ export const registrarValidation = async (
             'hoursDetails',
             hour?.days,
             'error',
-            'Close time must be grater than Start time!',
+            'Close time must be greater than Start time!',
           ),
         );
+      } else {
+        dispatch(updateRegistrarTimings(index, 'hoursDetails', hour?.days, 'error', undefined));
       }
     });
     registrar?.onCall?.forEach(hour => {
@@ -78,8 +81,10 @@ export const registrarValidation = async (
       } else if (hour?.startTime > hour?.finishTime) {
         validated = false;
         dispatch(
-          updateRegistrarTimings(index, 'onCall', hour?.days, 'error', 'Close time must be grater than Start time!'),
+          updateRegistrarTimings(index, 'onCall', hour?.days, 'error', 'Close time must be greater than Start time!'),
         );
+      } else {
+        dispatch(updateRegistrarTimings(index, 'onCall', hour?.days, 'error', undefined));
       }
     });
   });

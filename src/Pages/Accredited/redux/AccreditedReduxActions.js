@@ -333,11 +333,14 @@ export const getSupervisorList = facilityId => {
 export const deleteSupervisorDetail = (id, userId) => {
   return async () => {
     try {
+      startGeneralLoaderOnRequest('deleteSupervisorButtonLoader');
       const response = await AccreditedApiServices.formAApiServices.deleteSupervisorData(id, userId);
       if (response?.data?.status === 'SUCCESS') {
+        stopGeneralLoaderOnSuccessOrFail('deleteSupervisorButtonLoader');
         return true;
       }
     } catch (e) {
+      stopGeneralLoaderOnSuccessOrFail('deleteSupervisorButtonLoader');
       displayErrors(e);
     }
     return false;

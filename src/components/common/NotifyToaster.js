@@ -6,7 +6,7 @@ toast.configure();
 export const successNotification = message => {
   toast(message, {
     type: 'success',
-    position: 'bottom-right',
+    position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -20,7 +20,7 @@ export const successNotification = message => {
 export const errorNotification = message => {
   toast(message, {
     type: 'error',
-    position: 'bottom-right',
+    position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -33,7 +33,7 @@ export const errorNotification = message => {
 export const warningNotification = message => {
   toast(message, {
     type: 'warning',
-    position: 'bottom-right',
+    position: 'bottom-left',
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,

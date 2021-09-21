@@ -43,71 +43,88 @@ export const a1SupervisorValidation = async (
     })),
   };
 
-  finalData.standardsDetail.forEach((detail, index) => {
-    if (!detail?.status) {
-      validated = false;
-      dispatch(
-        updateAccreditedSubFormDataArrayFields(
-          'formA1',
-          sid,
-          index,
-          'standardsDetail',
-          'error',
-          'Please read and mark as checked to continue!',
-        ),
-      );
-    }
-    if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
-      validated = false;
-      dispatch(
-        updateAccreditedSubFormDataArrayFields(
-          'formA1',
-          sid,
-          index,
-          'standardsDetail',
-          'error',
-          'Please attach relevant document!',
-        ),
-      );
-    }
-    if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
-      validated = false;
-      dispatch(
-        updateAccreditedSubFormDataArrayFields(
-          'formA1',
-          sid,
-          index,
-          'standardsDetail',
-          'error',
-          'Please change the status',
-        ),
-      );
-    }
-    if (detail?.status === true && attachments.includes(detail?.title) && detail?.filePath) {
-      validated = true;
-      dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
-    }
-  });
+  if (isNextClick) {
+    finalData.standardsDetail.forEach((detail, index) => {
+      if (!detail?.status) {
+        validated = false;
+        dispatch(
+          updateAccreditedSubFormDataArrayFields(
+            'formA1',
+            sid,
+            index,
+            'standardsDetail',
+            'error',
+            'Please read and mark as checked to continue!',
+          ),
+        );
+      }
+      if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
+        validated = false;
+        dispatch(
+          updateAccreditedSubFormDataArrayFields(
+            'formA1',
+            sid,
+            index,
+            'standardsDetail',
+            'error',
+            'Please attach relevant document!',
+          ),
+        );
+      }
+      if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
+        validated = false;
+        dispatch(
+          updateAccreditedSubFormDataArrayFields(
+            'formA1',
+            sid,
+            index,
+            'standardsDetail',
+            'error',
+            'Please change the status',
+          ),
+        );
+      }
+      if (
+        (detail?.status === true && !attachments.includes(detail?.title)) ||
+        (detail?.status === true && attachments.includes(detail?.title) && detail?.filePath)
+      ) {
+        validated = true;
+        dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
+      }
+    });
 
-  finalData?.hours?.forEach(hour => {
-    if (hour?.isChecked === true && hour?.hours === '0:0') {
+    finalData?.hours?.forEach(hour => {
+      if (hour?.isChecked === true && hour?.hours === '0:0') {
+        validated = false;
+        dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Please select opening & closing hours!'));
+      } else if (hour?.startTime > hour?.finishTime) {
+        validated = false;
+        dispatch(
+          updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Close time must be greater than Start time!'),
+        );
+      } else {
+        dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
+      }
+    });
+
+    if (!data?.isAgree) {
       validated = false;
-      dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Please select opening & closing hours!'));
-    } else if (hour?.startTime > hour?.finishTime) {
-      validated = false;
-      dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Close time must be grater than Start time!'));
+      error.isAgree = 'Please check declaration to continue! ';
+      dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
     } else {
-      dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
+      error.isAgree = undefined;
+      dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
     }
-  });
-
-  if (!data?.isAgree) {
-    validated = false;
-    error.isAgree = 'Please check declaration to continue! ';
-    dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
   } else {
-    error.isAgree = undefined;
-    dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', error));
+    finalData.standardsDetail.forEach((detail, index) => {
+      dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
+    });
+
+    finalData?.hours?.forEach(hour => {
+      dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
+    });
+
+    dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', undefined));
   }
 
   try {

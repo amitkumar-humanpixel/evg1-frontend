@@ -83,9 +83,11 @@ export const practiceManagerValidation = async (
           index,
           'hours',
           'error',
-          'Close time must be grater than Start time!',
+          'Close time must be greater than Start time!',
         ),
       );
+    } else {
+      dispatch(updateAccreditedSubFormDataArrayFields('formA', 'practiceManager', index, 'hours', 'error', undefined));
     }
   });
 
