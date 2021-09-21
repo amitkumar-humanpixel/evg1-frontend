@@ -17,7 +17,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const windowHeight = useWindowHeight();
-  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? '');
+  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? undefined);
 
   const { page: paramPage, limit: paramLimit } = useQueryParams();
 
@@ -65,7 +65,7 @@ const Dashboard = () => {
 
   const onSelectRecord = useCallback(
     selectedUser => {
-      if (selectedUser?.facilityId && (USER_ID !== undefined || null))
+      if (selectedUser?.facilityId && USER_ID !== undefined)
         dispatch(
           changeAccreditionIdAndFacilityIdForAccreditionRedirection(
             selectedUser?.facilityId,
@@ -111,7 +111,7 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    if (USER_ID?.toString()?.length > 0) {
+    if (USER_ID !== undefined) {
       startGeneralLoaderOnRequest('isDashboardLoader');
       // waiting for localstorage to set userId for api interceptor
       setTimeout(async () => {

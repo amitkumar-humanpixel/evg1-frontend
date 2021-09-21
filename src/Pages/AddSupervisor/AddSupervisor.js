@@ -13,7 +13,7 @@ import Modal from '../../components/Modal/Modal';
 const AddSupervisor = props => {
   const { toggleAddNewSupervisorModal, isAddNewSupervisorModal } = props;
   const dispatch = useDispatch();
-  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? '');
+  const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? undefined);
   const { firstName, lastName, email, errors } = useSelector(({ addSupervisorReducer }) => addSupervisorReducer ?? {});
 
   const { addNewSupervisorLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
@@ -86,7 +86,7 @@ const AddSupervisor = props => {
       error.email = 'Please Enter valid email address!';
     }
     dispatch(updateAddSupervisorDetails('errors', error));
-    if (validated) {
+    if (validated && USER_ID !== undefined) {
       try {
         dispatch(AddNewSupervisorDetails(USER_ID, finalData));
         onCloseAddSupervisorModal();

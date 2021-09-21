@@ -36,7 +36,7 @@ export const standardValidation = async (
     } else if (condition?.status !== 'true' && attachments?.includes(condition.title) && condition?.filePath) {
       validated = false;
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please change the status!'));
-    } else if (condition?.status === 'true' && attachments.includes(condition?.title && condition?.file)) {
+    } else if (condition?.status === 'true' && attachments.includes(condition?.title) && condition?.filePath) {
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });

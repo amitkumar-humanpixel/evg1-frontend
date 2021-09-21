@@ -6,7 +6,6 @@ export const AccreditedApiServices = {
     ApiService.getData(`${ACCREDITED_URLS.GET_PRACTICE_MANAGER_POST_DETAILS}${id}`),
 
   getAccreditedDetail: uid => ApiService.getData(`${ACCREDITED_URLS.GET_ACCREDITED_DETAILS}${uid}`),
-  getAccreditedId: uid => ApiService.getData(`${ACCREDITED_URLS.GET_ACCREDITED_ID}${uid}`),
 
   getAccreditedSteps: accreditationId =>
     ApiService.getData(`${ACCREDITED_URLS.GET_ACCREDITED_STEPPER}${accreditationId}`),
