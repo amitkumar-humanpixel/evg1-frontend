@@ -4,7 +4,6 @@ import ReactSelect from 'react-select';
 import DatePicker from 'react-datepicker';
 import { useParams } from 'react-router-dom';
 import Switch from '../../../../components/Switch/Switch';
-import Checkbox from '../../../../components/Checkbox/Checkbox';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import {
   getFacilityDetailsForSummary,
@@ -15,6 +14,7 @@ import {
 import Input from '../../../../components/Input/Input';
 import SummaryApplications from './SummaryApplications';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 
 const Summary = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,9 @@ const Summary = () => {
     },
   ];
 
-  const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
+  const { accreditionSideBar, accreditionName } = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
+  );
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? '');
 
@@ -45,7 +47,7 @@ const Summary = () => {
 
   const {
     accreditorName,
-    shadyOaksPractice,
+    practiceDetail,
     applications,
     assessment,
     dateOfReportComplete,
@@ -134,7 +136,7 @@ const Summary = () => {
 
   const summaryFieldsRightPart = useMemo(() => {
     let rightPartInputs = assessment?.map((input, index) => ({
-      type: 'checkBox',
+      type: 'triState',
       index,
       id: input?.title,
       title: input?.title,
@@ -227,12 +229,11 @@ const Summary = () => {
         );
         break;
 
-      case 'checkBox':
+      case 'triState':
         component = (
-          <Checkbox
-            id={`summary-${input?.index}`}
-            checked={input?.value}
-            onChange={event => handleRightPartCheckInputChange(input?.index, event.target.checked)}
+          <TriStateSwitch
+            onChange={state => handleRightPartCheckInputChange(input?.index, state)}
+            state={input?.value}
             disabled={!input?.isEditable}
           />
         );
@@ -342,18 +343,18 @@ const Summary = () => {
       </section>
 
       <section className="common-white-container form-b-single-record-grid mt-20">
-        <div className="form-detail-title">Shady Oaks Practice</div>
+        <div className="form-detail-title">{accreditionName}</div>
         <textarea
           rows={4}
-          placeholder="Enter ShadyOaks Practice"
-          name="shadyOaksPractice"
-          value={shadyOaksPractice}
+          placeholder="Enter detail"
+          name="practiceDetail"
+          value={practiceDetail}
           onChange={handleInputTextChange}
           disabled={!isEditable}
         />
         {applications?.map(
           (application, index) =>
-            application?.consideration && (
+            application?.consideration === 'true' && (
               <>
                 <div className="form-detail-title">{application?.name}</div>
                 <textarea

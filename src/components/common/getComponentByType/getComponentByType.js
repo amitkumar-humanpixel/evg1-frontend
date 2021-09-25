@@ -2,9 +2,7 @@ import React, { useCallback } from 'react';
 import ReactSelect from 'react-select';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
-import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
-import moment from 'moment';
 import Input from '../../Input/Input';
 import Switch from '../../Switch/Switch';
 
@@ -21,8 +19,8 @@ const GetComponentByType = props => {
   );
 
   const handleSelectChange = useCallback(
-    e => {
-      onInputChange(e.name ?? e?.[0]?.name, e);
+    (name, value) => {
+      onInputChange(name, value);
     },
     [onInputChange],
   );
@@ -36,11 +34,8 @@ const GetComponentByType = props => {
 
   const onDayHourInputChange = useCallback(
     (inputName, inputValue, label, value) => {
-      const finalTimeValue =
-        label === 'hours' && value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
       const finalValue = {
-        ...inputValue,
-        [label]: label === 'hours' ? moment(finalTimeValue, 'HH:mm').format('HH:mm') : value,
+        [label]: value,
       };
       onInputChange(inputName, finalValue);
     },
@@ -51,15 +46,16 @@ const GetComponentByType = props => {
     case 'select':
       component = (
         <ReactSelect
+          isMulti={input?.isMulti}
           placeholder={input.placeholder}
           name={input.name}
           options={input?.options}
           className="react-select-container"
           classNamePrefix="react-select"
           value={input?.value ?? []}
-          onChange={handleSelectChange}
+          onChange={e => handleSelectChange(input?.name, e)}
           isDisabled={!input?.isEditable}
-          isMulti={input?.isMulti}
+          backspaceRemovesValue
         />
       );
       break;
@@ -90,16 +86,6 @@ const GetComponentByType = props => {
             suffixClass="day-input"
             onChange={e => onDayHourInputChange(input.name, input.value, 'days', e?.target?.value)}
             disabled={!input?.day?.isEditable}
-          />
-          <TimePicker
-            placeholder="00:00"
-            defaultValue={moment().hours(0).minutes(0)}
-            format="HH:mm"
-            use12Hours={false}
-            showSecond={false}
-            value={moment(input.time.value, 'HH:mm')}
-            onChange={e => onDayHourInputChange(input.name, input.value, 'hours', moment(e).format('HH:mm'))}
-            disabled={!input?.time?.isEditable}
           />
         </div>
       );

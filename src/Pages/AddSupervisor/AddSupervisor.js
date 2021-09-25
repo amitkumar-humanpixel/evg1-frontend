@@ -14,12 +14,21 @@ const AddSupervisor = props => {
   const { toggleAddNewSupervisorModal, isAddNewSupervisorModal } = props;
   const dispatch = useDispatch();
   const USER_ID = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails?.userId ?? undefined);
-  const { firstName, lastName, email, errors } = useSelector(({ addSupervisorReducer }) => addSupervisorReducer ?? {});
+  const { firstName, lastName, email, errors, practiceName } = useSelector(
+    ({ addSupervisorReducer }) => addSupervisorReducer ?? {},
+  );
 
   const { addNewSupervisorLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
   const SupervisorDetails = useMemo(
     () => [
+      {
+        type: 'text',
+        title: 'Practice Name',
+        name: 'practiceNAme',
+        value: practiceName,
+        isEditable: true,
+      },
       {
         type: 'input',
         title: 'First Name',
@@ -48,7 +57,7 @@ const AddSupervisor = props => {
         isEditable: true,
       },
     ],
-    [firstName, lastName, email, errors],
+    [firstName, lastName, email, practiceName, errors],
   );
 
   const onInputChange = useCallback((name, value) => {
@@ -67,11 +76,16 @@ const AddSupervisor = props => {
       firstName,
       lastName,
       email,
+      practiceName,
     };
 
     if (!finalData?.firstName || finalData?.firstName?.toString()?.trim()?.length === 0) {
       validated = false;
       error.firstName = 'Please Enter first name!';
+    }
+    if (!finalData?.practiceName || finalData?.practiceName?.toString()?.trim()?.length === 0) {
+      validated = false;
+      error.firstName = 'Practice name missing!';
     }
     if (!finalData?.lastName || finalData?.lastName?.toString()?.trim()?.length === 0) {
       validated = false;
@@ -94,7 +108,7 @@ const AddSupervisor = props => {
         /**/
       }
     }
-  }, [firstName, lastName, email, USER_ID, onCloseAddSupervisorModal]);
+  }, [firstName, lastName, email, USER_ID, practiceName, onCloseAddSupervisorModal]);
 
   const addSupervisorModalButtons = useMemo(
     () => [

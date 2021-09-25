@@ -1,6 +1,9 @@
+import _ from 'lodash';
+import moment from 'moment';
 import {
   saveAccreditedSupervisorDetails,
   updateAccreditedSubFormArrayFields,
+  updateSupervisorTimings,
 } from '../../redux/AccreditedReduxActions';
 import { setNextAccreditedItemUrl } from '../../../../helpers/AccreditedGoToNextStepHelper';
 import { MOBILE_NUMBER_REGEX } from '../../../../constants/RegexConstants';
@@ -20,8 +23,17 @@ export const supervisorValidation = async (
   let validated = true;
   const finalData = data?.map(e => ({
     userId: e?.userId?.value ? parseInt(e?.userId?.value, 10) : undefined,
+    college: e?.college?.map(college => college?.value),
     contactNumber: e?.contactNumber,
     categoryOfSupervisor: e?.categoryOfSupervisor?.value,
+    hours: e?.hours?.map(hour => ({
+      ...hour,
+      hours: `${moment
+        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+        .hours()}:${moment
+        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+        .minutes()}`,
+    })),
   }));
 
   data?.forEach((supervisor, index) => {
@@ -29,6 +41,11 @@ export const supervisorValidation = async (
     if (!supervisor?.userId || supervisor?.userId?.toString()?.trim()?.length === 0) {
       validated = false;
       errors.userId = 'Please select name!';
+    }
+
+    if (!supervisor?.college || _.isEmpty(supervisor?.college)) {
+      errors.college = 'Please select college!';
+      validated = false;
     }
 
     if (!supervisor?.categoryOfSupervisor || supervisor?.categoryOfSupervisor?.toString()?.trim()?.length === 0) {
@@ -45,6 +62,22 @@ export const supervisorValidation = async (
       validated = false;
       errors.contactNumber = 'Please enter valid contact number!';
     }
+
+    supervisor?.hours?.forEach(hour => {
+      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+        validated = false;
+        dispatch(
+          updateSupervisorTimings(index, 'hours', hour?.days, 'error', 'Please select opening & closing hours!'),
+        );
+      } else if (hour?.startTime > hour?.finishTime) {
+        validated = false;
+        dispatch(
+          updateSupervisorTimings(index, 'hours', hour?.days, 'error', 'Close time must be greater than Start time!'),
+        );
+      } else {
+        dispatch(updateSupervisorTimings(index, 'hours', hour?.days, 'error', undefined));
+      }
+    });
 
     dispatch(updateAccreditedSubFormArrayFields('formA', 'supervisors', index, 'errors', errors));
   });

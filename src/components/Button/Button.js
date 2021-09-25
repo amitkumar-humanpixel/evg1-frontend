@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Button = props => {
   const { isLoading, title, buttonType, className, children, isDisabled, ...restProps } = props;
-  const buttonClass = `button ${buttonType}-button ${className}`;
+  const buttonClass = `button ${buttonType}-button ${className} ${isDisabled && 'cursor-not-allowed'}`;
   return (
     <button type="button" className={buttonClass} {...restProps} disabled={isLoading || isDisabled}>
       {isLoading ? <span className="button-loader" /> : title || children}

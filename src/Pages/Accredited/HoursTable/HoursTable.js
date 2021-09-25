@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment/moment';
+import TriStateSwitch from '../../../components/TriStateSwitch/TriStateSwitch';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
-import Checkbox from '../../../components/Checkbox/Checkbox';
 
 const HoursTable = props => {
   const { className, hours, onHourInputChange, isEditable } = props;
@@ -11,21 +11,23 @@ const HoursTable = props => {
   const [totalTime, setTotalTime] = useState('00:00');
 
   useEffect(() => {
-    const totalHours = hours?.map(e => moment(e?.hours, 'HH:mm')?.format('HH:mm'));
+    const selectedHours = hours?.filter(e => e?.isChecked === 'true');
+    const totalHours = selectedHours?.map(e => moment(e?.hours, 'HH:mm')?.format('HH:mm'));
     const totalDurations = totalHours
       .slice(1)
       .reduce((prev, cur) => moment.duration(cur).add(prev), moment.duration(totalHours[0]));
 
-    setTotalTime(`${
-      Math.floor(totalDurations.asHours()) <= 9
-        ? `0${Math.floor(totalDurations.asHours())}`
-        : Math.floor(totalDurations.asHours())
-    }:
-      ${
+    setTotalTime(
+      `${
+        Math.floor(totalDurations.asHours()) <= 9
+          ? `0${Math.floor(totalDurations.asHours())}`
+          : Math.floor(totalDurations.asHours())
+      }:${
         Math.floor(totalDurations.asMinutes()) - Math.floor(totalDurations.asHours()) * 60 <= 9
           ? `0${Math.floor(totalDurations.asMinutes()) - Math.floor(totalDurations.asHours()) * 60}`
           : Math.floor(totalDurations.asMinutes()) - Math.floor(totalDurations.asHours()) * 60
-      }`);
+      }`,
+    );
   }, [hours]);
 
   return (
@@ -41,14 +43,15 @@ const HoursTable = props => {
           <tr>
             <td width={40}>
               <div className="hour-table-day-container">
-                <Checkbox
-                  id={`practice-hours-${e?.days}`}
-                  title={
-                    <div className="hour-table-day">{useWindowWidth() > 1024 ? e?.days : e?.days.slice(0, 3)}</div>
-                  }
-                  checked={e?.isChecked}
-                  onChange={event => onHourInputChange(e?.days, 'isChecked', event.target.checked)}
+                <TriStateSwitch
+                  onChange={state => onHourInputChange(e?.days, 'isChecked', state)}
+                  state={e?.isChecked}
                   disabled={!isEditable}
+                  title={
+                    <div className="hour-table-day">
+                      {useWindowWidth() < 640 ? e?.days?.toString()?.slice(0, 3) : e?.days?.toString()}
+                    </div>
+                  }
                 />
               </div>
             </td>
@@ -63,7 +66,7 @@ const HoursTable = props => {
                 focusOnOpen
                 value={moment(e?.startTime, 'HH:mm')}
                 onChange={time => onHourInputChange(e?.days, 'startTime', moment(time).format('HH:mm'))}
-                disabled={!isEditable}
+                disabled={!isEditable || e?.isChecked !== 'true'}
               />
             </td>
             <td width={20}>
@@ -76,12 +79,12 @@ const HoursTable = props => {
                 focusOnOpen
                 value={moment(e?.finishTime, 'HH:mm')}
                 onChange={time => onHourInputChange(e?.days, 'finishTime', moment(time).format('HH:mm'))}
-                disabled={!isEditable}
+                disabled={!isEditable || e?.isChecked !== 'true'}
               />
             </td>
             <td width={20}>
               <div className="total-hours">
-                {e?.startTime < e?.finishTime
+                {e?.isChecked === 'true' && e?.startTime < e?.finishTime
                   ? moment(
                       `${moment
                         .duration(moment(e?.finishTime, format).diff(moment(e?.startTime, format)))

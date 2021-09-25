@@ -24,7 +24,6 @@ const Supervisor = () => {
   const { deleteSupervisorButtonLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
-  const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
@@ -74,12 +73,10 @@ const Supervisor = () => {
   return (
     <>
       <div className="add-button-row">
-        {['Accreditation_Support_Coordinator', 'Super_Admin'].includes(role) && (
-          <Button buttonType="primary" onClick={toggleAddNewSupervisorModal}>
-            Accredit New Supervisor
-          </Button>
-        )}
-        <Button buttonType="primary" className="ml-5" onClick={addSupervisor}>
+        <Button buttonType="primary" onClick={toggleAddNewSupervisorModal} isDisabled={!isEditable}>
+          Accredit New Supervisor
+        </Button>
+        <Button buttonType="primary" className="ml-5" onClick={addSupervisor} isDisabled={!isEditable}>
           Re-accredit Supervisor
         </Button>
       </div>
@@ -93,7 +90,7 @@ const Supervisor = () => {
                   buttonType="danger"
                   className="icon-button"
                   onClick={() => deleteSupervisor(index, supervisor?.userId)}
-                  isDisabled={deleteSupervisorButtonLoader}
+                  isDisabled={deleteSupervisorButtonLoader || !isEditable}
                 >
                   <span className="material-icons-round">delete</span>
                 </Button>

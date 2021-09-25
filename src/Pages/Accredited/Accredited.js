@@ -46,7 +46,7 @@ const Accredited = () => {
               accreditionId ? `/?id=${accreditionId}` : ''
             }${stepDetails?.subSteps?.[0]?.userId ? `&sid=${stepDetails?.subSteps?.[0]?.userId}` : ''}`,
           );
-        } else if (stepDetails?.complete && !isDisabledStep) {
+        } else if (stepDetails?.complete || !isDisabledStep) {
           history.push(`/accredited/${stepDetails?.url}${accreditionId ? `/?id=${accreditionId}` : ''}`);
           if (showStepper) setShowStepper(!showStepper);
         }
@@ -71,15 +71,14 @@ const Accredited = () => {
 
   useEffect(() => {
     if (step) {
-      if (step !== 'postDetails' && subStep) {
-        const isExistStep = accreditionSideBar?.find(e => e?.url === step);
+      const isExistStep = accreditionSideBar?.find(e => e?.url === step);
+      if (!['postDetails', 'reaccreditationChecklist', 'previousRecommendations'].includes(step) && subStep) {
         setActiveStepIndex(isExistStep?.activeStepIndex);
         if (isExistStep?.subSteps?.length > 0 && subStep) {
           setActiveSubStepIndex(isExistStep?.subSteps?.find(e => e?.url === subStep)?.activeSubStepIndex || 0);
         }
       }
-      if (step !== 'postDetails' && !subStep) {
-        const isExistStep = accreditionSideBar?.find(e => e?.url === step);
+      if (!['postDetails', 'reaccreditationChecklist', 'previousRecommendations'].includes(step) && !subStep) {
         if (isExistStep?.subSteps?.length > 0) {
           history.push(
             `/accredited/${isExistStep?.url}/${isExistStep?.subSteps?.[0]?.url}${
@@ -89,7 +88,16 @@ const Accredited = () => {
         }
       }
       if (step === 'postDetails') {
+        setActiveStepIndex(isExistStep?.activeStepIndex || 1);
         history.push(`/accredited/postDetails/?id=${accreditionId ?? id ?? ''}`);
+      }
+      if (step === 'reaccreditationChecklist') {
+        setActiveStepIndex(isExistStep?.activeStepIndex || 0);
+        history.push(`/accredited/reaccreditationChecklist/?id=${accreditionId ?? id ?? ''}`);
+      }
+      if (step === 'previousRecommendations') {
+        setActiveStepIndex(isExistStep?.activeStepIndex || 4);
+        history.push(`/accredited/previousRecommendations/?id=${accreditionId ?? id ?? ''}`);
       }
     } else if (accreditionSideBar) {
       const stepToSet = accreditionSideBar?.[0];
@@ -114,7 +122,7 @@ const Accredited = () => {
       startGeneralLoaderOnRequest('accreditedLoader');
       setTimeout(() => {
         dispatch(getAccreditedSteps(accreditionId));
-      }, 500);
+      }, 1000);
     } else if (!accreditionId && id) {
       dispatch(changeAccreditionIdForAccreditionRedirection(id));
     }

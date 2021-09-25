@@ -7,6 +7,7 @@ export const postDetailsValidation = async (
   dispatch,
   history,
   data,
+  id,
   userId,
   isNextClick,
   accreditionSideBar,
@@ -56,10 +57,6 @@ export const postDetailsValidation = async (
   }
   if (!finalData?.totalNumberGPs || finalData?.totalNumberGPs?.toString()?.trim()?.length === 0) {
     errors.totalNumberGPs = 'Please enter total no of GPS!';
-    validated = false;
-  }
-  if (!finalData?.practiceWebsite || finalData?.practiceWebsite?.toString()?.trim()?.length === 0) {
-    errors.practiceWebsite = 'Please enter practice website!';
     validated = false;
   }
   if (finalData.practiceWebsite && !WEBSITE_URL.test(finalData.practiceWebsite)) {

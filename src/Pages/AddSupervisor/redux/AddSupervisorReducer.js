@@ -1,6 +1,7 @@
 import { ADD_SUPERVISOR_REDUX_CONSTANTS } from './AddSupervisorReduxConstants';
 
 const addSupervisorInitialReducer = {
+  practiceName: '',
   firstName: '',
   lastName: '',
   email: '',

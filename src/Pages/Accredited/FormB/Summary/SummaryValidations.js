@@ -23,7 +23,7 @@ export const summaryValidations = async (
       dateOfReportComplete: data?.dateOfReportComplete,
       assessment: [...data?.assessment],
       applications: [...data?.applications],
-      shadyOaksPractice: data?.shadyOaksPractice,
+      practiceDetail: data?.practiceDetail,
       accreditationWithEV: data?.accreditationWithEV,
     };
     try {

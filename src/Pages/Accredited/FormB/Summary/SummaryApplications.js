@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useParams } from 'react-router-dom';
-import Checkbox from '../../../../components/Checkbox/Checkbox';
-import Switch from '../../../../components/Switch/Switch';
 import { updateAccreditedSubFormDataArrayFields } from '../../redux/AccreditedReduxActions';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 
 const nameOfApplicants = [
   {
@@ -78,34 +77,31 @@ const SummaryApplications = () => {
               <td>{application?.name ?? '-'}</td>
               <td>{_.capitalize(application?.categoryOfSupervisor) ?? '-'}</td>
               <td>
-                <Checkbox
-                  id={`RACGP${index}`}
-                  name="RACGP"
-                  className="d-flex just-center"
-                  checked={application?.RACGP}
-                  onChange={e => handleApplicationInputChange(index, e.target.name, e.target.checked)}
-                  disabled={!isEditable}
-                />
+                <div className="d-flex just-center">
+                  <TriStateSwitch
+                    onChange={state => handleApplicationInputChange(index, 'RACGP', state)}
+                    state={application?.RACGP}
+                    disabled={!isEditable}
+                  />
+                </div>
               </td>
               <td>
-                <Checkbox
-                  id={`ACRRM${index}`}
-                  name="ACRRM"
-                  className="d-flex just-center"
-                  checked={application?.ACRRM}
-                  onChange={e => handleApplicationInputChange(index, e.target.name, e.target.checked)}
-                  disabled={!isEditable}
-                />
+                <div className="d-flex just-center">
+                  <TriStateSwitch
+                    onChange={state => handleApplicationInputChange(index, 'ACRRM', state)}
+                    state={application?.ACRRM}
+                    disabled={!isEditable}
+                  />
+                </div>
               </td>
               <td>
-                <Switch
-                  id={`consideration${index}`}
-                  switchContainerClass="d-flex just-center"
-                  name="consideration"
-                  checked={application.consideration}
-                  onChange={e => handleApplicationInputChange(index, e.target.name, e.target.checked)}
-                  disabled={!isEditable}
-                />
+                <div className="d-flex just-center">
+                  <TriStateSwitch
+                    onChange={state => handleApplicationInputChange(index, 'consideration', state)}
+                    state={application?.consideration}
+                    disabled={!isEditable}
+                  />
+                </div>
               </td>
             </tr>
           ))}

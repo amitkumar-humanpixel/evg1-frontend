@@ -14,6 +14,13 @@ export const AccreditedApiServices = {
   resubmitAccreditedForm: accreditationId =>
     ApiService.postData(`${ACCREDITED_URLS.RE_SUBMIT_ACCREDITED_FORM}${accreditationId}`),
 
+  // re accredited checkbox list
+  reAccreditedCheckbox: {
+    getReAccreditedCheckListData: id => ApiService.getData(`${ACCREDITED_URLS.GET_RE_ACCREDITED_CHECKLIST_DATA}${id}`),
+    saveReAccreditedAccreditedChecklistDetails: data =>
+      ApiService.postData(`${ACCREDITED_URLS.SAVE_RE_ACCREDITED_CHECKLIST_DETAILS}`, data),
+  },
+
   // post details
   getAccreditedPostDetails: id => ApiService.getData(`${ACCREDITED_URLS.POST_DETAILS_URL}/${id}`),
   saveAccreditedPostDetails: data => ApiService.postData(ACCREDITED_URLS.POST_DETAILS_URL, data),

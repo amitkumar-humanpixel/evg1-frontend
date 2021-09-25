@@ -1,16 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import _ from 'lodash';
 import SupervisorDetails from '../../FormA/Supervisor/SupervisorDetails';
-import HoursTable from '../../HoursTable/HoursTable';
 import Checkbox from '../../../../components/Checkbox/Checkbox';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import {
   deleteFileFromA1Standards,
   getFormA1SupervisorDetails,
-  updateA1SupervisorTimings,
   updateAccreditedSubFormDataArrayFields,
   updateAccreditedSubFormFields,
 } from '../../redux/AccreditedReduxActions';
@@ -18,6 +14,7 @@ import { useWindowWidth } from '../../../../hooks/useWindowWidth';
 import FileUploadButton from '../../../../components/FileUploadButton';
 import { fileNameExtension, fileNamePrefix } from '../../../../helpers/fileNameSplit';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 
 const attachments = ['I have hospital clinical privileges'];
 const A1Supervisor = () => {
@@ -32,21 +29,42 @@ const A1Supervisor = () => {
 
   const supervisor = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}`] ?? {});
 
-  const onHourDetailsInputChange = useCallback(
-    (day, name, value) => {
-      if (name === 'isChecked') {
-        if (!value) {
-          dispatch(updateA1SupervisorTimings(`${sid}`, day, 'startTime', '00:00'));
-          dispatch(updateA1SupervisorTimings(`${sid}`, day, 'finishTime', '00:00'));
-        }
-        dispatch(updateA1SupervisorTimings(`${sid}`, day, name, value));
-      } else {
-        const finalValue = value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
-        dispatch(updateA1SupervisorTimings(`${sid}`, day, name, moment(finalValue, 'HH:mm').format('HH:mm')));
-      }
-    },
-    [sid],
-  );
+  // const onHourDetailsInputChange = useCallback(
+  //   (day, name, value) => {
+  //     if (name === 'isChecked') {
+  //       if (value !== 'true') {
+  //         if (['Sunday', 'Saturday'].includes(day)) {
+  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'startTime', '00:00'));
+  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'finishTime', '00:00'));
+  //         } else {
+  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'startTime', '08:00'));
+  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'finishTime', '17:00'));
+  //         }
+  //       }
+  //       dispatch(updateA1SupervisorTimings(`${sid}`, day, name, value));
+  //     } else {
+  //       const finalValue =
+  //         value === 'Invalid date'
+  //           ? moment(
+  //               moment()
+  //                 .hour(
+  //                   (!['Sunday', 'Saturday'].includes(day) && (name === 'startTime' ? 8 : 17)) || 0
+  //                 )
+  //                 .minutes(0)
+  //             ).format('HH:mm')
+  //           : value;
+  //       dispatch(
+  //         updateA1SupervisorTimings(
+  //           `${sid}`,
+  //           day,
+  //           name,
+  //           moment(finalValue, 'HH:mm').format('HH:mm')
+  //         )
+  //       );
+  //     }
+  //   },
+  //   [sid]
+  // );
 
   const handleStandardInputChange = useCallback(
     (index, name, value) => {
@@ -62,10 +80,13 @@ const A1Supervisor = () => {
   );
 
   const handleFileDeletion = useCallback(
-    (index, filePath) => {
-      dispatch(deleteFileFromA1Standards(index, `Files/${filePath?.split('/').pop()}`, id, sid, 'formA1'));
+    (index, fileArray, filePath) => {
+      if (isEditable) {
+        const files = fileArray?.filter(e => e?.fileUrl !== filePath);
+        dispatch(deleteFileFromA1Standards(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
+      }
     },
-    [id, sid],
+    [id, sid, isEditable],
   );
 
   useEffect(() => {
@@ -81,12 +102,12 @@ const A1Supervisor = () => {
       <div className="common-white-container">
         <SupervisorDetails data={supervisor} fromModule="formA1" isEditable={isEditable} />
       </div>
-      <div className="accredited-title accredited-title-margin">Supervisor Hours – Opening & Closing Time</div>
-      <div className="common-white-container">
-        {!_.isEmpty(supervisor?.hours) && (
-          <HoursTable hours={supervisor?.hours} onHourInputChange={onHourDetailsInputChange} isEditable={isEditable} />
-        )}
-      </div>
+      {/* <div className="accredited-title accredited-title-margin">Supervisor Hours – Opening & Closing Time</div> */}
+      {/* <div className="common-white-container"> */}
+      {/*  {!_.isEmpty(supervisor?.hours) && ( */}
+      {/*    <HoursTable hours={supervisor?.hours} onHourInputChange={onHourDetailsInputChange} isEditable={isEditable} /> */}
+      {/*  )} */}
+      {/* </div> */}
       <section>
         <div className="accredited-title accredited-title-margin">Standard Details</div>
         <div className="common-white-container">
@@ -95,34 +116,33 @@ const A1Supervisor = () => {
               <tr>
                 <td className="standard-detail-checkbox">
                   <div className="standard-detail">
-                    <Checkbox
-                      id={`standard-details-${index}`}
-                      name="status"
-                      checked={detail?.status}
-                      onChange={event => handleStandardInputChange(index, event?.target?.name, event.target.checked)}
-                      checkmarkClass="A1-checklist-checkmark"
+                    <TriStateSwitch
+                      className="A1-checklist-checkmark"
+                      state={detail?.status}
+                      onChange={status => handleStandardInputChange(index, 'status', status)}
                       disabled={!isEditable}
                     />
                     <div>
                       <span>{detail?.title}</span>
                       <div className="form-error-message standard-error-message">{detail?.error}</div>
-                      {detail?.filePath && (
-                        <div className="standard-attached-file">
-                          <span className="file-name">
-                            <span className="file-name-without-extension">
-                              <b>Uploaded File: </b>
-                              {fileNamePrefix(detail?.filePath?.split('/').pop())}
+                      {detail?.filePath?.length > 0 &&
+                        detail?.filePath?.map(file => (
+                          <div className="standard-attached-file">
+                            <span className="file-name">
+                              <span className="file-name-without-extension">
+                                <b>Uploaded File: </b>
+                                {fileNamePrefix(file?.fileName?.split('/').pop())}
+                              </span>
+                              <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
                             </span>
-                            <span>.{fileNameExtension(detail?.filePath?.split('/').pop())}</span>
-                          </span>
-                          <span
-                            className="material-icons-round"
-                            onClick={() => handleFileDeletion(index, detail?.filePath)}
-                          >
-                            delete
-                          </span>
-                        </div>
-                      )}
+                            <span
+                              className="material-icons-round"
+                              onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
+                            >
+                              delete
+                            </span>
+                          </div>
+                        ))}
                     </div>
                     {isMobileWidth && attachments.includes(detail.title) && (
                       <FileUploadButton
@@ -132,6 +152,8 @@ const A1Supervisor = () => {
                         index={index}
                         subFormField="standardsDetail"
                         isEditable={isEditable}
+                        isMulti
+                        existFiles={detail?.filePath ?? []}
                       />
                     )}
                   </div>
@@ -145,6 +167,8 @@ const A1Supervisor = () => {
                       index={index}
                       subFormField="standardsDetail"
                       isEditable={isEditable}
+                      isMulti
+                      existFiles={detail?.filePath ?? []}
                     />
                   )}
                 </td>
@@ -166,6 +190,7 @@ const A1Supervisor = () => {
           checked={supervisor?.isAgree}
           name="isAgree"
           onChange={e => handleInputChange(e.target.name, e.target.checked)}
+          disabled={!isEditable}
         />
         {supervisor?.error?.isAgree && (
           <div className="form-error-message ml-20 mt-10">{supervisor?.error?.isAgree}</div>
