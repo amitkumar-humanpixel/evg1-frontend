@@ -38,6 +38,10 @@ export const ACCREDITED_URLS = {
 
   RE_SUBMIT_ACCREDITED_FORM: `${BASE_URL}formA1/resubmitForm/`,
 
+  // Re accredited check box list
+  GET_RE_ACCREDITED_CHECKLIST_DATA: `${BASE_URL}accredited/reaccreditation-checklist/`,
+  SAVE_RE_ACCREDITED_CHECKLIST_DETAILS: `${BASE_URL}accredited/reaccreditation-checklist/`,
+
   // post details
   GET_PRACTICE_MANAGER_POST_DETAILS: `${BASE_URL}facility/`,
   POST_DETAILS_URL: `${BASE_URL}accredited/post-detail`,

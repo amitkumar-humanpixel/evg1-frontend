@@ -28,15 +28,23 @@ export const standardValidation = async (
   ];
 
   data?.forEach((condition, index) => {
-    if (condition?.status === 'true' && attachments.includes(condition?.title) && !condition?.filePath) {
+    if (condition?.status === 'true' && attachments.includes(condition?.title) && condition?.filePath?.length <= 0) {
       validated = false;
       dispatch(
         updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please attach relevant document!'),
       );
-    } else if (condition?.status !== 'true' && attachments?.includes(condition.title) && condition?.filePath) {
+    } else if (
+      condition?.status !== 'true' &&
+      attachments?.includes(condition.title) &&
+      condition?.filePath?.length > 0
+    ) {
       validated = false;
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please change the status!'));
-    } else if (condition?.status === 'true' && attachments.includes(condition?.title) && condition?.filePath) {
+    } else if (
+      condition?.status === 'true' &&
+      attachments.includes(condition?.title) &&
+      condition?.filePath?.length > 0
+    ) {
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });

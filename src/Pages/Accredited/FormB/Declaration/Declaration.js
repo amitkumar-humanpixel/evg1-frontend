@@ -15,7 +15,7 @@ const Declaration = () => {
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
-  const { reviewedBy, declarationStatus, recomendationPanel, summery, previousIssues, error } = useSelector(
+  const { reviewedBy, isAgree, recomendationPanel, summery, previousIssues, error } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formB?.otherDetails ?? {},
   );
 
@@ -93,8 +93,8 @@ const Declaration = () => {
               </div>
             }
             id="declarationStatus"
-            name="declarationStatus"
-            checked={declarationStatus ?? false}
+            name="isAgree"
+            checked={isAgree ?? false}
             onChange={handleInputCheckChange}
             disabled={!isEditable}
           />

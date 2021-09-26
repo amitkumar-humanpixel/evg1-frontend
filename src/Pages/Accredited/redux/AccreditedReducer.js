@@ -8,49 +8,49 @@ const hoursTableData = [
     hours: '00',
     startTime: '00',
     finishTime: '00',
-    isChecked: false,
+    isChecked: 'none',
   },
   {
     days: 'Monday',
     hours: '00',
-    startTime: '00',
-    finishTime: '00',
-    isChecked: false,
+    startTime: '08:00',
+    finishTime: '17:00',
+    isChecked: 'none',
   },
   {
     days: 'Tuesday',
     hours: '00',
-    startTime: '00',
-    finishTime: '00',
-    isChecked: false,
+    startTime: '08:00',
+    finishTime: '17:00',
+    isChecked: 'none',
   },
   {
     days: 'Wednesday',
     hours: '00',
-    startTime: '00',
-    finishTime: '00',
-    isChecked: false,
+    startTime: '08:00',
+    finishTime: '17:00',
+    isChecked: 'none',
   },
   {
     days: 'Thursday',
     hours: '00',
-    startTime: '00',
-    finishTime: '00',
-    isChecked: false,
+    startTime: '08:00',
+    finishTime: '17:00',
+    isChecked: 'none',
   },
   {
     days: 'Friday',
     hours: '00',
-    startTime: '00',
-    finishTime: '00',
-    isChecked: false,
+    startTime: '08:00',
+    finishTime: '17:00',
+    isChecked: 'none',
   },
   {
     days: 'Saturday',
     hours: '00',
     startTime: '00',
     finishTime: '00',
-    isChecked: false,
+    isChecked: 'none',
   },
 ];
 
@@ -139,46 +139,46 @@ const formAStandardsConstant = [
 
 const supervisorStandardDetails = [
   {
-    status: false,
+    status: 'none',
     title: 'I am recognized as a Specialist GP by AHPRA ',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I confirm that I am not currently under investigation or the subject of disciplinary proceedings\n' +
       'under any jurisdiction. A yes answer indicates that this is correct.',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I confirm that I have not been removed from the register for conduct, health, or performance\n' +
       'reasons under any jurisdiction at any time in my career. A yes answer indicates that this is correct.',
   },
   {
-    status: false,
+    status: 'none',
     title: 'I confirm that I am not subject to any conditions, limitations or restrictions from any jurisdiction.',
   },
   {
-    status: false,
+    status: 'none',
     title: 'I have completed ongoing CPD as required by RACGP',
   },
   {
-    status: false,
+    status: 'none',
     title: 'I have completed ongoing CPD as required by ACRRM ',
   },
   {
-    status: false,
+    status: 'none',
     title: 'I have hospital clinical privileges',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I will continue to attend EV continuing professional development aimed at improving performance\n' +
       'as a general practice educator, as required by EV and the RACGP/ACCRM. This will be in alignment\n' +
       'with the requirements for the category of supervision sought.',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I agree to inform the Accreditation Coordinator at EV if there are changes to my medical registration that ' +
       'include any caution, undertaking, condition, reprimand, or if my medical registration is suspended or ' +
@@ -186,7 +186,7 @@ const supervisorStandardDetails = [
       'impact upon my accreditation as a GP Supervisor.',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I have read and understood the application form and agree to train to the standards/requirements\n' +
       'in alignment with the supervisor category sought. I also understand that not meeting the\n' +
@@ -194,7 +194,7 @@ const supervisorStandardDetails = [
       'take registrars. ',
   },
   {
-    status: false,
+    status: 'none',
     title:
       'I am aware that in becoming an accredited supervisor I will be required to abide by the conditions\n' +
       'of the Supervision and Training Agreement as agreed between EV and my practice. Please see your\n' +
@@ -203,45 +203,49 @@ const supervisorStandardDetails = [
 ];
 
 const finalCheckListConstant = [
-  { title: 'Application form completed and declaration signed by each supervisor', status: false },
+  { title: 'Application form completed and declaration signed by each supervisor', status: 'none' },
   {
     title: 'Current practice accreditation certificate AGPAL or QPA (not mandatory for ACRRM)',
-    status: false,
+    status: 'none',
   },
-  { title: 'Copy of the registrar-specific orientation document', status: false },
-  { title: 'Copy of a registrar employment contract template', status: false },
+  { title: 'Copy of the registrar-specific orientation document', status: 'none' },
+  { title: 'Copy of a registrar employment contract template', status: 'none' },
   {
     title: 'Each supervisor Copy of hospital letter confirming clinical privileging (if applicable)',
-    status: false,
+    status: 'none',
   },
 ];
 
 const summaryAssessment = [
   {
     title: 'Desktop',
-    status: false,
+    status: 'none',
   },
   {
     title: 'Short meeting',
-    status: false,
+    status: 'none',
   },
   {
     title: 'full zoom meeting',
-    status: false,
+    status: 'none',
   },
   {
     title: 'In person visit to practice',
-    status: false,
+    status: 'none',
   },
   {
     title: 'Other',
-    status: false,
+    status: 'none',
   },
 ];
 
 const initialAccreditedReducer = {
   accreditedDetails: {},
   accreditedStepper: {},
+
+  reaccreditationChecklist: {
+    reaccreditationChecklist: [...finalCheckListConstant],
+  },
 
   postDetails: {},
   formA: {
@@ -258,6 +262,7 @@ const initialAccreditedReducer = {
         categoryOfSupervisor: [],
         contactNumber: '',
         email: '',
+        hours: [...hoursTableData],
       },
     ],
     registrars: [
@@ -266,6 +271,8 @@ const initialAccreditedReducer = {
         note: '',
         hoursDetails: [...hoursTableData],
         onCall: [...hoursTableData],
+        note1: '',
+        note2: '',
       },
     ],
   },
@@ -273,9 +280,9 @@ const initialAccreditedReducer = {
     finalCheckList: {
       recommendation: '',
       actioned: '',
-      finalCheckLists: [...finalCheckListConstant],
     },
   },
+  previousRecommendations: {},
   formB: {
     accreditorAssign: {
       accreditorId: [],
@@ -287,7 +294,7 @@ const initialAccreditedReducer = {
       dateOfReportComplete: '',
       assessment: [...summaryAssessment],
       applications: [],
-      shadyOaksPractice: '',
+      practiceDetail: '',
       accreditationWithEV: false,
     },
     otherDetails: {
@@ -295,6 +302,7 @@ const initialAccreditedReducer = {
       summery: '',
       recomendationPanel: '',
       reviewedBy: '',
+      isAgree: false,
     },
   },
 };
@@ -419,6 +427,19 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       };
     }
 
+    // *** Reaccredited Checkbox ***
+
+    case ACCREDITED_REDUX_CONSTANTS.RE_ACCREDITED_CHECKBOX.GET_RE_ACCREDITED_CHECKBOX_DETAILS: {
+      return {
+        ...state,
+        reaccreditationChecklist: {
+          reaccreditationChecklist: !_.isEmpty(action?.data?.reaccreditationChecklist)
+            ? action?.data?.reaccreditationChecklist
+            : [...finalCheckListConstant],
+        },
+      };
+    }
+
     // *** PostDetails ***
 
     case ACCREDITED_REDUX_CONSTANTS.POST_DETAILS.GET_PRACTICE_MANAGERS_POST_DETAILS: {
@@ -487,7 +508,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         ...action?.data,
         userId: userId ? { label: name, value: userId, name: 'userId' } : [],
         contactNumber: contactNumber || '',
-        usualWorkingHours: !_.isEmpty(usualWorkingHours) ? usualWorkingHours : { days: '', hours: '00:00' },
+        usualWorkingHours: !_.isEmpty(usualWorkingHours) ? usualWorkingHours : { days: '' },
         hours: !_.isEmpty(hours) ? hours : [...hoursTableData],
         name: name || '',
         email: email || '',
@@ -593,6 +614,12 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
               : [],
             contactNumber: supervisor?.contactNumber || '',
             email: supervisor?.email || '',
+            college: supervisor?.college?.map(college => ({
+              label: _.upperCase(college),
+              value: college,
+              name: 'college',
+            })),
+            hours: !_.isEmpty(supervisor?.hours) ? supervisor?.hours : [...hoursTableData],
           }))
         : [
             {
@@ -600,6 +627,8 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
               categoryOfSupervisor: [],
               contactNumber: '',
               email: '',
+              college: [],
+              hours: [...hoursTableData],
             },
           ];
 
@@ -632,10 +661,62 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
               categoryOfSupervisor: [],
               contactNumber: '',
               email: '',
+              hours: [...hoursTableData],
             },
           ],
         },
       };
+
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_SUPERVISOR_TIMINGS: {
+      let finalArray = state?.formA?.supervisors;
+      finalArray = finalArray?.map((supervisor, index) => {
+        if (index === action?.index) {
+          return {
+            ...supervisor,
+            [action?.fieldFor]: supervisor?.[action?.fieldFor]?.map(hour => {
+              if (hour?.days === action?.day) {
+                return {
+                  ...hour,
+                  [action.fieldName]: action.fieldValue,
+                };
+              }
+              return hour;
+            }),
+          };
+        }
+        return supervisor;
+      });
+      finalArray = finalArray?.map((supervisor, index) => {
+        if (index === action?.index) {
+          return {
+            ...supervisor,
+            [action?.fieldFor]: supervisor?.[action?.fieldFor]?.map(hour => ({
+              ...hour,
+              hours:
+                hour?.startTime < hour?.finishTime
+                  ? moment(
+                      `${moment
+                        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+                        .hours()}:${moment
+                        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+                        .minutes()}`,
+                      'HH:mm',
+                    ).format('HH:mm')
+                  : '00:00',
+            })),
+          };
+        }
+        return supervisor;
+      });
+
+      return {
+        ...state,
+        formA: {
+          ...state?.formA,
+          supervisors: finalArray,
+        },
+      };
+    }
 
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.DELETE_SUPERVISOR: {
       const supervisors = state?.formA?.supervisors.filter((supervisor, index) => index !== action?.index);
@@ -664,6 +745,8 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             note: registrar?.note || '',
             hoursDetails: !_.isEmpty(registrar?.hoursDetails) ? registrar?.hoursDetails : [...hoursTableData],
             onCall: !_.isEmpty(registrar?.onCall) ? registrar?.onCall : [...hoursTableData],
+            note1: registrar?.note1 || '',
+            note2: registrar?.note2 || '',
           }))
         : [
             {
@@ -671,6 +754,8 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
               note: '',
               hoursDetails: [...hoursTableData],
               onCall: [...hoursTableData],
+              note1: '',
+              note2: '',
             },
           ];
 
@@ -792,7 +877,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             email: action?.data?.email ? action?.data?.email : '',
             contactNumber: action?.data?.contactNumber ? action?.data?.contactNumber : '',
             categoryOfSupervisor: _.capitalize(action?.data?.categoryOfSupervisor),
-            hours: [...hoursTableData],
+            // hours: [...hoursTableData],
             standardsDetail: [...supervisorStandardDetails],
           },
         },
@@ -805,66 +890,60 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
           ...state.formA1,
           [action?.data?.userId]: {
             ...state?.formA1?.[action?.data?.userId],
-            hours: !_.isEmpty(action?.data?.hours) ? action?.data?.hours : [...hoursTableData],
+            // hours: !_.isEmpty(action?.data?.hours) ? action?.data?.hours : [...hoursTableData],
             standardsDetail: !_.isEmpty(action?.data?.standardsDetail)
               ? action?.data?.standardsDetail
               : [...supervisorStandardDetails],
+            isAgree: action?.data?.isAgree,
           },
         },
       };
 
-    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_TIMING: {
-      let { hours } = state.formA1?.[action.subFormName];
-      hours = hours.map(hour => {
-        if (hour?.days === action?.day) {
-          return {
-            ...hour,
-            [action.fieldName]: action.fieldValue,
-          };
-        }
-        return hour;
-      });
-      hours = hours?.map(hour => ({
-        ...hour,
-        hours:
-          hour?.startTime < hour?.finishTime
-            ? moment(
-                `${moment
-                  .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-                  .hours()}:${moment
-                  .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-                  .minutes()}`,
-                'HH:mm',
-              ).format('HH:mm')
-            : '00:00',
-      }));
+    // case ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_TIMING: {
+    //   let { hours } = state.formA1?.[action.subFormName];
+    //   hours = hours.map(hour => {
+    //     if (hour?.days === action?.day) {
+    //       return {
+    //         ...hour,
+    //         [action.fieldName]: action.fieldValue,
+    //       };
+    //     }
+    //     return hour;
+    //   });
+    //   hours = hours?.map(hour => ({
+    //     ...hour,
+    //     hours:
+    //       hour?.startTime < hour?.finishTime
+    //         ? moment(
+    //             `${moment
+    //               .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+    //               .hours()}:${moment
+    //               .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+    //               .minutes()}`,
+    //             'HH:mm',
+    //           ).format('HH:mm')
+    //         : '00:00',
+    //   }));
+    //   return {
+    //     ...state,
+    //     formA1: {
+    //       ...state.formA1,
+    //       [action?.subFormName]: {
+    //         ...state.formA1?.[action?.subFormName],
+    //         hours,
+    //       },
+    //     },
+    //   };
+    // }
+
+    // *** Previous Recommendations ***
+
+    case ACCREDITED_REDUX_CONSTANTS.PREVIOUS_RECOMMENDATIONS.GET_PREVIOUS_RECOMMENDATIONS_DETAILS: {
       return {
         ...state,
-        formA1: {
-          ...state.formA1,
-          [action?.subFormName]: {
-            ...state.formA1?.[action?.subFormName],
-            hours,
-          },
-        },
-      };
-    }
-
-    // final checklist
-
-    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_FINAL_CHECKLIST_DATA: {
-      return {
-        ...state,
-        formA1: {
-          ...state.formA1,
-          finalCheckList: {
-            ...state.formA1.finalCheckList,
-            recommendation: action?.data?.addressRecommendation?.recommendation || '',
-            actioned: action?.data?.addressRecommendation?.actioned || '',
-            finalCheckLists: !_.isEmpty(action?.data?.finalCheckList)
-              ? action?.data?.finalCheckList
-              : [...finalCheckListConstant],
-          },
+        previousRecommendations: {
+          recommendation: action?.data?.addressRecommendation?.recommendation || '',
+          actioned: action?.data?.addressRecommendation?.actioned || '',
         },
       };
     }
@@ -904,7 +983,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         dateOfReportComplete: action?.data?.dateOfReportComplete || '',
         assessment: !_.isEmpty(action?.data?.assessment) ? [...action?.data?.assessment] : [...summaryAssessment],
         applications: action?.data?.applications,
-        shadyOaksPractice: action?.data?.shadyOaksPractice || '',
+        practiceDetail: action?.data?.practiceDetail || '',
         accreditationWithEV: action?.data?.accreditationWithEV ?? false,
       };
       return {
@@ -968,6 +1047,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             summery: action?.data?.summery || '',
             recomendationPanel: action?.data?.recomendationPanel || '',
             reviewedBy: action?.data?.reviewedBy || '',
+            isAgree: action?.data?.isAgree ?? false,
           },
         },
       };

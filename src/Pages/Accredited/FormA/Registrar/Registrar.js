@@ -56,7 +56,7 @@ const Registrar = () => {
   return (
     <>
       <div className="add-button-row">
-        <Button buttonType="primary" className="icon-button" onClick={addRegistrar}>
+        <Button buttonType="primary" className="icon-button" onClick={addRegistrar} isDisabled={!isEditable}>
           <span className="material-icons-round">add</span>
         </Button>
       </div>
@@ -66,7 +66,12 @@ const Registrar = () => {
             <div className="section-inner-title-button-row">
               <div className="section-inner-title">{`Registrar ${index + 1}`}</div>
               {registrars?.length > 1 && (
-                <Button buttonType="danger" className="icon-button" onClick={() => deleteRegistrar(index)}>
+                <Button
+                  buttonType="danger"
+                  className="icon-button"
+                  onClick={() => deleteRegistrar(index)}
+                  isDisabled={!isEditable}
+                >
                   <span className="material-icons-round">delete</span>
                 </Button>
               )}

@@ -5,10 +5,16 @@
 }
 
 .final-checklist {
+  display: flex;
   margin-bottom: 10px;
+  color: $field-color;
 
-  .checkbox-container > div {
-    margin-left: 5px;
+  .tri-state-switch-container {
+    margin-top: 5px;
+  }
+
+  & > div {
+    margin-left: 10px;
   }
 }
 

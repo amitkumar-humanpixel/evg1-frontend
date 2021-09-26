@@ -1,9 +1,9 @@
 export const fileNamePrefix = fileName => {
-  const file = fileName.split('.');
-  return file[0];
+  const file = fileName?.split('.');
+  return file?.[0];
 };
 
 export const fileNameExtension = fileName => {
-  const file = fileName.split('.');
-  return file[1];
+  const file = fileName?.split('.');
+  return file?.[1];
 };

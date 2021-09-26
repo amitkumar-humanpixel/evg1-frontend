@@ -52,7 +52,7 @@ export const registrarValidation = async (
     }
 
     registrar?.hoursDetails?.forEach(hour => {
-      if (hour?.isChecked === true && hour?.hours === '0:0') {
+      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
         validated = false;
         dispatch(
           updateRegistrarTimings(index, 'hoursDetails', hour?.days, 'error', 'Please select opening & closing hours!'),
@@ -73,7 +73,7 @@ export const registrarValidation = async (
       }
     });
     registrar?.onCall?.forEach(hour => {
-      if (hour?.isChecked === true && hour?.hours === '0:0') {
+      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
         validated = false;
         dispatch(
           updateRegistrarTimings(index, 'onCall', hour?.days, 'error', 'Please select opening & closing hours!'),

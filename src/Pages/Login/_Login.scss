@@ -15,36 +15,56 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  padding: 10%;
+  padding: 10% 3%;
 }
 
 .login-title {
   margin-bottom: 10px;
-  font: $boldH2;
   line-height: 1;
+
+  img {
+    height: 7vh;
+    margin-bottom: 5vh;
+  }
 
   > div:first-child {
     margin-top: 10px;
   }
 }
 
+.welcome-title {
+  font: $boldH3;
+  color: $secondary-color;
+}
+
+.EV-name {
+  font: $boldH3;
+  color: $primary-color;
+}
+
 .auth-strip {
   height: 100%;
   width: 24px;
   border: 1px solid white;
+  z-index: 2;
 }
 
 .login-right-part {
   width: 100%;
   height: 100%;
-  background-image: url('../../assets/images/login_images/login-right-image.png');
+  background-image: url('../../assets/images/login_images/login-right-image.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  z-index: 2;
 }
 
-.login-left-part, .login-right-part {
-  width: calc(50% - 24px);
+.login-left-part {
+  width: calc(40% - 12px);
+}
+
+.login-right-part {
+  width: calc(60% - 12px);
 }
 
 .input-container.auth-input-container {
@@ -79,15 +99,16 @@
 
 .auth-evgp-bg-logo {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: -3vw;
+  bottom: 3vh;
   height: 20%;
-  filter: grayscale(100%);
+  filter: grayscale(1) brightness(.7) contrast(1.7);
 }
 
-.auth-submit-button {
+.button.auth-submit-button {
   width: fit-content;
   margin-top: 20px;
+  font: $semiBoldTitle;
 }
 
 @media (max-width: 1024px) {
@@ -104,11 +125,16 @@
     }
 
     .login-right-part {
-      height: calc(40% - 14px);
+      height: 40%;
     }
 
     .auth-strip {
       height: 14px;
     }
+  }
+
+  .auth-evgp-bg-logo {
+    right: 0;
+    bottom: 0;
   }
 }

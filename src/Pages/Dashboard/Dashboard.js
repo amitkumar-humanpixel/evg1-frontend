@@ -74,7 +74,7 @@ const Dashboard = () => {
           ),
         );
       if (['Practice_Manager', 'Principal_Supervisor'].includes(role) && selectedUser?.formType === 'formB') {
-        history.push('/accredited/postDetails');
+        history.push('/accredited/reaccreditationChecklist');
       } else if (selectedUser?.formType) history.push(`/accredited/${selectedUser?.formType}`);
     },
     [USER_ID, role],

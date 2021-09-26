@@ -34,10 +34,13 @@ const Standards = () => {
   }, []);
 
   const handleFileDeletion = useCallback(
-    (index, filePath) => {
-      dispatch(deleteFileFromStandards(index, `Files/${filePath?.split('/').pop()}`, id, 'practiceStandards'));
+    (index, fileArray, filePath) => {
+      if (isEditable) {
+        const files = fileArray?.filter(e => e?.fileUrl !== filePath);
+        dispatch(deleteFileFromStandards(index, `Files/${filePath?.split('/').pop()}`, files, id, 'practiceStandards'));
+      }
     },
-    [id],
+    [id, isEditable],
   );
 
   useEffect(() => {
@@ -71,6 +74,7 @@ const Standards = () => {
                     <TriStateSwitch
                       onChange={state => handleInputChange(index, 'status', state)}
                       state={detail?.status}
+                      disabled={!isEditable}
                     />
                     <div className="standard-detail-container">
                       <div className="standard-detail-point">
@@ -84,23 +88,24 @@ const Standards = () => {
                         )}
                       </div>
                       <div className="form-error-message standard-error-message">{detail?.error}</div>
-                      {detail?.filePath && (
-                        <div className="standard-attached-file">
-                          <span className="file-name">
-                            <span className="file-name-without-extension">
-                              <b>Uploaded File: </b>
-                              {fileNamePrefix(detail?.filePath?.split('/').pop())}
+                      {detail?.filePath?.length > 0 &&
+                        detail?.filePath?.map(file => (
+                          <div className="standard-attached-file">
+                            <span className="file-name">
+                              <span className="file-name-without-extension">
+                                <b>Uploaded File: </b>
+                                {fileNamePrefix(file?.fileName?.split('/').pop())}
+                              </span>
+                              <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
                             </span>
-                            <span>.{fileNameExtension(detail?.filePath?.split('/').pop())}</span>
-                          </span>
-                          <span
-                            className="material-icons-round"
-                            onClick={() => handleFileDeletion(index, detail?.filePath)}
-                          >
-                            delete
-                          </span>
-                        </div>
-                      )}
+                            <span
+                              className="material-icons-round"
+                              onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
+                            >
+                              delete
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -111,6 +116,8 @@ const Standards = () => {
                       data={detail}
                       index={index}
                       isEditable={isEditable}
+                      isMulti
+                      existFiles={detail?.filePath ?? []}
                     />
                   )}
 
@@ -140,6 +147,8 @@ const Standards = () => {
                     data={detail}
                     index={index}
                     isEditable={isEditable}
+                    isMulti
+                    existFiles={detail?.filePath ?? []}
                   />
                 </td>
               )}

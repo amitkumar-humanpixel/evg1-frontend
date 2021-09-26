@@ -62,7 +62,7 @@ export const practiceManagerValidation = async (
   }
 
   finalData?.hours?.forEach((hour, index) => {
-    if (hour?.isChecked === true && hour?.hours === '0:0') {
+    if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(

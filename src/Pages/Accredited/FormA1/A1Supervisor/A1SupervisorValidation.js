@@ -1,8 +1,6 @@
-import moment from 'moment';
 import {
   saveAccreditedA1SupervisorDetails,
   saveAccreditedA1SupervisorDetailsPartially,
-  updateA1SupervisorTimings,
   updateAccreditedSubFormDataArrayFields,
   updateAccreditedSubFormFields,
 } from '../../redux/AccreditedReduxActions';
@@ -28,24 +26,25 @@ export const a1SupervisorValidation = async (
     userId: data?.userId,
     contactNumber: data?.contactNumber,
     categoryOfSupervisor: data?.categoryOfSupervisor,
-    hours: data?.hours?.map(hour => ({
-      ...hour,
-      hours: `${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .hours()}:${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .minutes()}`,
-    })),
+    // hours: data?.hours?.map(hour => ({
+    //   ...hour,
+    //   hours: `${moment
+    //     .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+    //     .hours()}:${moment
+    //     .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+    //     .minutes()}`,
+    // })),
     standardsDetail: data?.standardsDetail?.map(standardDetail => ({
       status: standardDetail?.status,
       title: standardDetail?.title,
       filePath: standardDetail?.filePath,
     })),
+    isAgree: data?.isAgree,
   };
 
   if (isNextClick) {
     finalData.standardsDetail.forEach((detail, index) => {
-      if (!detail?.status) {
+      if (!detail?.status || detail?.status === 'none') {
         validated = false;
         dispatch(
           updateAccreditedSubFormDataArrayFields(
@@ -54,11 +53,10 @@ export const a1SupervisorValidation = async (
             index,
             'standardsDetail',
             'error',
-            'Please read and mark as checked to continue!',
+            'Please read and mark as change status to continue!',
           ),
         );
-      }
-      if (detail?.status === true && attachments.includes(detail?.title) && !detail?.filePath) {
+      } else if (detail?.status === 'true' && attachments.includes(detail?.title) && detail?.filePath?.length <= 0) {
         validated = false;
         dispatch(
           updateAccreditedSubFormDataArrayFields(
@@ -70,8 +68,7 @@ export const a1SupervisorValidation = async (
             'Please attach relevant document!',
           ),
         );
-      }
-      if (detail?.status === false && attachments.includes(detail?.title) && detail?.filePath) {
+      } else if (detail?.status !== 'true' && attachments.includes(detail?.title) && detail?.filePath?.length > 0) {
         validated = false;
         dispatch(
           updateAccreditedSubFormDataArrayFields(
@@ -83,29 +80,39 @@ export const a1SupervisorValidation = async (
             'Please change the status',
           ),
         );
-      }
-      if (
-        (detail?.status === true && !attachments.includes(detail?.title)) ||
-        (detail?.status === true && attachments.includes(detail?.title) && detail?.filePath)
+      } else if (
+        (detail?.status !== 'none' && !attachments.includes(detail?.title)) ||
+        (detail?.status !== 'none' && attachments.includes(detail?.title) && detail?.filePath?.length > 0)
       ) {
-        validated = true;
         dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
       }
     });
 
-    finalData?.hours?.forEach(hour => {
-      if (hour?.isChecked === true && hour?.hours === '0:0') {
-        validated = false;
-        dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Please select opening & closing hours!'));
-      } else if (hour?.startTime > hour?.finishTime) {
-        validated = false;
-        dispatch(
-          updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', 'Close time must be greater than Start time!'),
-        );
-      } else {
-        dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
-      }
-    });
+    // finalData?.hours?.forEach(hour => {
+    //   if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+    //     validated = false;
+    //     dispatch(
+    //       updateA1SupervisorTimings(
+    //         `${sid}`,
+    //         hour?.days,
+    //         'error',
+    //         'Please select opening & closing hours!'
+    //       )
+    //     );
+    //   } else if (hour?.startTime > hour?.finishTime) {
+    //     validated = false;
+    //     dispatch(
+    //       updateA1SupervisorTimings(
+    //         `${sid}`,
+    //         hour?.days,
+    //         'error',
+    //         'Close time must be greater than Start time!'
+    //       )
+    //     );
+    //   } else {
+    //     dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
+    //   }
+    // });
 
     if (!data?.isAgree) {
       validated = false;
@@ -120,9 +127,9 @@ export const a1SupervisorValidation = async (
       dispatch(updateAccreditedSubFormDataArrayFields('formA1', sid, index, 'standardsDetail', 'error', undefined));
     });
 
-    finalData?.hours?.forEach(hour => {
-      dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
-    });
+    // finalData?.hours?.forEach(hour => {
+    //   dispatch(updateA1SupervisorTimings(`${sid}`, hour?.days, 'error', undefined));
+    // });
 
     dispatch(updateAccreditedSubFormFields('formA1', `${sid}`, 'error', undefined));
   }

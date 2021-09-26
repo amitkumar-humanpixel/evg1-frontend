@@ -47,13 +47,25 @@ const RegistrarDetails = props => {
   const onHourDetailsInputChange = useCallback(
     (day, name, value) => {
       if (name === 'isChecked') {
-        if (!value) {
-          dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'startTime', '00:00'));
-          dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'finishTime', '00:00'));
+        if (value !== 'true') {
+          if (['Sunday', 'Saturday'].includes(day)) {
+            dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'startTime', '00:00'));
+            dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'finishTime', '00:00'));
+          } else {
+            dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'startTime', '08:00'));
+            dispatch(updateRegistrarTimings(index, 'hoursDetails', day, 'finishTime', '17:00'));
+          }
         }
         dispatch(updateRegistrarTimings(index, 'hoursDetails', day, name, value));
       } else {
-        const finalValue = value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
+        const finalValue =
+          value === 'Invalid date'
+            ? moment(
+                moment()
+                  .hour((!['Sunday', 'Saturday'].includes(day) && (name === 'startTime' ? 8 : 17)) || 0)
+                  .minutes(0),
+              ).format('HH:mm')
+            : value;
         dispatch(updateRegistrarTimings(index, 'hoursDetails', day, name, moment(finalValue, 'HH:mm').format('HH:mm')));
       }
     },
@@ -63,13 +75,25 @@ const RegistrarDetails = props => {
   const onCallInputChange = useCallback(
     (day, name, value) => {
       if (name === 'isChecked') {
-        if (!value) {
-          dispatch(updateRegistrarTimings(index, 'onCall', day, 'startTime', '00:00'));
-          dispatch(updateRegistrarTimings(index, 'onCall', day, 'finishTime', '00:00'));
+        if (value !== 'true') {
+          if (['Sunday', 'Saturday'].includes(day)) {
+            dispatch(updateRegistrarTimings(index, 'onCall', day, 'startTime', '00:00'));
+            dispatch(updateRegistrarTimings(index, 'onCall', day, 'finishTime', '00:00'));
+          } else {
+            dispatch(updateRegistrarTimings(index, 'onCall', day, 'startTime', '08:00'));
+            dispatch(updateRegistrarTimings(index, 'onCall', day, 'finishTime', '17:00'));
+          }
         }
         dispatch(updateRegistrarTimings(index, 'onCall', day, name, value));
       } else {
-        const finalValue = value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
+        const finalValue =
+          value === 'Invalid date'
+            ? moment(
+                moment()
+                  .hour((!['Sunday', 'Saturday'].includes(day) && (name === 'startTime' ? 8 : 17)) || 0)
+                  .minutes(0),
+              ).format('HH:mm')
+            : value;
         dispatch(updateRegistrarTimings(index, 'onCall', day, name, moment(finalValue, 'HH:mm').format('HH:mm')));
       }
     },

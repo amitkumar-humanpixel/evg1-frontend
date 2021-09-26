@@ -38,6 +38,7 @@ const PracticeManager = () => {
       value: manager?.userId,
       name: 'userId',
       email: manager?.email,
+      contactNumber: manager?.contactNumber,
     }));
   }, [practiceManagerList]);
 
@@ -71,7 +72,7 @@ const PracticeManager = () => {
       },
       {
         type: 'day/hours',
-        title: 'Usual Working Days/Hours',
+        title: 'Usual Working Days',
         name: 'usualWorkingHours',
         value: usualWorkingHours,
         error: errors?.usualWorkingHours,
@@ -81,25 +82,31 @@ const PracticeManager = () => {
           suffix: 'Days',
           isEditable,
         },
-        time: {
-          placeholder: '00:00',
-          value: usualWorkingHours?.hours || '00:00',
-          suffix: 'Hours',
-          isEditable,
-        },
       },
     ],
     [usualWorkingHours, contactNumber, email, practiceManagerOptions, userId, errors, isEditable],
   );
   const onHourInputChange = useCallback((day, name, value) => {
     if (name === 'isChecked') {
-      if (!value) {
-        dispatch(updatePracticeManagerTimings(day, 'startTime', '00:00'));
-        dispatch(updatePracticeManagerTimings(day, 'finishTime', '00:00'));
+      if (value !== 'true') {
+        if (['Sunday', 'Saturday'].includes(day)) {
+          dispatch(updatePracticeManagerTimings(day, 'startTime', '00:00'));
+          dispatch(updatePracticeManagerTimings(day, 'finishTime', '00:00'));
+        } else {
+          dispatch(updatePracticeManagerTimings(day, 'startTime', '08:00'));
+          dispatch(updatePracticeManagerTimings(day, 'finishTime', '17:00'));
+        }
       }
       dispatch(updatePracticeManagerTimings(day, name, value));
     } else {
-      const finalValue = value === 'Invalid date' ? moment(moment().hour(0).minutes(0)).format('HH:mm') : value;
+      const finalValue =
+        value === 'Invalid date'
+          ? moment(
+              moment()
+                .hour((!['Sunday', 'Saturday'].includes(day) && (name === 'startTime' ? 8 : 17)) || 0)
+                .minutes(0),
+            ).format('HH:mm')
+          : value;
       dispatch(updatePracticeManagerTimings(day, name, moment(finalValue, 'HH:mm').format('HH:mm')));
     }
   }, []);
@@ -108,6 +115,7 @@ const PracticeManager = () => {
     (name, value) => {
       if (name === 'userId') {
         dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', 'email', value?.email));
+        dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', 'contactNumber', value?.contactNumber));
       }
       dispatch(updateAccreditedSubFormFields('formA', 'practiceManager', name, value));
     },

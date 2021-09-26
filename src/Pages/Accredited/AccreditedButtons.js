@@ -9,11 +9,12 @@ import { useQueryParams } from '../../hooks/GetQueryParamHook';
 import { supervisorValidation } from './FormA/Supervisor/SupervisorValidation';
 import { registrarValidation } from './FormA/Registrar/RegistrarValidation';
 import { a1SupervisorValidation } from './FormA1/A1Supervisor/A1SupervisorValidation';
-import { finalCheckListValidations } from './FormA1/FinalChecklist/FinalCheckListValidations';
 import { summaryValidations } from './FormB/Summary/SummaryValidations';
 import { declarationValidations } from './FormB/Declaration/DeclarationValidations';
 import { accreditorAssignValidations } from './FormB/AccreditorAssign/AccreditorAssignValidation';
 import { resetAccredited, resubmitAccreditedForm } from './redux/AccreditedReduxActions';
+import { ReaccreditationChecklistValidations } from './ReaccreditationChecklist/ReaccreditationChecklistValidations';
+import { PreviousRecommendationsValidation } from './PreviousRecommendations/PreviousRecommendationsValidation';
 
 const AccreditedButtons = () => {
   const { step, subStep } = useParams();
@@ -25,7 +26,7 @@ const AccreditedButtons = () => {
 
   const { role } = useSelector(({ loginReducer }) => loginReducer?.loggedUserDetails ?? {});
 
-  const { accreditionId, accreditionSideBar } = useSelector(
+  const { accreditionId, accreditionSideBar, facilityId } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {},
   );
 
@@ -37,7 +38,13 @@ const AccreditedButtons = () => {
     ({ accreditedReducer }) => accreditedReducer?.formA ?? {},
   );
   const a1SupervisorDetails = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}`] ?? {});
-  const finalCheckListDetails = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.finalCheckList ?? {});
+  const finalCheckListDetails = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.reaccreditationChecklist ?? {},
+  );
+
+  const previousRecommendationsDetails = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.previousRecommendations ?? {},
+  );
 
   const { summary, otherDetails, accreditorAssign } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formB ?? {},
@@ -50,7 +57,7 @@ const AccreditedButtons = () => {
 
   const onClickSave = useCallback(
     async isNextClick => {
-      if (step !== 'postDetails') {
+      if (!['postDetails', 'reaccreditationChecklist', 'previousRecommendations'].includes(step)) {
         switch (subStep) {
           case 'practiceManager':
             await practiceManagerValidation(
@@ -100,20 +107,6 @@ const AccreditedButtons = () => {
               dispatch,
               history,
               registrars,
-              id,
-              userId,
-              isNextClick,
-              accreditionSideBar,
-              accreditionId,
-              step,
-              subStep,
-            );
-            break;
-          case 'finalCheckList':
-            await finalCheckListValidations(
-              dispatch,
-              history,
-              finalCheckListDetails,
               id,
               userId,
               isNextClick,
@@ -193,12 +186,40 @@ const AccreditedButtons = () => {
           dispatch,
           history,
           postDetails,
+          id,
           userId,
           isNextClick,
           accreditionSideBar,
           accreditionId,
           step,
           subStep,
+        );
+      } else if (step === 'previousRecommendations') {
+        await PreviousRecommendationsValidation(
+          dispatch,
+          history,
+          previousRecommendationsDetails,
+          id,
+          userId,
+          isNextClick,
+          accreditionSideBar,
+          accreditionId,
+          step,
+          subStep,
+        );
+      } else if (step === 'reaccreditationChecklist') {
+        await ReaccreditationChecklistValidations(
+          dispatch,
+          history,
+          finalCheckListDetails,
+          userId,
+          facilityId,
+          isNextClick,
+          accreditionSideBar,
+          accreditionId,
+          step,
+          subStep,
+          facilityId,
         );
       }
     },
@@ -212,6 +233,7 @@ const AccreditedButtons = () => {
       registrars,
       a1SupervisorDetails,
       finalCheckListDetails,
+      previousRecommendationsDetails,
       accreditionSideBar,
       accreditionId,
       summary,
@@ -220,6 +242,7 @@ const AccreditedButtons = () => {
       id,
       userId,
       supervisorList,
+      facilityId,
     ],
   );
 
@@ -252,13 +275,13 @@ const AccreditedButtons = () => {
         currentSubStep?.activeSubStepIndex === currentStep?.subSteps?.length - 1
       )
         return true;
-      if (currentStep?.url === 'formA1' && currentSubStep?.url === 'finalCheckList') return true;
+      if (currentStep?.url === 'formA1') return true;
     } else if (currentStep?.activeStepIndex === accreditionSideBar?.length - 1) return true;
     return false;
   }, [step, subStep, accreditionSideBar]);
 
   const getAccreditedRightSideButtons = useMemo(() => {
-    if (role === 'Supervisor' && step === 'formA1' && subStep !== 'finalCheckList') {
+    if (role === 'Supervisor' && step === 'formA1') {
       return (
         <>
           <Button buttonType="outlined-primary" title="Save" onClick={() => onClickSave(false)} />
@@ -266,7 +289,7 @@ const AccreditedButtons = () => {
         </>
       );
     }
-    if (role === 'Accreditation_Support_Coordinator' && step === 'formA1' && subStep === 'finalCheckList') {
+    if (['Accreditation_Support_Coordinator', 'Super_Admin'].includes(role) && step === 'previousRecommendations') {
       return (
         <>
           <Button buttonType="outlined-primary" title="Re-Submit" onClick={onClickResubmit} />

@@ -16,9 +16,9 @@ export const declarationValidations = async (
   const errors = {};
   let validated = true;
 
-  if (!data?.declarationStatus) {
+  if (!data?.isAgree) {
     validated = false;
-    errors.declarationStatus = 'Please check declaration to continue!';
+    errors.isAgree = 'Please check declaration to continue!';
     dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', 'error', errors));
   } else {
     dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', 'error', {}));
