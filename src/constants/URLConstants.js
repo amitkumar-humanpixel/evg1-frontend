@@ -34,6 +34,7 @@ export const ACCREDITED_URLS = {
   GET_ACCREDITED_DETAILS: `${BASE_URL}accredited/`,
   GET_ACCREDITED_STEPPER: `${BASE_URL}accredited/accreditionSideBar/`,
   UPLOAD_FILE: `${BASE_URL}fileUploader/file`,
+  DOWNLOAD_FILE: `${BASE_URL}fileDownloader/`,
   DELETE_FILE: `${BASE_URL}fileUploader/file/`,
 
   RE_SUBMIT_ACCREDITED_FORM: `${BASE_URL}formA1/resubmitForm/`,

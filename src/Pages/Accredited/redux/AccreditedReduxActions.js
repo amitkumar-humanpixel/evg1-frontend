@@ -308,6 +308,19 @@ export const saveAccreditedStandardDetails = (id, data, accreditationId) => {
   };
 };
 
+export const downloadFileFromStandards = async fileName => {
+  try {
+    const response = await AccreditedApiServices.formAApiServices.downloadAccreditedStandardFile(fileName);
+    if (response) {
+      return response;
+    }
+  } catch (e) {
+    displayErrors(e);
+    return false;
+  }
+  return false;
+};
+
 export const deleteFileFromStandards = (index, filePath, files, accreditationId, fromModule) => {
   return async dispatch => {
     try {
@@ -580,6 +593,19 @@ export const saveAccreditedA1SupervisorDetailsPartially = (id, data) => {
       throw Error();
     }
   };
+};
+
+export const downloadFileFromA1Supervisor = async fileName => {
+  try {
+    const response = await AccreditedApiServices.formA1ApiServices.downloadA1SupervisorFile(fileName);
+    if (response) {
+      return response;
+    }
+  } catch (e) {
+    displayErrors(e);
+    return false;
+  }
+  return false;
 };
 
 export const deleteFileFromA1Standards = (index, filePath, files, accreditationId, sid, fromModule) => {

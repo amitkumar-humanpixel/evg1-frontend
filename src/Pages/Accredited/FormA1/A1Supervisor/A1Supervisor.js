@@ -5,7 +5,7 @@ import SupervisorDetails from '../../FormA/Supervisor/SupervisorDetails';
 import Checkbox from '../../../../components/Checkbox/Checkbox';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import {
-  deleteFileFromA1Standards,
+  downloadFileFromA1Supervisor,
   getFormA1SupervisorDetails,
   updateAccreditedSubFormDataArrayFields,
   updateAccreditedSubFormFields,
@@ -15,6 +15,8 @@ import FileUploadButton from '../../../../components/FileUploadButton';
 import { fileNameExtension, fileNamePrefix } from '../../../../helpers/fileNameSplit';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
 import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
+import { downloadAll } from '../../../../helpers/DownloadHelper';
+import { errorNotification } from '../../../../components/common/NotifyToaster';
 
 const attachments = ['I have hospital clinical privileges'];
 const A1Supervisor = () => {
@@ -79,11 +81,24 @@ const A1Supervisor = () => {
     [sid],
   );
 
+  const handleFileDownload = useCallback(async fileName => {
+    if (fileName) {
+      const response = await downloadFileFromA1Supervisor(fileName);
+      if (response) {
+        downloadAll(response);
+      } else {
+        errorNotification('Download failed, please try again.');
+      }
+    } else {
+      errorNotification('No file found');
+    }
+  }, []);
+
   const handleFileDeletion = useCallback(
     (index, fileArray, filePath) => {
       if (isEditable) {
         const files = fileArray?.filter(e => e?.fileUrl !== filePath);
-        dispatch(deleteFileFromA1Standards(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
+        dispatch(downloadFileFromA1Supervisor(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
       }
     },
     [id, sid, isEditable],
@@ -122,7 +137,7 @@ const A1Supervisor = () => {
                       onChange={status => handleStandardInputChange(index, 'status', status)}
                       disabled={!isEditable}
                     />
-                    <div>
+                    <div className="w-100">
                       <span>{detail?.title}</span>
                       <div className="form-error-message standard-error-message">{detail?.error}</div>
                       {detail?.filePath?.length > 0 &&
@@ -135,12 +150,21 @@ const A1Supervisor = () => {
                               </span>
                               <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
                             </span>
-                            <span
-                              className="material-icons-round"
-                              onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
-                            >
-                              delete
-                            </span>
+                            <div className="d-flex">
+                              <span
+                                className="material-icons-round download-file"
+                                title={`Download ${file?.fileName}`}
+                                onClick={() => handleFileDownload(file?.fileName)}
+                              >
+                                cloud_download
+                              </span>
+                              <span
+                                className="material-icons-round"
+                                onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
+                              >
+                                delete
+                              </span>
+                            </div>
                           </div>
                         ))}
                     </div>
