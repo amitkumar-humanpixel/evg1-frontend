@@ -181,7 +181,7 @@ const A1Supervisor = () => {
         <Checkbox
           title={
             <div className="confirmation-title">
-              I <span>{supervisor?.username}</span> agree the information provided has been entered by me and is true
+              I, <span>{supervisor?.username}</span> agree the information provided has been entered by me and is true
               and accurate. Additionally, I support and adhere to EV’s Training Post guidelines.
             </div>
           }

@@ -164,11 +164,11 @@ const supervisorStandardDetails = [
   },
   {
     status: 'none',
-    title: 'I have completed ongoing CPD as required by ACRRM ',
+    title: 'I have completed ongoing CPD as required by ACRRM',
   },
   {
     status: 'none',
-    title: 'I have hospital clinical privileges',
+    title: 'I have hospital clinical privileges - please attach evidence',
   },
   {
     status: 'none',

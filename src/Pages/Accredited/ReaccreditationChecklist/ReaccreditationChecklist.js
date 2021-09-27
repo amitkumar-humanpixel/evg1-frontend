@@ -38,6 +38,20 @@ const ReaccreditationChecklist = () => {
   return (
     <>
       <section>
+        <div className="accredited-title mb-10">Introduction</div>
+        <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
+          <div className="standard-texts">
+            Supervisors and practice managers are referred to the most recent EV Training Post Handbook for guidance on
+            current standards for teaching and supervision plus administrative requirements. If not already received The
+            Training post handbook is available in electronic form from the Accreditation Support Administrator at
+            EVGPT. Handbooks and Quick Guides are also available from the EV website at{' '}
+            <a href="https://www.evgptraining.com.au/resources/" target="_blank" rel="noreferrer">
+              https://www.evgptraining.com.au/resources/
+            </a>
+            .
+          </div>
+        </div>
+        <div className="accredited-title mb-10">Checklist</div>
         <div className="common-white-container">
           {reaccreditationChecklist?.map((detail, index) => (
             <div className="final-checklist">
