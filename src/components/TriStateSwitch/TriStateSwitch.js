@@ -42,7 +42,7 @@ const TriStateSwitch = props => {
         }`}
         onClick={() => !disabled && onTriStateChange()}
       >
-        <div />
+        <div className={`${disabled && 'cursor-not-allowed'}`} />
       </div>
       {title && <span>{title}</span>}
     </div>

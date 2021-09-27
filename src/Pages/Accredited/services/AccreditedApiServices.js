@@ -38,6 +38,12 @@ export const AccreditedApiServices = {
     getAccreditedStandardDetails: id => ApiService.getData(`${ACCREDITED_URLS.FORM_A.GET_STANDARD_DETAILS}${id}`),
     saveAccreditedStandardDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A.SAVE_STANDARD_DETAILS}${id}`, data),
+    downloadAccreditedStandardFile: fileName =>
+      ApiService.request({
+        url: `${ACCREDITED_URLS.DOWNLOAD_FILE}${fileName}`,
+        method: 'GET',
+        responseType: 'blob',
+      }),
     deleteAccreditedStandardFile: (file, accreditationId, fromModule) =>
       ApiService.request({
         url: `${ACCREDITED_URLS.DELETE_FILE}${accreditationId}`,
@@ -67,6 +73,12 @@ export const AccreditedApiServices = {
       ApiService.getData(`${ACCREDITED_URLS.FORM_A1.GET_A1_SUPERVISOR_DATA}${id}/${sid}`),
     saveAccreditedA1SupervisorDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A1.SAVE_A1_SUPERVISOR_DETAILS}${id}`, data),
+    downloadA1SupervisorFile: fileName =>
+      ApiService.request({
+        url: `${ACCREDITED_URLS.DOWNLOAD_FILE}${fileName}`,
+        method: 'GET',
+        responseType: 'blob',
+      }),
     saveAccreditedA1SupervisorDetailsPartially: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A1.SAVE_A1_SUPERVISOR_DETAILS_PARTIALLY}${id}`, data),
 
