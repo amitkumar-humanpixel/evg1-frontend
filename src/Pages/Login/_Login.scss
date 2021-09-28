@@ -23,7 +23,8 @@
   line-height: 1;
 
   img {
-    height: 7vh;
+    height: auto;
+    width: 100%;
     margin-bottom: 5vh;
   }
 
@@ -35,11 +36,19 @@
 .welcome-title {
   font: $boldH3;
   color: $secondary-color;
+  font-size: 3vw;
+}
+
+.welcome-text{
+  margin: 10px 0 25px 0;
+  font-size: 2vw;
 }
 
 .EV-name {
   font: $boldH3;
   color: $primary-color;
+  font-size: 3vw;
+  margin: 10px 0;
 }
 
 .auth-strip {
@@ -111,6 +120,54 @@
   font: $semiBoldTitle;
 }
 
+@media (min-width: 1024px){
+  .welcome-title {
+    font-size: 2vw;
+  }
+  
+  .welcome-text{
+    margin: 10px 0 25px 0;
+    font-size: 1.5vw;
+  }
+
+  .EV-name {
+    font-size: 2vw;
+    margin: 10px 0;
+  }
+ }
+
+/* Progressive Enhancement for Jumbo sized Screen Handling... */
+@media (min-width: 2166px){
+  .login-title{
+    img{
+      max-width:662px;
+    }
+  }
+
+  .login-left-part {
+    width: calc(30% - 12px);
+    min-width:calc(2166px * .4 - 12px);
+  }
+  
+  .login-right-part {
+    width: calc(70% - 12px);
+    min-width: calc(2166px *.6 - 12px);
+  }
+
+  .EV-name{
+      font-size: 44px;
+  }
+
+  .welcome-title{
+      font-size: 44px;
+  }
+
+  .welcome-text{
+      font-size: 32px;
+  }
+}
+
+/* Progressive Enhancement for Smaller Device */
 @media (max-width: 1024px) {
   .login-wrapper {
     flex-direction: column-reverse;
@@ -122,6 +179,7 @@
 
     .login-left-part {
       height: calc(60% - 14px);
+      overflow:scroll;
     }
 
     .login-right-part {
@@ -133,6 +191,18 @@
     }
   }
 
+  .login-wrapper {
+    .login-left-part {
+      overflow:scroll;
+    }
+  }
+
+  .login-title {
+    img{
+      height: 7vh;
+      width: auto;
+    }
+  }
   .auth-evgp-bg-logo {
     right: 0;
     bottom: 0;
