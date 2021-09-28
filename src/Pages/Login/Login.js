@@ -28,6 +28,7 @@ const Login = () => {
           <img src={evSign} alt="evg-img" />
           <div className="welcome-title">Welcome to</div>
           <div className="EV-name">Eastern Victoria GP Training</div>
+          <div className="welcome-text">Log in to access the EVGPT re-accreditation form</div>
         </div>
 
         <Button buttonType="primary" title="Log in with OKTA" className="auth-submit-button" onClick={login} />
