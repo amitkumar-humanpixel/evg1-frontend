@@ -6,11 +6,17 @@ import Dashboard from '../Pages/Dashboard/Dashboard';
 import FacilityList from '../Pages/Facility/FacilityList';
 import UserList from '../Pages/User/UserList';
 import RegistrarList from '../Pages/Registrar/RegistrarList';
+import ForbiddenAccessPage from '../components/common/ForbiddenAccessPage/ForbiddenAccessPage';
 
 export const ROUTE_CONSTANTS = [
   {
     path: '/',
     authenticated: true,
+  },
+  {
+    path: '/forbidden-access',
+    component: ForbiddenAccessPage,
+    escapeRedirect: true,
   },
   {
     path: '/Login',

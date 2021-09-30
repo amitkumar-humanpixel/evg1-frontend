@@ -1,3 +1,28 @@
+.standard-detail {
+  .material-icons-round {
+    min-width: 24px;
+    padding: 2px;
+    font-size: 20px;
+    background-color: $background-color;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+    .download-file {
+      margin-right: 5px;
+      color: $alert-blue;
+      &:hover {
+        color: #448888;
+      }
+    }
+
+    .delete-file {
+      color: $error-color;
+      &:hover {
+        color: red;
+      }
+    }
+}
+
 .A1-checklist-checkmark {
   margin-top: 0;
   left: -10px;

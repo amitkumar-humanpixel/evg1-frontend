@@ -328,7 +328,7 @@ const Summary = () => {
             ))}
           </thead>
           <tr>
-            <td>Practice</td>
+            <td>{accreditionName}</td>
             <td>
               <Switch
                 id="AccreditationWithEV"
