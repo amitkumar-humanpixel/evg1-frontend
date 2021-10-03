@@ -479,11 +479,11 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             }))
           : [],
         college: college
-          ? {
-              label: _.upperCase(college),
-              value: college,
+          ? college?.map(e => ({
+              label: _.upperCase(e),
+              value: e,
               name: 'college',
-            }
+            }))
           : [],
         address: address || '',
         accreditationEndDate,
@@ -877,6 +877,11 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             email: action?.data?.email ? action?.data?.email : '',
             contactNumber: action?.data?.contactNumber ? action?.data?.contactNumber : '',
             categoryOfSupervisor: _.capitalize(action?.data?.categoryOfSupervisor),
+            college: action?.data?.college?.map(college => ({
+              label: _.upperCase(college),
+              value: college,
+              name: 'college',
+            })),
             // hours: [...hoursTableData],
             standardsDetail: [...supervisorStandardDetails],
           },

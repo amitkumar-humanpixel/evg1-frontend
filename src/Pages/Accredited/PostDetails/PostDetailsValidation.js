@@ -19,7 +19,7 @@ export const postDetailsValidation = async (
   let validated = true;
   const finalData = {
     facilityId: data?.facilityId,
-    college: data?.college?.value,
+    college: data?.college?.map(e => e?.value),
     address: data?.address,
     accreditationBody: data?.accreditationBody?.map(e => e?.value),
     accreditationEndDate: data?.accreditationEndDate,
@@ -31,7 +31,7 @@ export const postDetailsValidation = async (
     errors.facilityId = 'Please select facility Name!';
     validated = false;
   }
-  if (!finalData?.college || finalData?.college?.toString()?.trim()?.length === 0) {
+  if (!finalData?.college || _.isEmpty(finalData?.college)) {
     errors.college = 'Please select college!';
     validated = false;
   }

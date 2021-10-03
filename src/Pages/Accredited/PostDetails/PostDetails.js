@@ -57,6 +57,7 @@ const PostDetails = () => {
           { label: 'ACRRM', value: 'ACRRM', name: 'college' },
         ],
         value: college,
+        isMulti: true,
         error: errors?.college,
         isEditable,
       },

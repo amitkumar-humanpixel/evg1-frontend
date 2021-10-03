@@ -115,6 +115,20 @@ const SupervisorDetails = props => {
         isEditable,
       },
       {
+        type: 'select',
+        title: `College`,
+        name: 'college',
+        placeholder: 'Select college',
+        options: [
+          { label: 'RACGP', value: 'RACGP', name: 'college' },
+          { label: 'ACRRM', value: 'ACRRM', name: 'college' },
+        ],
+        isMulti: true,
+        value: college,
+        error: errors?.college,
+        isEditable,
+      },
+      {
         type: 'text',
         title: 'Email',
         name: 'email',
