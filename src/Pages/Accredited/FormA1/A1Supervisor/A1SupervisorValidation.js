@@ -21,7 +21,7 @@ export const a1SupervisorValidation = async (
 ) => {
   let validated = true;
   const error = {};
-  const attachments = ['I have hospital clinical privileges'];
+  const attachments = ['I have hospital clinical privileges - please attach evidence'];
   const finalData = {
     userId: data?.userId,
     contactNumber: data?.contactNumber,

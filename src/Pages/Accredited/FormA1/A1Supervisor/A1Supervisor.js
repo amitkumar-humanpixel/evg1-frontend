@@ -18,7 +18,7 @@ import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch
 import { downloadAll } from '../../../../helpers/DownloadHelper';
 import { errorNotification } from '../../../../components/common/NotifyToaster';
 
-const attachments = ['I have hospital clinical privileges'];
+const attachments = ['I have hospital clinical privileges - please attach evidence'];
 const A1Supervisor = () => {
   const dispatch = useDispatch();
   const { id, sid } = useQueryParams();
