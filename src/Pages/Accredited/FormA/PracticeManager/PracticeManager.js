@@ -27,10 +27,7 @@ const PracticeManager = () => {
     ({ accreditedReducer }) => accreditedReducer?.formA ?? {},
   );
 
-  const { userId, email, contactNumber, usualWorkingHours, hours, errors } = useMemo(
-    () => practiceManager,
-    [practiceManager],
-  );
+  const { userId, email, contactNumber, hours, errors } = useMemo(() => practiceManager, [practiceManager]);
 
   const practiceManagerOptions = useMemo(() => {
     return practiceManagerList.map(manager => ({
@@ -70,21 +67,8 @@ const PracticeManager = () => {
         error: errors?.contactNumber,
         isEditable,
       },
-      {
-        type: 'day/hours',
-        title: 'Usual Working Days',
-        name: 'usualWorkingHours',
-        value: usualWorkingHours,
-        error: errors?.usualWorkingHours,
-        day: {
-          placeholder: '00',
-          value: usualWorkingHours?.days,
-          suffix: 'Days',
-          isEditable,
-        },
-      },
     ],
-    [usualWorkingHours, contactNumber, email, practiceManagerOptions, userId, errors, isEditable],
+    [contactNumber, email, practiceManagerOptions, userId, errors, isEditable],
   );
   const onHourInputChange = useCallback((day, name, value) => {
     if (name === 'isChecked') {

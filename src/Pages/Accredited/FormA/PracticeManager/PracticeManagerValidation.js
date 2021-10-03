@@ -51,11 +51,6 @@ export const practiceManagerValidation = async (
     errors.contactNumber = 'Please enter valid phone number!';
   }
 
-  if (!finalData?.usualWorkingHours?.days || finalData?.usualWorkingHours?.days?.toString()?.trim()?.length === 0) {
-    validated = false;
-    errors.usualWorkingHours = 'Please enter working days!';
-  }
-
   if (finalData?.usualWorkingHours?.days && !NUMBER_REGEX.test(finalData?.usualWorkingHours?.days)) {
     validated = false;
     errors.usualWorkingHours = 'Please enter valid working days!';
