@@ -69,7 +69,7 @@ const Standards = () => {
 
   return (
     <section>
-      <div className="accredited-title mb-10">Standard Details</div>
+      <div className="accredited-title mb-10">Standard Details (To be completed by the Practice Manager)</div>
       <div className="common-white-container">
         <table className="standard-detail-table">
           {standards.map((detail, index) => (

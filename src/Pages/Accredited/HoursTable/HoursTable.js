@@ -6,7 +6,7 @@ import TriStateSwitch from '../../../components/TriStateSwitch/TriStateSwitch';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
 
 const HoursTable = props => {
-  const { className, hours, onHourInputChange, isEditable } = props;
+  const { className, hours, onHourInputChange, isEditable, isPersonal } = props;
   const format = 'HH:mm';
   const [totalTime, setTotalTime] = useState('00:00');
 
@@ -55,8 +55,8 @@ const HoursTable = props => {
     <table className={`hours-table ${className}`}>
       <thead>
         <th>Days</th>
-        <th>Opening</th>
-        <th>Closing</th>
+        <th>{isPersonal ? 'Starting' : 'Opening'}</th>
+        <th>{isPersonal ? 'Finishing' : 'Closing'}</th>
         <th>Total</th>
       </thead>
       {hours
@@ -144,6 +144,7 @@ HoursTable.propTypes = {
   hours: PropTypes.array,
   onHourInputChange: PropTypes.func,
   isEditable: PropTypes.bool,
+  isPersonal: PropTypes.bool,
 };
 
 HoursTable.defaultProps = {
@@ -151,6 +152,7 @@ HoursTable.defaultProps = {
   hours: [],
   onHourInputChange: () => {},
   isEditable: true,
+  isPersonal: false,
 };
 
 export default HoursTable;

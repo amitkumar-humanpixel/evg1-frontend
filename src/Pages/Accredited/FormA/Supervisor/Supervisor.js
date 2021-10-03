@@ -72,14 +72,6 @@ const Supervisor = () => {
 
   return (
     <>
-      <div className="add-button-row">
-        <Button buttonType="primary" onClick={toggleAddNewSupervisorModal} isDisabled={!isEditable}>
-          Accredit New Supervisor
-        </Button>
-        <Button buttonType="primary" className="ml-5" onClick={addSupervisor} isDisabled={!isEditable}>
-          Re-accredit Supervisor
-        </Button>
-      </div>
       {supervisors?.length > 0 &&
         supervisors?.map((supervisor, index) => (
           <section className="common-white-container mb-10">
@@ -105,6 +97,14 @@ const Supervisor = () => {
             />
           </section>
         ))}
+      <div className="add-button-row">
+        <Button buttonType="primary" onClick={toggleAddNewSupervisorModal} isDisabled={!isEditable}>
+          Accredit New Supervisor
+        </Button>
+        <Button buttonType="primary" className="ml-5" onClick={addSupervisor} isDisabled={!isEditable}>
+          Add Re-accredit Supervisor
+        </Button>
+      </div>
       {isAddNewSupervisorModal && (
         <AddSupervisor
           isAddNewSupervisorModal={isAddNewSupervisorModal}

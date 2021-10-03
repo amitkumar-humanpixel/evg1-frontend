@@ -124,7 +124,9 @@ const A1Supervisor = () => {
       {/*  )} */}
       {/* </div> */}
       <section>
-        <div className="accredited-title accredited-title-margin">Standard Details</div>
+        <div className="accredited-title accredited-title-margin">
+          Standard Details (To be completed by {supervisor.name})
+        </div>
         <div className="common-white-container">
           <table className="standard-detail-table">
             {supervisor?.standardsDetail?.map((detail, index) => (

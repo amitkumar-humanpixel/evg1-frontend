@@ -113,6 +113,7 @@ const RegistrarDetails = props => {
         hours={hoursDetails}
         onHourInputChange={onHourDetailsInputChange}
         isEditable={isEditable}
+        isPersonal
       />
       <div className="registrar-details-grid">
         <span className="form-detail-title multi-line-inputs-container">Note - 1</span>
@@ -128,7 +129,13 @@ const RegistrarDetails = props => {
         </div>
       </div>
       <div className="section-inner-title mt-15">On Call Hours</div>
-      <HoursTable className="mt-10" hours={onCall} onHourInputChange={onCallInputChange} isEditable={isEditable} />
+      <HoursTable
+        className="mt-10"
+        hours={onCall}
+        onHourInputChange={onCallInputChange}
+        isEditable={isEditable}
+        isPersonal
+      />
       <div className="registrar-details-grid">
         <span className="form-detail-title multi-line-inputs-container">Note - 2</span>
         <div className="multi-line-inputs-container">

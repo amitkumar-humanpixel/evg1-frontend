@@ -209,7 +209,12 @@ const SupervisorDetails = props => {
           <div className="accredited-title accredited-title-margin">Supervisor Hours – Opening & Closing Time</div>
           <div className="common-white-container">
             {!_.isEmpty(hours) && (
-              <HoursTable hours={hours} onHourInputChange={onHourDetailsInputChange} isEditable={isEditable} />
+              <HoursTable
+                hours={hours}
+                onHourInputChange={onHourDetailsInputChange}
+                isEditable={isEditable}
+                isPersonal
+              />
             )}
           </div>
         </>
