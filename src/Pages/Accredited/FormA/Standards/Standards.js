@@ -68,64 +68,108 @@ const Standards = () => {
   }, [id]);
 
   return (
-    <section>
-      <div className="accredited-title mb-10">Standard Details (To be completed by the Practice Manager)</div>
-      <div className="common-white-container">
-        <table className="standard-detail-table">
-          {standards.map((detail, index) => (
-            <tr>
-              <td className="standard-detail-checkbox">
-                <div className="standard-detail-with-attach-button">
-                  <div className="standard-detail">
-                    <TriStateSwitch
-                      onChange={state => handleInputChange(index, 'status', state)}
-                      state={detail?.status}
-                      disabled={!isEditable}
-                    />
-                    <div className="standard-detail-container">
-                      <div className="standard-detail-point">
-                        {`${index + 1}. ${detail.title}`}
-                        {detail?.list && (
-                          <ul>
-                            {detail.list.map(point => (
-                              <li>{point}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                      <div className="form-error-message standard-error-message">{detail?.error}</div>
-                      {detail?.filePath?.length > 0 &&
-                        detail?.filePath?.map(file => (
-                          <div className="standard-attached-file">
-                            <span className="file-name">
-                              <span className="file-name-without-extension">
-                                <b>Uploaded File: </b>
-                                {fileNamePrefix(file?.fileName?.split('/').pop())}
+    <>
+      <section className="common-white-container" style={{ 'margin-bottom': '20px' }}>
+        <p>
+          In order for the application to be considered complete, each question must be answered. Some questions will
+          require an attachment to be uploaded as part of the response (for example an up to date accreditation
+          certificate) for the application to be submitted. If you need to proceed past this point, and return to answer
+          questions or upload attachments later, please save at the bottom right of the page and press Next.
+        </p>
+        <p>
+          Incomplete applications will either fail to submit, or be returned for additional information. If you are
+          unsure, please contact EV.
+        </p>
+      </section>
+      <section>
+        <div className="accredited-title mb-10">Standard Details (To be completed by the Practice Manager)</div>
+        <div className="common-white-container">
+          <table className="standard-detail-table">
+            {standards.map((detail, index) => (
+              <tr>
+                <td className="standard-detail-checkbox">
+                  <div className="standard-detail-with-attach-button">
+                    <div className="standard-detail">
+                      <TriStateSwitch
+                        onChange={state => handleInputChange(index, 'status', state)}
+                        state={detail?.status}
+                        disabled={!isEditable}
+                      />
+                      <div className="standard-detail-container">
+                        <div className="standard-detail-point">
+                          {`${index + 1}. ${detail.title}`}
+                          {detail?.list && (
+                            <ul>
+                              {detail.list.map(point => (
+                                <li>{point}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div className="form-error-message standard-error-message">{detail?.error}</div>
+                        {detail?.filePath?.length > 0 &&
+                          detail?.filePath?.map(file => (
+                            <div className="standard-attached-file">
+                              <span className="file-name">
+                                <span className="file-name-without-extension">
+                                  <b>Uploaded File: </b>
+                                  {fileNamePrefix(file?.fileName?.split('/').pop())}
+                                </span>
+                                <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
                               </span>
-                              <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
-                            </span>
-                            <div className="d-flex">
-                              <span
-                                className="material-icons-round download-file"
-                                title={`Download ${file?.fileName}`}
-                                onClick={() => handleFileDownload(file?.fileName)}
-                              >
-                                cloud_download
-                              </span>
-                              <span
-                                className="material-icons-round delete-file"
-                                title={`Delete ${file?.fileName}`}
-                                onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
-                              >
-                                delete
-                              </span>
+                              <div className="d-flex">
+                                <span
+                                  className="material-icons-round download-file"
+                                  title={`Download ${file?.fileName}`}
+                                  onClick={() => handleFileDownload(file?.fileName)}
+                                >
+                                  cloud_download
+                                </span>
+                                <span
+                                  className="material-icons-round delete-file"
+                                  title={`Delete ${file?.fileName}`}
+                                  onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
+                                >
+                                  delete
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {useWindowWidth() < 1024 && attachments.includes(detail.title) && (
+                    {useWindowWidth() < 1024 && attachments.includes(detail.title) && (
+                      <FileUploadButton
+                        formName="formA"
+                        subFormName="standards"
+                        data={detail}
+                        index={index}
+                        isEditable={isEditable}
+                        isMulti
+                        existFiles={detail?.filePath ?? []}
+                      />
+                    )}
+
+                    {detail?.title ===
+                      'Have there been changes to facilities or resources since last\n' +
+                        'accreditation/reaccreditation visit? If yes, please provide detail.' &&
+                      detail?.status === 'true' && (
+                        <div className="remarks-input">
+                          <textarea
+                            rows={2}
+                            name="remarks"
+                            placeholder="Detail"
+                            value={detail?.remarks}
+                            onChange={e => handleInputChange(index, e.target.name, e.target.value)}
+                            disabled={!isEditable}
+                          />
+                        </div>
+                      )}
+                  </div>
+                </td>
+
+                {attachments.includes(detail.title) && (
+                  <td className="standard-detail-button">
                     <FileUploadButton
                       formName="formA"
                       subFormName="standards"
@@ -135,44 +179,14 @@ const Standards = () => {
                       isMulti
                       existFiles={detail?.filePath ?? []}
                     />
-                  )}
-
-                  {detail?.title ===
-                    'Have there been changes to facilities or resources since last\n' +
-                      'accreditation/reaccreditation visit? If yes, please provide detail.' &&
-                    detail?.status === 'true' && (
-                      <div className="remarks-input">
-                        <textarea
-                          rows={2}
-                          name="remarks"
-                          placeholder="Detail"
-                          value={detail?.remarks}
-                          onChange={e => handleInputChange(index, e.target.name, e.target.value)}
-                          disabled={!isEditable}
-                        />
-                      </div>
-                    )}
-                </div>
-              </td>
-
-              {attachments.includes(detail.title) && (
-                <td className="standard-detail-button">
-                  <FileUploadButton
-                    formName="formA"
-                    subFormName="standards"
-                    data={detail}
-                    index={index}
-                    isEditable={isEditable}
-                    isMulti
-                    existFiles={detail?.filePath ?? []}
-                  />
-                </td>
-              )}
-            </tr>
-          ))}
-        </table>
-      </div>
-    </section>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </table>
+        </div>
+      </section>
+    </>
   );
 };
 
