@@ -25,10 +25,6 @@ export const PreviousRecommendationsValidation = async (
     validated = false;
     errors.actioned = 'Please enter relevant explanation';
   }
-  if (finalData?.recommendation?.toString()?.trim()?.length <= 0) {
-    validated = false;
-    errors.recommendation = 'Please enter recommendations';
-  }
   dispatch(updateAccreditedFields('previousRecommendations', 'errors', errors));
 
   if (validated) {

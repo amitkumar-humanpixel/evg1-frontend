@@ -13,9 +13,7 @@ const PreviousRecommendations = () => {
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
-  const { actioned, recommendation, errors } = useSelector(
-    ({ accreditedReducer }) => accreditedReducer?.previousRecommendations ?? {},
-  );
+  const { actioned, errors } = useSelector(({ accreditedReducer }) => accreditedReducer?.previousRecommendations ?? {});
   const onInputChange = useCallback(
     (name, value) => dispatch(updateAccreditedFields('previousRecommendations', name, value)),
     [],
@@ -32,20 +30,6 @@ const PreviousRecommendations = () => {
   return (
     <section>
       <div className="common-white-container final-checklist-grid">
-        <div className="form-detail-title">List Recommendations</div>
-        <div>
-          <textarea
-            rows={4}
-            name="recommendation"
-            placeholder="Enter Recommendations"
-            value={recommendation ?? '-'}
-            className="w-100"
-            onChange={e => onInputChange(e.target.name, e.target.value)}
-            disabled={!isEditable}
-          />
-          {errors?.recommendation && <div className="form-error-message">{errors?.recommendation}</div>}
-        </div>
-        <div className="form-detail-title">Explain how these have been actioned</div>
         <div>
           <textarea
             rows={4}
