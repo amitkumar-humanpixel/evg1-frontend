@@ -46,20 +46,14 @@ const FinalChecklist = () => {
       <section>
         <div className="accredited-title mb-10">Address Previous Recommendations</div>
         <div className="common-white-container final-checklist-grid">
-          <div className="form-detail-title">List Recommendations</div>
           <div>
-            <textarea
-              rows={4}
-              name="recommendation"
-              placeholder="Enter Recommendations"
-              value={recommendation ?? '-'}
-              className="w-100"
-              onChange={e => onInputChange(e.target.name, e.target.value)}
-              disabled={!isEditable}
-            />
-            {errors?.recommendation && <div className="form-error-message">{errors?.recommendation}</div>}
+            <p>Explain how the practice addressed recommendations made at the most recent visit or review.</p>
+            <p>
+              This may have been at the initial accreditation of the practice, a reaccreditation, or a review visit.
+              These will be incorporated into the application in future iterations, but for now, have been provided to
+              the practice manager and/or principal supervisor directly by email.
+            </p>
           </div>
-          <div className="form-detail-title">Explain how these have been actioned</div>
           <div>
             <textarea
               rows={4}
