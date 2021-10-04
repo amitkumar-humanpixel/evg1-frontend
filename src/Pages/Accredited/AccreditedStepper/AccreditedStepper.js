@@ -53,7 +53,7 @@ const AccreditedStepper = props => {
               onClick={() => onClickStep(stepDetail, isDisabledStep(stepDetail))}
             >
               <span className="material-icons-round">{stepDetail.complete ? 'task_alt' : 'hourglass_empty'}</span>
-              <span className="step-name">{stepDetail.name}</span>
+              <span className="step-name">{stepDetail.displayName ?? stepDetail.name}</span>
               {stepDetail.subSteps.length > 0 && (
                 <span className={`material-icons-round ${activeStepIndex === stepIndex && 'active-index-arrow'}`}>
                   chevron_right
