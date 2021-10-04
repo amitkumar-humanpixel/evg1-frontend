@@ -72,6 +72,25 @@ const Supervisor = () => {
 
   return (
     <>
+      <section>
+        <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
+          <p>
+            Please supply information of each accredited supervisor in the practice. The first entry should be the
+            Principal Educational Supervisor. Please note that where applicants work across multiple sites, the roster
+            hours on the application should relate ONLY to the specific site on this application.
+          </p>
+          <p>
+            Spaces are provided for two supervisor applicants, but additional supervisors who are reaccrediting can be
+            added by clicking the Reaccredit Supervisor button on the bottom right. There is no capacity for accrediting
+            new supervisors in this application, but practice managers can flag an expression of interest of this to EV
+            by clicking &lsquo;Add New Supervisor&rsquo;.
+          </p>
+          <p>
+            Submission of the Supervisor Summary will send individual declarations to each named supervisor requesting
+            they fill in their section.
+          </p>
+        </div>
+      </section>
       {supervisors?.length > 0 &&
         supervisors?.map((supervisor, index) => (
           <section className="common-white-container mb-10">
