@@ -114,6 +114,12 @@ const A1Supervisor = () => {
 
   return (
     <>
+      <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
+        Please note that all questions must be answered for the application to be considered complete. You can save the
+        answers and return to complete this section later, by clicking Save at bottom right and exiting the page. To
+        submit, click Next at bottom right and the form will be saved for submission. If you answer Yes to having
+        hospital clinical privileges, you will need to be able to upload a copy of evidence before continuing.
+      </div>
       <div className="common-white-container">
         <SupervisorDetails data={supervisor} fromModule="formA1" isEditable={isEditable} />
       </div>
@@ -125,7 +131,7 @@ const A1Supervisor = () => {
       {/* </div> */}
       <section>
         <div className="accredited-title accredited-title-margin">
-          Standard Details (To be completed by {supervisor.name})
+          Standard Details (To be completed by {supervisor.username})
         </div>
         <div className="common-white-container">
           <table className="standard-detail-table">
