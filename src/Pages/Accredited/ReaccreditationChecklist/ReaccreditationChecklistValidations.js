@@ -15,7 +15,6 @@ export const ReaccreditationChecklistValidations = async (
 ) => {
   let validated = true;
 
-  console.log(facilityId);
   const finalData = {
     facilityId,
     reaccreditationChecklist: data?.reaccreditationChecklist,

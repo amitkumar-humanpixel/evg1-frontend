@@ -28,7 +28,22 @@ export const standardValidation = async (
   ];
 
   data?.forEach((condition, index) => {
-    if (condition?.status === 'true' && attachments.includes(condition?.title) && condition?.filePath?.length <= 0) {
+    if (condition?.status === 'none') {
+      validated = false;
+      dispatch(
+        updateAccreditedSubFormArrayFields(
+          'formA',
+          'standards',
+          index,
+          'error',
+          'Please read and change status to continue!',
+        ),
+      );
+    } else if (
+      condition?.status === 'true' &&
+      attachments.includes(condition?.title) &&
+      condition?.filePath?.length <= 0
+    ) {
       validated = false;
       dispatch(
         updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please attach relevant document!'),
@@ -45,6 +60,8 @@ export const standardValidation = async (
       attachments.includes(condition?.title) &&
       condition?.filePath?.length > 0
     ) {
+      dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
+    } else if (condition?.status !== 'none') {
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });

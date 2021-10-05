@@ -53,7 +53,7 @@ export const a1SupervisorValidation = async (
             index,
             'standardsDetail',
             'error',
-            'Please read and mark as change status to continue!',
+            'Please read and change status to continue!',
           ),
         );
       } else if (detail?.status === 'true' && attachments.includes(detail?.title) && detail?.filePath?.length <= 0) {

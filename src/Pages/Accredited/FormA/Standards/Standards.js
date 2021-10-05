@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useWindowWidth } from '../../../../hooks/useWindowWidth';
 import {
   deleteFileFromStandards,
+  downloadFileFromStandards,
   getFormAStandardDetails,
   updateAccreditedSubFormArrayFields,
 } from '../../redux/AccreditedReduxActions';
@@ -12,6 +13,8 @@ import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 import { fileNameExtension, fileNamePrefix } from '../../../../helpers/fileNameSplit';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import { errorNotification } from '../../../../components/common/NotifyToaster';
+import { downloadAll } from '../../../../helpers/DownloadHelper';
 
 const attachments = [
   'Orientation is provided to each registrar at commencement - please attach the registrar specific orientation checklist/materials used by the practice.',
@@ -31,6 +34,19 @@ const Standards = () => {
 
   const handleInputChange = useCallback((index, name, value) => {
     dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, name, value));
+  }, []);
+
+  const handleFileDownload = useCallback(async fileName => {
+    if (fileName) {
+      const response = await downloadFileFromStandards(fileName);
+      if (response) {
+        downloadAll(response);
+      } else {
+        errorNotification('Download failed, please try again.');
+      }
+    } else {
+      errorNotification('No file found');
+    }
   }, []);
 
   const handleFileDeletion = useCallback(
@@ -98,12 +114,22 @@ const Standards = () => {
                               </span>
                               <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
                             </span>
-                            <span
-                              className="material-icons-round"
-                              onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
-                            >
-                              delete
-                            </span>
+                            <div className="d-flex">
+                              <span
+                                className="material-icons-round download-file"
+                                title={`Download ${file?.fileName}`}
+                                onClick={() => handleFileDownload(file?.fileName)}
+                              >
+                                cloud_download
+                              </span>
+                              <span
+                                className="material-icons-round delete-file"
+                                title={`Delete ${file?.fileName}`}
+                                onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
+                              >
+                                delete
+                              </span>
+                            </div>
                           </div>
                         ))}
                     </div>

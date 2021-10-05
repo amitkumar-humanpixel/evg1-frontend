@@ -53,6 +53,7 @@
 
 .standard-detail-button {
   width: 130px;
+  vertical-align: top;
 }
 
 .standard-detail-remark {
@@ -90,15 +91,25 @@
     min-width: 24px;
     padding: 2px;
     font-size: 20px;
-    color: $error-color;
     background-color: $background-color;
     border-radius: 5px;
     cursor: pointer;
-
-    &:hover {
-      color: red;
-    }
   }
+    .download-file {
+      margin-right: 5px;
+      color: $alert-blue;
+      &:hover {
+        color: #448888;
+      }
+    }
+
+    .delete-file {
+      color: $error-color;
+      &:hover {
+        color: red;
+      }
+    }
+
 }
 
 .file-name {
@@ -132,6 +143,6 @@
 
   .attach-button {
     width: unset;
-    margin: 5px 0 0 80px;
+    margin: 5px 0 0 10px;
   }
 }

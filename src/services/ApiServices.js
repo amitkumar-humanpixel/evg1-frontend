@@ -65,7 +65,7 @@ instance.interceptors.response.use(
         return false;
       case 403:
         /* handle 403 here */
-        // window.location.href = '/forbidden-access';
+        window.location.href = '/forbidden-access';
         return false;
       default:
         break;
