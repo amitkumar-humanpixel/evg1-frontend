@@ -78,6 +78,9 @@ const PostDetails = () => {
         options: [
           { label: 'AGPAL', value: 'AGPAL', name: 'accreditationBody' },
           { label: 'QPA', value: 'QPA', name: 'accreditationBody' },
+          { label: 'Global-Mark', value: 'Global-Mark', name: 'accreditationBody' },
+          { label: 'ACHS', value: 'ACHS', name: 'accreditationBody' },
+          { label: 'IHCA', value: 'IHCA', name: 'accreditationBody' },
         ],
         value: accreditationBody,
         isMulti: true,

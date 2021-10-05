@@ -74,7 +74,7 @@ const AccreditedStepper = props => {
                     <span className="material-icons-round">
                       {subStepDetail.isComplete ? 'task_alt' : 'hourglass_empty'}
                     </span>
-                    <span className="step-name">{subStepDetail.stepName}</span>
+                    <span className="step-name">{subStepDetail.displayName ?? subStepDetail.stepName}</span>
                   </div>
                 ))}
               </div>

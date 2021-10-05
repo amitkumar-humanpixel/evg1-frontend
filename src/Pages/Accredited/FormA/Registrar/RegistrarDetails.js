@@ -107,7 +107,7 @@ const RegistrarDetails = props => {
           <GetComponentByType input={detail} onInputChange={onInputChange} />
         ))}
       </div>
-      <div className="section-inner-title mt-15">Registrar Hours – Opening & Closing Time</div>
+      <div className="section-inner-title mt-15">Registrar Hours – Starting & Finishing Time</div>
       <HoursTable
         className="mt-10"
         hours={hoursDetails}

@@ -206,7 +206,7 @@ const SupervisorDetails = props => {
       </div>
       {fromModule === 'formA' && (
         <>
-          <div className="accredited-title accredited-title-margin">Supervisor Hours – Opening & Closing Time</div>
+          <div className="accredited-title accredited-title-margin">Supervisor Hours – Starting & Finishing Time</div>
           <div className="common-white-container">
             {!_.isEmpty(hours) && (
               <HoursTable

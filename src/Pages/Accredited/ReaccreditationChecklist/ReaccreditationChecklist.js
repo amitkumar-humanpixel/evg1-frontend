@@ -62,11 +62,12 @@ const ReaccreditationChecklist = () => {
                 Educational Supervisor will be able to complete the Final Application Submission.
               </li>
               <li>
-                The Final Application Submission has the checklist to assist identifying completion of each section and
-                also provides the practice response to any previous recommendations that have been provided to the
-                practice. This may have been at the initial accreditation of the practice, a reaccreditation, or a
-                review visit. These will be incorporated into the application in future iterations, but for now, have
-                been provided to the practice manager and/or principal supervisor directly by email.
+                The Final Application Submission has a space for the practice to outline actions undertaken from
+                previous recommendations made to the practice. This may have been at the initial accreditation of the
+                practice, a reaccreditation, or a review visit. These recommendations will be directly incorporated into
+                this application in future iterations, but for now, have been provided to the practice manager and/or
+                principal educational supervisor directly by email. Please consider this information in formulating your
+                response. This will form the final page of application for submission.
               </li>
             </ol>
             <p>Things you will need to submit your application</p>

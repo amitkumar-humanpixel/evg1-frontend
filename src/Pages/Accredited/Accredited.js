@@ -148,12 +148,16 @@ const Accredited = () => {
                     widgets
                   </span>
                   <div className="breadcrumb accredited-breadcrumb">
-                    <div className="breadcrumb-link">{accreditionSideBar?.[activeStepIndex]?.name}</div>
+                    <div className="breadcrumb-link">
+                      {accreditionSideBar?.[activeStepIndex]?.displayName ??
+                        accreditionSideBar?.[activeStepIndex]?.name}
+                    </div>
                     {accreditionSideBar?.[activeStepIndex]?.subSteps?.length > 0 && (
                       <>
                         <span className=" material-icons-round breadcrumb-arrow">chevron_right</span>
                         <div className="breadcrumb-link">
-                          {accreditionSideBar?.[activeStepIndex]?.subSteps?.[activeSubStepIndex]?.stepName}
+                          {accreditionSideBar?.[activeStepIndex]?.subSteps?.[activeSubStepIndex]?.displayName ??
+                            accreditionSideBar?.[activeStepIndex]?.subSteps?.[activeSubStepIndex]?.stepName}
                         </div>
                       </>
                     )}

@@ -45,7 +45,7 @@ const Header = props => {
             {SideMenuConstants.map(route => (
               <Route path={route.url}>
                 {route.title === 'Accreditation' && accreditionName
-                  ? `Accreditation - ${accreditionName ?? ''}`
+                  ? `Reaccreditation - ${accreditionName ?? ''}`
                   : route.title}
               </Route>
             ))}
