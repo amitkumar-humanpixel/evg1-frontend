@@ -167,7 +167,7 @@ const A1Supervisor = () => {
                                 cloud_download
                               </span>
                               <span
-                                className="material-icons-round"
+                                className="material-icons-round delete-file"
                                 onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
                               >
                                 delete
