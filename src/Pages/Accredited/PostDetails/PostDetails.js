@@ -89,7 +89,7 @@ const PostDetails = () => {
       },
       {
         type: 'date',
-        title: 'Accreditation End Date',
+        title: 'Accreditation Body Expiry Date',
         name: 'accreditationEndDate',
         placeholder: 'Select date',
         value: accreditationEndDate,

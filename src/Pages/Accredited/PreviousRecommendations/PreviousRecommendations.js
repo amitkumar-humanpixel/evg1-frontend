@@ -31,6 +31,15 @@ const PreviousRecommendations = () => {
     <section>
       <div className="common-white-container final-checklist-grid">
         <div>
+          <p>
+            Explain how the practice addressed recommendations made at the most recent visit or review. This may have
+            been at the initial accreditation of the practice, a reaccreditation, or a review visit. These will be
+            incorporated into the application in future iterations, but for now, have been provided to the practice
+            manager and/or principal supervisor directly by email.
+          </p>
+        </div>
+        <div />
+        <div>
           <textarea
             rows={4}
             name="actioned"

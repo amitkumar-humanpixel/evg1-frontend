@@ -37,22 +37,21 @@ const ReaccreditationChecklist = () => {
             <ol>
               <li>
                 Documents below will need to be available to electronically attach when submitting the application and
-                actions below will need to be completed. There will be a separate checkbox at the end of this document
-                that you can fill in to tick the completion off – but this is here to help you prepare.
+                actions below will need to be completed.
               </li>
               <li>
-                First section (now called Practice Manager Information) to be completed by the Practice Manager. This
-                includes information about your working days, the operating hours of the practice, the facility
-                accreditation (by AGPAL or QPA or other), some statements about the facility and some basic information
-                relating to each supervisor. This includes rostered hours for each supervisor and registrar.
+                Practice Manager Information to be completed by the Practice Manager. This the operating hours of the
+                practice, the facility accreditation (by AGPAL or QPA or other), some statements about the facility and
+                some basic information relating to each supervisor. This includes rostered hours for each supervisor and
+                registrar.
               </li>
               <li>
-                Please note that all information on the following pages must be completed for you to submit the
-                application, but you can proceed through the form to the next section by pressing Save to retain your
-                answers so far and then Next at the bottom right hand of the page.
+                Please note that information on the following pages must be completed for you to submit the application,
+                but you can proceed through the form to the next section by pressing Save to retain your answers so far
+                and then Next at the bottom right hand of the page.
               </li>
               <li>
-                When Practice Manager’s section is submitted, a separate declaration called Supervisor Information is
+                When Practice Manager Information is submitted, a separate declaration called Supervisor Information is
                 sent to each named supervisor. This applies only to currently accredited supervisors seeking
                 reaccreditation. New supervisors apply separately.
               </li>

@@ -118,7 +118,7 @@ const Supervisor = () => {
         ))}
       <div className="add-button-row">
         <Button buttonType="primary" onClick={toggleAddNewSupervisorModal} isDisabled={!isEditable}>
-          Accredit New Supervisor
+          Add New Supervisor
         </Button>
         <Button buttonType="primary" className="ml-5" onClick={addSupervisor} isDisabled={!isEditable}>
           Add Re-accredit Supervisor
