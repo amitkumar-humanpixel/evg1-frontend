@@ -22,28 +22,13 @@ export const standardValidation = async (
     remarks: e?.remarks,
   }));
   const attachments = [
-    'Orientation is provided to each registrar at commencement - please attach the registrar specific orientation checklist/materials used by the practice.',
     'Practice is accredited by AGPAL or QPA (not mandatory for ACRRM) – please attach certificate',
     'Registrars continue to be employed to the current National Terms and Conditions for Employment of Registrars – please attach employment contract template',
+    'Orientation is provided to each registrar at commencement - please attach the registrar specific orientation checklist/materials used by the practice.',
   ];
 
   data?.forEach((condition, index) => {
-    if (condition?.status === 'none') {
-      validated = false;
-      dispatch(
-        updateAccreditedSubFormArrayFields(
-          'formA',
-          'standards',
-          index,
-          'error',
-          'Please read and change status to continue!',
-        ),
-      );
-    } else if (
-      condition?.status === 'true' &&
-      attachments.includes(condition?.title) &&
-      condition?.filePath?.length <= 0
-    ) {
+    if (condition?.status === 'true' && attachments.includes(condition?.title) && condition?.filePath?.length <= 0) {
       validated = false;
       dispatch(
         updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', 'Please attach relevant document!'),
@@ -60,8 +45,6 @@ export const standardValidation = async (
       attachments.includes(condition?.title) &&
       condition?.filePath?.length > 0
     ) {
-      dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
-    } else if (condition?.status !== 'none') {
       dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'error', undefined));
     }
   });
