@@ -331,8 +331,8 @@ export const deleteFileFromStandards = (index, filePath, files, accreditationId,
       );
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message ?? 'File deleted successfully');
+        // dispatch(getFormAStandardDetails(accreditationId));
         dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'filePath', files));
-        dispatch(getFormAStandardDetails(accreditationId));
       }
     } catch (e) {
       displayErrors(e);
@@ -621,7 +621,7 @@ export const deleteFileFromA1Standards = (index, filePath, files, accreditationI
         dispatch(
           updateAccreditedSubFormDataArrayFields('formA1', `${sid}`, index, 'standardsDetail', 'filePath', files),
         );
-        dispatch(getFormA1SupervisorDetails(accreditationId, sid));
+        // dispatch(getFormA1SupervisorDetails(accreditationId, sid));
       }
     } catch (e) {
       displayErrors(e);

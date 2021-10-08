@@ -5,6 +5,7 @@ import SupervisorDetails from '../../FormA/Supervisor/SupervisorDetails';
 import Checkbox from '../../../../components/Checkbox/Checkbox';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import {
+  deleteFileFromA1Standards,
   downloadFileFromA1Supervisor,
   getFormA1SupervisorDetails,
   updateAccreditedSubFormDataArrayFields,
@@ -98,7 +99,7 @@ const A1Supervisor = () => {
     (index, fileArray, filePath) => {
       if (isEditable) {
         const files = fileArray?.filter(e => e?.fileUrl !== filePath);
-        dispatch(downloadFileFromA1Supervisor(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
+        dispatch(deleteFileFromA1Standards(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
       }
     },
     [id, sid, isEditable],
