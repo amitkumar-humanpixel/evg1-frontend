@@ -300,6 +300,9 @@ const AccreditedButtons = () => {
     if (isLastStep) {
       return <Button buttonType="primary" title="Submit" onClick={() => onClickSave(true)} />;
     }
+    if (step === 'reaccreditationChecklist') {
+      return <Button buttonType="primary" title="Next" onClick={() => onClickSave(true)} />;
+    }
     return (
       <>
         <Button buttonType="outlined-primary" title="Save" onClick={() => onClickSave(false)} />

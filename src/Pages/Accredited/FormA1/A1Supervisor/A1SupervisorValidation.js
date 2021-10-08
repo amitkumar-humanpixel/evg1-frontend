@@ -56,7 +56,11 @@ export const a1SupervisorValidation = async (
             'Please read and change status to continue!',
           ),
         );
-      } else if (detail?.status === 'true' && attachments.includes(detail?.title) && detail?.filePath?.length <= 0) {
+      } else if (
+        detail?.status === 'true' &&
+        attachments.includes(detail?.title) &&
+        (!detail.filePath || detail?.filePath?.length <= 0)
+      ) {
         validated = false;
         dispatch(
           updateAccreditedSubFormDataArrayFields(

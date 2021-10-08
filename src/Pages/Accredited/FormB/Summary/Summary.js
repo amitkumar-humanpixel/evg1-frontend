@@ -48,7 +48,6 @@ const Summary = () => {
   const {
     accreditorName,
     practiceDetail,
-    applications,
     assessment,
     dateOfReportComplete,
     dateOfVisit,
@@ -178,10 +177,6 @@ const Summary = () => {
     },
     [onInputChange],
   );
-
-  const handleApplicationInputChange = useCallback((index, name, value) => {
-    dispatch(updateAccreditedSubFormDataArrayFields('formB', 'summary', index, 'applications', name, value));
-  }, []);
 
   const handleRightPartCheckInputChange = useCallback(
     (index, value) =>
@@ -352,22 +347,6 @@ const Summary = () => {
           onChange={handleInputTextChange}
           disabled={!isEditable}
         />
-        {applications?.map(
-          (application, index) =>
-            application?.consideration === 'true' && (
-              <>
-                <div className="form-detail-title">{application?.name}</div>
-                <textarea
-                  rows={4}
-                  placeholder="Enter Details"
-                  name="remarks"
-                  value={application?.remarks}
-                  onChange={e => handleApplicationInputChange(index, e.target.name, e.target.value)}
-                  disabled={!isEditable}
-                />
-              </>
-            ),
-        )}
       </section>
     </>
   );
