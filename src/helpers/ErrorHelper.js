@@ -1,4 +1,4 @@
-import { errorNotification } from '../components/common/NotifyToaster';
+import { errorNotification, warningNotification } from '../components/common/NotifyToaster';
 
 export const displayErrors = e => {
   if (e?.code === 'ECONNABORTED') {
@@ -16,6 +16,12 @@ export const displayErrors = e => {
         break;
       case 'BAD_REQUEST':
         errorNotification(e?.response?.data?.message || 'Bad request');
+        break;
+      case 'VALIDATION_FAILED':
+        errorNotification('Unable to Submit Form due to Missing Information.');
+        if (e.response.data?.data?.length > 0) {
+          e.response.data.data.forEach(s => warningNotification(s));
+        }
         break;
       default:
         errorNotification('Something went wrong, Please try again later.');
