@@ -13,12 +13,15 @@ import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import SupervisorDetails from './SupervisorDetails';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
 import AddSupervisor from '../../../AddSupervisor/AddSupervisor';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const Supervisor = () => {
   const { id } = useQueryParams();
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
+
   const [isEditable, setIsEditable] = useState(true);
+
   const [isAddNewSupervisorModal, setIsAddNewSupervisorModal] = useState(false);
 
   const { deleteSupervisorButtonLoader } = useSelector(({ generalLoaderReducer }) => generalLoaderReducer ?? false);
@@ -27,7 +30,9 @@ const Supervisor = () => {
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
-  const { supervisorList, supervisors } = useSelector(({ accreditedReducer }) => accreditedReducer?.formA ?? {});
+  const { supervisorList, supervisors, supervisorsCopy } = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.formA ?? {},
+  );
 
   const toggleAddNewSupervisorModal = useCallback(() => {
     setIsAddNewSupervisorModal(!isAddNewSupervisorModal);
@@ -72,6 +77,8 @@ const Supervisor = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={supervisors} dataCopy={supervisorsCopy} />
+
       <section>
         <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
           <p>

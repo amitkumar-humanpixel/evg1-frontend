@@ -105,19 +105,53 @@ export const updateAccreditedSubFormDataArrayFields = (
   };
 };
 
-export const uploadAccreditedFile = (existFiles, data, config, formName, subFormName, index, subFormField) => {
+export const uploadAccreditedFormAFile = (existFiles, data, config, formName, subFormName, index, id) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.uploadFile(data, config);
+      const response = await AccreditedApiServices.uploadFormAFile(id, data, config);
       if (response?.data?.status === 'SUCCESS' && response?.data?.data) {
         successNotification(response?.data?.message || 'file uploaded successfully');
-        const fileData = [...existFiles, ...response?.data?.data];
+        const fileData = [...existFiles, ...response?.data?.data?.filePath];
         if (formName === 'formA') {
           dispatch(updateAccreditedSubFormArrayFields(formName, subFormName, index, 'filePath', fileData));
+          dispatch(updateAccreditedSubFormArrayFields(formName, subFormName, index, '_id', response?.data?.data?._id));
         }
+      }
+    } catch (e) {
+      displayErrors(e);
+      throw Error();
+    }
+  };
+};
+export const uploadAccreditedFormA1File = (
+  existFiles,
+  data,
+  config,
+  formName,
+  subFormName,
+  index,
+  subFormField,
+  id,
+) => {
+  return async dispatch => {
+    try {
+      const response = await AccreditedApiServices.uploadFormA1File(id, data, subFormName, config);
+      if (response?.data?.status === 'SUCCESS' && response?.data?.data) {
+        successNotification(response?.data?.message || 'file uploaded successfully');
+        const fileData = [...existFiles, ...response?.data?.data?.filePath];
         if (formName === 'formA1') {
           dispatch(
             updateAccreditedSubFormDataArrayFields(formName, subFormName, index, subFormField, 'filePath', fileData),
+          );
+          dispatch(
+            updateAccreditedSubFormDataArrayFields(
+              formName,
+              subFormName,
+              index,
+              subFormField,
+              '_id',
+              response?.data?.data?._id,
+            ),
           );
         }
       }
@@ -130,21 +164,22 @@ export const uploadAccreditedFile = (existFiles, data, config, formName, subForm
 
 // reAccredited checkbox
 
-export const getReAccreditedCheckList = id => {
-  return async dispatch => {
-    try {
-      const response = await AccreditedApiServices.reAccreditedCheckbox.getReAccreditedCheckListData(id);
-      if (response?.data?.status === 'SUCCESS') {
-        dispatch({
-          type: ACCREDITED_REDUX_CONSTANTS.RE_ACCREDITED_CHECKBOX.GET_RE_ACCREDITED_CHECKBOX_DETAILS,
-          data: response?.data?.data,
-        });
-      }
-    } catch (e) {
-      displayErrors(e);
-    }
-  };
-};
+// export const getReAccreditedCheckList = id => {
+//   return async dispatch => {
+//     try {
+//       const response = await AccreditedApiServices.reAccreditedCheckbox.getReAccreditedCheckListData(id);
+//       if (response?.data?.status === 'SUCCESS') {
+//         dispatch({
+//           type: ACCREDITED_REDUX_CONSTANTS.RE_ACCREDITED_CHECKBOX.GET_RE_ACCREDITED_CHECKBOX_DETAILS,
+//           data: response?.data?.data,
+//         });
+//       }
+//     } catch (e) {
+//       displayErrors(e);
+//     }
+//   };
+// };
+// unused
 
 export const saveReAccreditedCheckList = (data, accreditationId) => {
   return async dispatch => {
@@ -197,14 +232,18 @@ export const getPostDetails = id => {
   };
 };
 
-export const saveAccreditedPostDetails = (data, accreditationId) => {
+export const saveAccreditedPostDetails = (data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.saveAccreditedPostDetails(data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification('Post details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
-        // return response?.data?.data;
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.POST_DETAILS.UPDATE_POST_DETAILS_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -260,13 +299,18 @@ export const updatePracticeManagerTimings = (day, fieldName, fieldValue) => {
   };
 };
 
-export const saveAccreditedPracticeManagerDetails = (id, data, accreditationId) => {
+export const saveAccreditedPracticeManagerDetails = (id, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedPracticeManagerDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification('Practice manager details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_PRACTICE_MANAGER_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -293,13 +337,18 @@ export const getFormAStandardDetails = id => {
   };
 };
 
-export const saveAccreditedStandardDetails = (id, data, accreditationId) => {
+export const saveAccreditedStandardDetails = (id, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedStandardDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Standard details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_STANDARD_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -321,17 +370,12 @@ export const downloadFileFromStandards = async fileName => {
   return false;
 };
 
-export const deleteFileFromStandards = (index, filePath, files, accreditationId, fromModule) => {
+export const deleteFileFromStandards = (index, data, files) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.formAApiServices.deleteAccreditedStandardFile(
-        filePath,
-        accreditationId,
-        fromModule,
-      );
+      const response = await AccreditedApiServices.formAApiServices.deleteFormAStandardsFile(data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message ?? 'File deleted successfully');
-        // dispatch(getFormAStandardDetails(accreditationId));
         dispatch(updateAccreditedSubFormArrayFields('formA', 'standards', index, 'filePath', files));
       }
     } catch (e) {
@@ -420,13 +464,18 @@ export const deleteSupervisorFromList = index => {
   };
 };
 
-export const saveAccreditedSupervisorDetails = (id, data, accreditationId) => {
+export const saveAccreditedSupervisorDetails = (id, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedSupervisorDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Supervisor details updated successfully.');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_SUPERVISOR_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -482,13 +531,18 @@ export const getRegistrarsList = facilityId => {
   };
 };
 
-export const saveAccreditedRegistrarDetails = (id, data, accreditationId) => {
+export const saveAccreditedRegistrarDetails = (id, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formAApiServices.saveAccreditedRegistrarDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Registrar details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_REGISTRAR_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -551,42 +605,24 @@ export const getFormA1SupervisorDetails = (id, sid) => {
   };
 };
 
-// export const updateA1SupervisorTimings = (subFormName, day, fieldName, fieldValue) => {
-//   return dispatch => {
-//     dispatch({
-//       type: ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_TIMING,
-//       subFormName,
-//       day,
-//       fieldName,
-//       fieldValue,
-//     });
-//   };
-// };
-
-export const saveAccreditedA1SupervisorDetails = (id, data, accreditationId) => {
+export const saveAccreditedA1SupervisorDetails = (id, sid, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetails(id, data);
+      let response;
+      if (isNextClick) {
+        response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetails(id, data);
+      } else {
+        response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetailsPartially(id, data);
+      }
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Supervisor details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
-      }
-    } catch (e) {
-      displayErrors(e);
-      throw Error();
-    }
-  };
-};
-
-export const saveAccreditedA1SupervisorDetailsPartially = (id, data) => {
-  return async () => {
-    try {
-      const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedA1SupervisorDetailsPartially(
-        id,
-        data,
-      );
-      if (response?.data?.status === 'SUCCESS') {
-        successNotification(response?.data?.message || 'Supervisor details saved partially');
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_COPY_DATA,
+            data: { sid },
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -608,20 +644,15 @@ export const downloadFileFromA1Supervisor = async fileName => {
   return false;
 };
 
-export const deleteFileFromA1Standards = (index, filePath, files, accreditationId, sid, fromModule) => {
+export const deleteFileFromA1Standards = (index, data, files, sid) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.formAApiServices.deleteAccreditedStandardFile(
-        filePath,
-        accreditationId,
-        fromModule,
-      );
+      const response = await AccreditedApiServices.formA1ApiServices.deleteFormA1StandardsFile(data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message ?? 'File deleted successfully');
         dispatch(
           updateAccreditedSubFormDataArrayFields('formA1', `${sid}`, index, 'standardsDetail', 'filePath', files),
         );
-        // dispatch(getFormA1SupervisorDetails(accreditationId, sid));
       }
     } catch (e) {
       displayErrors(e);
@@ -647,13 +678,15 @@ export const getPreviousRecommendationsData = id => {
   };
 };
 
-export const savePreviousRecommendationsData = (id, data, accreditationId) => {
+export const savePreviousRecommendationsData = (id, data) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formA1ApiServices.saveAccreditedFinalChecklistDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Previous recommendations updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        dispatch({
+          type: ACCREDITED_REDUX_CONSTANTS.PREVIOUS_RECOMMENDATIONS.UPDATE_PREVIOUS_RECOMMENDATIONS_COPY_DATA,
+        });
       }
     } catch (e) {
       displayErrors(e);
@@ -732,13 +765,18 @@ export const getFormBSelectedAccreditor = id => {
   };
 };
 
-export const saveAccreditedAssignAccreditedDetails = (id, data, accreditationId) => {
+export const saveAccreditedAssignAccreditedDetails = (id, data, accreditationId, isNextClick) => {
   return async dispatch => {
     try {
       const response = await AccreditedApiServices.formBApiServices.saveAccreditedAssignAccreditorDetails(id, data);
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (isNextClick) dispatch(getAccreditedSteps(accreditationId));
+        else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_ACCREDITORS_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -747,13 +785,25 @@ export const saveAccreditedAssignAccreditedDetails = (id, data, accreditationId)
   };
 };
 
-export const saveAccreditedSummaryDetails = (id, data, accreditationId) => {
+export const saveAccreditedSummaryDetails = (id, data, accreditationId, isPartiallySave = false) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.formBApiServices.saveAccreditedSummaryDetails(id, data);
+      let response;
+      if (isPartiallySave) {
+        response = await AccreditedApiServices.formBApiServices.saveAccreditedSummaryDetailsPartially(id, data);
+      } else {
+        response = await AccreditedApiServices.formBApiServices.saveAccreditedSummaryDetails(id, data);
+      }
+
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Summary details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (!isPartiallySave) {
+          dispatch(getAccreditedSteps(accreditationId));
+        } else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_SUMMARY_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);
@@ -780,13 +830,25 @@ export const getFormBOtherDetails = id => {
   };
 };
 
-export const saveAccreditedDeclarationDetails = (id, data, accreditationId) => {
+export const saveAccreditedDeclarationDetails = (id, data, accreditationId, isPartiallySave = false) => {
   return async dispatch => {
     try {
-      const response = await AccreditedApiServices.formBApiServices.saveDeclarationDetails(id, data);
+      let response;
+      if (isPartiallySave) {
+        response = await AccreditedApiServices.formBApiServices.saveDeclarationDetailsPartially(id, data);
+      } else {
+        response = await AccreditedApiServices.formBApiServices.saveDeclarationDetails(id, data);
+      }
+
       if (response?.data?.status === 'SUCCESS') {
         successNotification(response?.data?.message || 'Other details updated successfully');
-        dispatch(getAccreditedSteps(accreditationId));
+        if (!isPartiallySave) {
+          dispatch(getAccreditedSteps(accreditationId));
+        } else {
+          dispatch({
+            type: ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_OTHER_DETAILS_COPY_DATA,
+          });
+        }
       }
     } catch (e) {
       displayErrors(e);

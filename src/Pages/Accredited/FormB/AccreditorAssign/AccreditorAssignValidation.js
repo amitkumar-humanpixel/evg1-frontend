@@ -31,7 +31,7 @@ export const accreditorAssignValidations = async (
 
   if (validated) {
     try {
-      await dispatch(saveAccreditedAssignAccreditedDetails(id, finalData, accreditionId));
+      await dispatch(saveAccreditedAssignAccreditedDetails(id, finalData, accreditionId, isNextClick));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
       // history.push(`/accredited/formB/declaration/?id=${id}`);
     } catch (e) {

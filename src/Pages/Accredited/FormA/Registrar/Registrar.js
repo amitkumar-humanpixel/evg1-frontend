@@ -11,19 +11,21 @@ import {
 } from '../../redux/AccreditedReduxActions';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const Registrar = () => {
   const { id } = useQueryParams();
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
-
   const [isEditable, setIsEditable] = useState(true);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
-  const { registrarList, registrars } = useSelector(({ accreditedReducer }) => accreditedReducer?.formA ?? {});
+  const { registrarList, registrars, registrarsCopy } = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.formA ?? {},
+  );
 
   const finalRegistrarList = useMemo(() => {
     const registrarsSelected = registrars?.map(e => e?.placementId?.value);
@@ -55,6 +57,8 @@ const Registrar = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={registrars} dataCopy={registrarsCopy} />
+
       <div className="add-button-row">
         <Button buttonType="primary" className="icon-button" onClick={addRegistrar} isDisabled={!isEditable}>
           <span className="material-icons-round">add</span>

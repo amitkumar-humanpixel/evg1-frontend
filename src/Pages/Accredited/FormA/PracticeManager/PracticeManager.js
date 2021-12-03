@@ -12,6 +12,7 @@ import {
 } from '../../redux/AccreditedReduxActions';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const PracticeManager = () => {
   const { id } = useQueryParams();
@@ -23,7 +24,7 @@ const PracticeManager = () => {
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? {});
 
-  const { practiceManagerList, practiceManager } = useSelector(
+  const { practiceManagerList, practiceManager, practiceManagerCopy } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formA ?? {},
   );
 
@@ -120,6 +121,7 @@ const PracticeManager = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={practiceManager} dataCopy={practiceManagerCopy} />
       <section className="common-white-container practice-manager-basic-details-grid">
         {practiceManagerBasicDetailsFields.map(input => (
           <GetComponentByType input={input} onInputChange={onInputChange} />

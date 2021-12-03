@@ -12,7 +12,7 @@ import { a1SupervisorValidation } from './FormA1/A1Supervisor/A1SupervisorValida
 import { summaryValidations } from './FormB/Summary/SummaryValidations';
 import { declarationValidations } from './FormB/Declaration/DeclarationValidations';
 import { accreditorAssignValidations } from './FormB/AccreditorAssign/AccreditorAssignValidation';
-import { resetAccredited, resubmitAccreditedForm } from './redux/AccreditedReduxActions';
+import { resubmitAccreditedForm } from './redux/AccreditedReduxActions';
 import { ReaccreditationChecklistValidations } from './ReaccreditationChecklist/ReaccreditationChecklistValidations';
 import { PreviousRecommendationsValidation } from './PreviousRecommendations/PreviousRecommendationsValidation';
 
@@ -39,7 +39,7 @@ const AccreditedButtons = () => {
   );
   const a1SupervisorDetails = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}`] ?? {});
   const finalCheckListDetails = useSelector(
-    ({ accreditedReducer }) => accreditedReducer?.reaccreditationChecklist ?? {},
+    ({ accreditedReducer }) => accreditedReducer?.reaccreditationChecklist?.reaccreditationChecklist ?? {},
   );
 
   const previousRecommendationsDetails = useSelector(
@@ -248,7 +248,7 @@ const AccreditedButtons = () => {
 
   const onClickCancel = useCallback(() => {
     try {
-      dispatch(resetAccredited());
+      // dispatch(resetAccredited());
       history.push('/dashboard');
     } catch (e) {
       /**/
@@ -281,7 +281,7 @@ const AccreditedButtons = () => {
   }, [step, subStep, accreditionSideBar]);
 
   const getAccreditedRightSideButtons = useMemo(() => {
-    if (role === 'Supervisor' && step === 'formA1') {
+    if ((role === 'Supervisor' && step === 'formA1') || step === 'formB') {
       return (
         <>
           <Button buttonType="outlined-primary" title="Save" onClick={() => onClickSave(false)} />

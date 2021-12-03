@@ -5,200 +5,52 @@ import { ACCREDITED_REDUX_CONSTANTS } from './AccreditedReduxConstants';
 const hoursTableData = [
   {
     days: 'Sunday',
-    hours: '00',
-    startTime: '00',
-    finishTime: '00',
+    hours: '00:00',
+    startTime: '00:00',
+    finishTime: '00:00',
     isChecked: 'none',
   },
   {
     days: 'Monday',
-    hours: '00',
+    hours: '00:00',
     startTime: '08:00',
     finishTime: '17:00',
     isChecked: 'none',
   },
   {
     days: 'Tuesday',
-    hours: '00',
+    hours: '00:00',
     startTime: '08:00',
     finishTime: '17:00',
     isChecked: 'none',
   },
   {
     days: 'Wednesday',
-    hours: '00',
+    hours: '00:00',
     startTime: '08:00',
     finishTime: '17:00',
     isChecked: 'none',
   },
   {
     days: 'Thursday',
-    hours: '00',
+    hours: '00:00',
     startTime: '08:00',
     finishTime: '17:00',
     isChecked: 'none',
   },
   {
     days: 'Friday',
-    hours: '00',
+    hours: '00:00',
     startTime: '08:00',
     finishTime: '17:00',
     isChecked: 'none',
   },
   {
     days: 'Saturday',
-    hours: '00',
-    startTime: '00',
-    finishTime: '00',
+    hours: '00:00',
+    startTime: '00:00',
+    finishTime: '00:00',
     isChecked: 'none',
-  },
-];
-
-const formAStandardsConstant = [
-  {
-    status: 'none',
-    title: 'Practice is accredited by AGPAL or QPA (not mandatory for ACRRM) – please attach certificate',
-  },
-  {
-    status: 'none',
-    title: 'Supervisors hold practitioner medical indemnity insurance',
-  },
-  {
-    status: 'none',
-    title: 'Practice holds separate medical indemnity insurance (not mandatory but recommended)',
-  },
-  {
-    status: 'none',
-    title:
-      'Registrars continue to be employed to the current National Terms and Conditions for Employment of Registrars – please attach employment contract template',
-  },
-  {
-    status: 'none',
-    title:
-      'Registrars medical indemnity and registration are checked at commencement/orientation to ensure they are up to date',
-  },
-  {
-    status: 'none',
-    title:
-      'Orientation is provided to each registrar at commencement - please attach the registrar specific orientation checklist/materials used by the practice.',
-  },
-  {
-    status: 'none',
-    title: 'Practice agrees to review the learning plans of registrars on a regular basis, as required by EV.',
-  },
-  {
-    status: 'none',
-    title: 'Practice agrees to ensure regular, planned and protected teaching time is provided as per EV requirements.',
-  },
-  {
-    status: 'none',
-    title:
-      'Feedback is an essential part of training and can be either formal or informal. The\n' +
-      'educational supervisor is primarily responsible for provision of feedback, but the whole\n' +
-      'supervision team contribute to the monitoring of progress for the registrar. Practice\n' +
-      'agrees to comply with the feedback requirements of EV',
-  },
-  {
-    status: 'none',
-    title:
-      'Practice will comply with the supervision requirements appropriate to the level of training and competency of registrars as required by EV. Arrangements outside of this standard will be discussed and agreed to with registrar and EV in advance.',
-  },
-  {
-    status: 'none',
-    title: 'Practice will participate in and facilitate ECT, TA and Mini-CEX visits',
-  },
-  {
-    status: 'none',
-    title: 'Practice agrees to registrar release time for attending required EV educational workshops',
-  },
-  {
-    status: 'none',
-    title:
-      'Workload and Patient numbers seen by registrars will comply with EV requirements for\n' +
-      'their level of training and capacity. Registrars will see at least two patients per hour\n' +
-      'and no more than four patients per hour, averaged over a month, except in times of\n' +
-      'unusual clinical demand.',
-  },
-  {
-    status: 'none',
-    title: 'The registrar will continue to be provided with:',
-    list: [
-      'A suitably equipped room to conduct consultations with adequate technology\n' +
-        '(phone, internet & communication software)',
-      'Access to up to date educational references & patient information material – online or hard copy',
-      'Private space for teaching',
-    ],
-  },
-  {
-    status: 'none',
-    title:
-      'Have there been changes to facilities or resources since last\n' +
-      'accreditation/reaccreditation visit? If yes, please provide detail.',
-  },
-];
-
-const supervisorStandardDetails = [
-  {
-    status: 'none',
-    title: 'I am recognized as a Specialist GP by AHPRA ',
-  },
-  {
-    status: 'none',
-    title:
-      'I confirm that I am not currently under investigation or the subject of disciplinary proceedings\n' +
-      'under any jurisdiction. A yes answer indicates that this is correct.',
-  },
-  {
-    status: 'none',
-    title:
-      'I confirm that I have not been removed from the register for conduct, health, or performance\n' +
-      'reasons under any jurisdiction at any time in my career. A yes answer indicates that this is correct.',
-  },
-  {
-    status: 'none',
-    title: 'I confirm that I am not subject to any conditions, limitations or restrictions from any jurisdiction.',
-  },
-  {
-    status: 'none',
-    title: 'I have completed ongoing CPD as required by RACGP',
-  },
-  {
-    status: 'none',
-    title: 'I have completed ongoing CPD as required by ACRRM',
-  },
-  {
-    status: 'none',
-    title: 'I have hospital clinical privileges - please attach evidence',
-  },
-  {
-    status: 'none',
-    title:
-      'I will continue to attend EV continuing professional development aimed at improving performance\n' +
-      'as a general practice educator, as required by EV and the RACGP/ACCRM. This will be in alignment\n' +
-      'with the requirements for the category of supervision sought.',
-  },
-  {
-    status: 'none',
-    title:
-      'I agree to inform the Accreditation Coordinator at EV if there are changes to my medical registration that ' +
-      'include any caution, undertaking, condition, reprimand, or if my medical registration is suspended or ' +
-      'cancelled during any time that I am an accredited GP Supervisor. I am aware that should this occur, it may ' +
-      'impact upon my accreditation as a GP Supervisor.',
-  },
-  {
-    status: 'none',
-    title:
-      'I have read and understood the application form and agree to train to the standards/requirements\n' +
-      'in alignment with the supervisor category sought. I also understand that not meeting the\n' +
-      'requirements will lead to suspension or loss of accreditation and the practice may be ineligible to\n' +
-      'take registrars. ',
-  },
-  {
-    status: 'none',
-    title:
-      'I am aware that in becoming an accredited supervisor I will be required to abide by the conditions\n' +
-      'of the Supervision and Training Agreement as agreed between EV and my practice. Please see your\n' +
-      'Practice Manager to view a copy',
   },
 ];
 
@@ -248,6 +100,7 @@ const initialAccreditedReducer = {
   },
 
   postDetails: {},
+  postDetailsCopy: {},
   formA: {
     practiceManagerList: [],
     supervisorList: [],
@@ -255,8 +108,21 @@ const initialAccreditedReducer = {
     practiceManager: {
       hours: [...hoursTableData],
     },
-    standards: [...formAStandardsConstant],
+    practiceManagerCopy: {
+      hours: [...hoursTableData],
+    },
+    standards: [],
+    standardsCopy: [],
     supervisors: [
+      {
+        userId: [],
+        categoryOfSupervisor: [],
+        contactNumber: '',
+        email: '',
+        hours: [...hoursTableData],
+      },
+    ],
+    supervisorsCopy: [
       {
         userId: [],
         categoryOfSupervisor: [],
@@ -275,16 +141,35 @@ const initialAccreditedReducer = {
         note2: '',
       },
     ],
+    registrarsCopy: [
+      {
+        placementId: [],
+        note: '',
+        hoursDetails: [...hoursTableData],
+        onCall: [...hoursTableData],
+        note1: '',
+        note2: '',
+      },
+    ],
   },
   formA1: {
     finalCheckList: {
       recommendation: '',
       actioned: '',
     },
+    finalCheckListCopy: {
+      recommendation: '',
+      actioned: '',
+    },
   },
   previousRecommendations: {},
+  previousRecommendationsCopy: {},
   formB: {
     accreditorAssign: {
+      accreditorId: [],
+      accreditorNameList: [],
+    },
+    accreditorAssignCopy: {
       accreditorId: [],
       accreditorNameList: [],
     },
@@ -297,7 +182,23 @@ const initialAccreditedReducer = {
       practiceDetail: '',
       accreditationWithEV: false,
     },
+    summaryCopy: {
+      classification: '',
+      dateOfVisit: '',
+      dateOfReportComplete: '',
+      assessment: [...summaryAssessment],
+      applications: [],
+      practiceDetail: '',
+      accreditationWithEV: false,
+    },
     otherDetails: {
+      previousIssues: '',
+      summery: '',
+      recomendationPanel: '',
+      reviewedBy: '',
+      isAgree: false,
+    },
+    otherDetailsCopy: {
       previousIssues: '',
       summery: '',
       recomendationPanel: '',
@@ -427,30 +328,19 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       };
     }
 
-    // *** Reaccredited Checkbox ***
-
-    case ACCREDITED_REDUX_CONSTANTS.RE_ACCREDITED_CHECKBOX.GET_RE_ACCREDITED_CHECKBOX_DETAILS: {
-      return {
-        ...state,
-        reaccreditationChecklist: {
-          reaccreditationChecklist: !_.isEmpty(action?.data?.reaccreditationChecklist)
-            ? action?.data?.reaccreditationChecklist
-            : [...finalCheckListConstant],
-        },
-      };
-    }
-
     // *** PostDetails ***
 
     case ACCREDITED_REDUX_CONSTANTS.POST_DETAILS.GET_PRACTICE_MANAGERS_POST_DETAILS: {
+      const postDetails = {
+        ...state?.postDetails,
+        address: `${action?.data?.address} ${action?.data?.suburb} ${action?.data?.postalCode}`,
+        facilityName: action?.data?.practiceName,
+        facilityId: action?.data?.facilityId,
+      };
       return {
         ...state,
-        postDetails: {
-          ...state?.postDetails,
-          address: `${action?.data?.address} ${action?.data?.suburb} ${action?.data?.postalCode}`,
-          facilityName: action?.data?.practiceName,
-          facilityId: action?.data?.facilityId,
-        },
+        postDetails,
+        postDetailsCopy: postDetails,
       };
     }
 
@@ -494,8 +384,15 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       return {
         ...state,
         postDetails,
+        postDetailsCopy: postDetails,
       };
     }
+
+    case ACCREDITED_REDUX_CONSTANTS.POST_DETAILS.UPDATE_POST_DETAILS_COPY_DATA:
+      return {
+        ...state,
+        postDetailsCopy: state?.postDetails,
+      };
 
     // *** Form A ***
 
@@ -518,6 +415,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         formA: {
           ...state.formA,
           practiceManager,
+          practiceManagerCopy: practiceManager,
         },
       };
     }
@@ -568,30 +466,35 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       };
     }
 
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_PRACTICE_MANAGER_COPY_DATA:
+      return {
+        ...state,
+        formA: {
+          ...state.formA,
+          practiceManagerCopy: state.formA.practiceManager,
+        },
+      };
+
     // standards
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.GET_STANDARD_DETAILS: {
       return {
         ...state,
         formA: {
           ...state.formA,
-          standards: !_.isEmpty(action?.data)
-            ? action?.data?.map(e =>
-                e?.title === 'The registrar will continue to be provided with:'
-                  ? {
-                      ...e,
-                      list: [
-                        'A suitably equipped room to conduct consultations with adequate technology\n' +
-                          '(phone, internet & communication software)',
-                        'Access to up to date educational references & patient information material – online or hard copy',
-                        'Private space for teaching',
-                      ],
-                    }
-                  : e,
-              )
-            : [...formAStandardsConstant],
+          standards: !_.isEmpty(action?.data) ? action?.data : [],
+          standardsCopy: !_.isEmpty(action?.data) ? action?.data : [],
         },
       };
     }
+
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_STANDARD_COPY_DATA:
+      return {
+        ...state,
+        formA: {
+          ...state.formA,
+          standardsCopy: state.formA.standards,
+        },
+      };
 
     // supervisors
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.GET_SUPERVISOR_DATA: {
@@ -637,6 +540,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         formA: {
           ...state?.formA,
           supervisors: [...supervisors],
+          supervisorsCopy: [...supervisors],
         },
       };
     }
@@ -729,6 +633,15 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       };
     }
 
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_SUPERVISOR_COPY_DATA:
+      return {
+        ...state,
+        formA: {
+          ...state.formA,
+          supervisorsCopy: state.formA.supervisors,
+        },
+      };
+
     // registrar
 
     case ACCREDITED_REDUX_CONSTANTS.FORM_A.GET_REGISTRAR_DATA: {
@@ -764,6 +677,7 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         formA: {
           ...state?.formA,
           registrars: [...registrars],
+          registrarsCopy: [...registrars],
         },
       };
     }
@@ -862,96 +776,89 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
       };
     }
 
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A.UPDATE_REGISTRAR_COPY_DATA:
+      return {
+        ...state,
+        formA: {
+          ...state.formA,
+          registrarsCopy: state.formA.registrars,
+        },
+      };
+
     // *** Form A1 ***
 
     // A1 supervisor
-    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_A1_SUPERVISOR_DETAIL:
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_A1_SUPERVISOR_DETAIL: {
+      const a1SupervisorData = {
+        ...state?.formA1?.[action?.data?.userId],
+        userId: action?.data?.userId,
+        username: action?.data?.username ? action?.data?.username : '',
+        email: action?.data?.email ? action?.data?.email : '',
+        contactNumber: action?.data?.contactNumber ? action?.data?.contactNumber : '',
+        categoryOfSupervisor: _.capitalize(action?.data?.categoryOfSupervisor),
+        college: action?.data?.college?.map(college => ({
+          label: _.upperCase(college),
+          value: college,
+          name: 'college',
+        })),
+        standardsDetail: [],
+      };
       return {
         ...state,
         formA1: {
           ...state.formA1,
-          [action?.data?.userId]: {
-            ...state?.formA1?.[action?.data?.userId],
-            userId: action?.data?.userId,
-            username: action?.data?.username ? action?.data?.username : '',
-            email: action?.data?.email ? action?.data?.email : '',
-            contactNumber: action?.data?.contactNumber ? action?.data?.contactNumber : '',
-            categoryOfSupervisor: _.capitalize(action?.data?.categoryOfSupervisor),
-            college: action?.data?.college?.map(college => ({
-              label: _.upperCase(college),
-              value: college,
-              name: 'college',
-            })),
-            // hours: [...hoursTableData],
-            standardsDetail: [...supervisorStandardDetails],
-          },
+          [action?.data?.userId]: a1SupervisorData,
+          [`${[action?.data?.userId]}copy`]: a1SupervisorData,
         },
       };
+    }
 
-    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_A1_SUPERVISOR_DATA:
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.GET_A1_SUPERVISOR_DATA: {
+      const a1SupervisorData = {
+        ...state?.formA1?.[action?.data?.userId],
+        // hours: !_.isEmpty(action?.data?.hours) ? action?.data?.hours : [...hoursTableData],
+        standardsDetail: !_.isEmpty(action?.data?.standardsDetail) ? action?.data?.standardsDetail : [],
+        isAgree: action?.data?.isAgree,
+      };
       return {
         ...state,
         formA1: {
           ...state.formA1,
-          [action?.data?.userId]: {
-            ...state?.formA1?.[action?.data?.userId],
-            // hours: !_.isEmpty(action?.data?.hours) ? action?.data?.hours : [...hoursTableData],
-            standardsDetail: !_.isEmpty(action?.data?.standardsDetail)
-              ? action?.data?.standardsDetail
-              : [...supervisorStandardDetails],
-            isAgree: action?.data?.isAgree,
-          },
+          [action?.data?.userId]: a1SupervisorData,
+          [`${[action?.data?.userId]}copy`]: a1SupervisorData,
         },
       };
+    }
 
-    // case ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_TIMING: {
-    //   let { hours } = state.formA1?.[action.subFormName];
-    //   hours = hours.map(hour => {
-    //     if (hour?.days === action?.day) {
-    //       return {
-    //         ...hour,
-    //         [action.fieldName]: action.fieldValue,
-    //       };
-    //     }
-    //     return hour;
-    //   });
-    //   hours = hours?.map(hour => ({
-    //     ...hour,
-    //     hours:
-    //       hour?.startTime < hour?.finishTime
-    //         ? moment(
-    //             `${moment
-    //               .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-    //               .hours()}:${moment
-    //               .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-    //               .minutes()}`,
-    //             'HH:mm',
-    //           ).format('HH:mm')
-    //         : '00:00',
-    //   }));
-    //   return {
-    //     ...state,
-    //     formA1: {
-    //       ...state.formA1,
-    //       [action?.subFormName]: {
-    //         ...state.formA1?.[action?.subFormName],
-    //         hours,
-    //       },
-    //     },
-    //   };
-    // }
+    case ACCREDITED_REDUX_CONSTANTS.FORM_A1.UPDATE_A1_SUPERVISOR_COPY_DATA: {
+      return {
+        ...state,
+        formA1: {
+          ...state.formA1,
+          [`${[action?.data?.sid]}copy`]: state.formA1[action.data.sid],
+        },
+      };
+    }
 
     // *** Previous Recommendations ***
 
     case ACCREDITED_REDUX_CONSTANTS.PREVIOUS_RECOMMENDATIONS.GET_PREVIOUS_RECOMMENDATIONS_DETAILS: {
+      const previousRecommendationsData = {
+        recommendation: action?.data?.addressRecommendation?.recommendation || '',
+        actioned: action?.data?.addressRecommendation?.actioned || '',
+      };
       return {
         ...state,
-        previousRecommendations: {
-          recommendation: action?.data?.addressRecommendation?.recommendation || '',
-          actioned: action?.data?.addressRecommendation?.actioned || '',
-        },
+        previousRecommendations: previousRecommendationsData,
+        previousRecommendationsCopy: previousRecommendationsData,
       };
     }
+
+    case ACCREDITED_REDUX_CONSTANTS.PREVIOUS_RECOMMENDATIONS.UPDATE_PREVIOUS_RECOMMENDATIONS_COPY_DATA:
+      return {
+        ...state,
+        previousRecommendationsCopy: state.previousRecommendations,
+      };
 
     // *** Form B ***
 
@@ -996,9 +903,19 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
         formB: {
           ...state.formB,
           summary,
+          summaryCopy: summary,
         },
       };
     }
+
+    case ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_SUMMARY_COPY_DATA:
+      return {
+        ...state,
+        formB: {
+          ...state.formB,
+          summaryCopy: state.formB.summary,
+        },
+      };
 
     // assign accreditors
 
@@ -1030,30 +947,53 @@ export const accreditedReducer = (state = initialAccreditedReducer, action) => {
             name: 'accreditorId',
           }
         : [];
+      const accreditorAssignData = {
+        ...state?.formB?.accreditorAssign,
+        accreditorId,
+      };
       return {
         ...state,
         formB: {
           ...state.formB,
-          accreditorAssign: {
-            ...state?.formB?.accreditorAssign,
-            accreditorId,
-          },
+          accreditorAssign: accreditorAssignData,
+          accreditorAssignCopy: accreditorAssignData,
         },
       };
     }
 
-    case ACCREDITED_REDUX_CONSTANTS.FORM_B.GET_FORM_B_OTHER_DETAILS:
+    case ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_ACCREDITORS_COPY_DATA:
       return {
         ...state,
         formB: {
           ...state.formB,
-          otherDetails: {
-            previousIssues: action?.data?.previousIssues || '',
-            summery: action?.data?.summery || '',
-            recomendationPanel: action?.data?.recomendationPanel || '',
-            reviewedBy: action?.data?.reviewedBy || '',
-            isAgree: action?.data?.isAgree ?? false,
-          },
+          accreditorAssignCopy: state.formB.accreditorAssign,
+        },
+      };
+
+    case ACCREDITED_REDUX_CONSTANTS.FORM_B.GET_FORM_B_OTHER_DETAILS: {
+      const otherDetailsData = {
+        previousIssues: action?.data?.previousIssues || '',
+        summery: action?.data?.summery || '',
+        recomendationPanel: action?.data?.recomendationPanel || '',
+        reviewedBy: action?.data?.reviewedBy || '',
+        isAgree: action?.data?.isAgree ?? false,
+      };
+      return {
+        ...state,
+        formB: {
+          ...state.formB,
+          otherDetails: otherDetailsData,
+          otherDetailsCopy: otherDetailsData,
+        },
+      };
+    }
+
+    case ACCREDITED_REDUX_CONSTANTS.FORM_B.UPDATE_FORM_B_OTHER_DETAILS_COPY_DATA:
+      return {
+        ...state,
+        formB: {
+          ...state.formB,
+          otherDetailsCopy: state.formB.otherDetails,
         },
       };
 

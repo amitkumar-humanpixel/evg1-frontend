@@ -15,6 +15,7 @@ import Input from '../../../../components/Input/Input';
 import SummaryApplications from './SummaryApplications';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
 import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const Summary = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Summary = () => {
 
   const { facilityId } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedDetails ?? '');
 
-  const { summary, facilityPracticeManagerOptions } = useSelector(
+  const { summary, facilityPracticeManagerOptions, summaryCopy } = useSelector(
     ({ accreditedReducer }) => accreditedReducer?.formB ?? {},
   );
 
@@ -302,6 +303,8 @@ const Summary = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={summary} dataCopy={summaryCopy} />
+
       <section>
         <div className="accredited-title mb-10">Summary of key findings and accreditor recommendations</div>
         <div className="common-white-container summary-details">

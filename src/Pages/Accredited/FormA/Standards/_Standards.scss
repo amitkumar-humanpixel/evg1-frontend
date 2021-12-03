@@ -1,7 +1,17 @@
-.standard-detail-with-attach-button,
+.standard-detail-table {
+  border-spacing: 0.4rem 1.5rem;
+}
+
+.standard-detail-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
 .standard-detail {
   display: flex;
   align-items: flex-start;
+  flex: 1;
+  max-width: calc(100% - 235px);
 }
 
 .standard-texts {
@@ -11,19 +21,9 @@
   text-align: justify;
 }
 
-.standard-detail-with-attach-button {
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.standard-detail {
-  flex: 1;
-  min-width: 70%;
-}
-
 .standard-detail-container {
   flex: 1;
-  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .standard-detail-point {
@@ -41,14 +41,6 @@
       margin-left: -20px;
     }
   }
-}
-
-.standard-detail-table {
-  border-spacing: 0.4rem 1.5rem;
-}
-
-.standard-detail-checkbox {
-  width: calc(100% - 130px);
 }
 
 .standard-detail-button {
@@ -95,21 +87,23 @@
     border-radius: 5px;
     cursor: pointer;
   }
-    .download-file {
-      margin-right: 5px;
-      color: $alert-blue;
-      &:hover {
-        color: #448888;
-      }
-    }
 
-    .delete-file {
-      color: $error-color;
-      &:hover {
-        color: red;
-      }
-    }
+  .download-file {
+    margin-right: 5px;
+    color: $alert-blue;
 
+    &:hover {
+      color: #448888;
+    }
+  }
+
+  .delete-file {
+    color: $error-color;
+
+    &:hover {
+      color: red;
+    }
+  }
 }
 
 .file-name {
@@ -125,7 +119,6 @@
 
 .remarks-input {
   width: 100%;
-  margin: 5px 0 0 80px;
 
   > textarea {
     width: inherit;
@@ -133,16 +126,20 @@
 }
 
 @media (max-width: 1024px) {
-  .standard-detail-checkbox {
-    width: 100%;
+  .standard-detail-row {
+    flex-wrap: wrap;
   }
 
-  .standard-detail-button {
-    display: none;
+  .standard-detail {
+    min-width: calc(100% - 85px);
   }
+
+  //.standard-detail-button {
+  //  display: none;
+  //}
 
   .attach-button {
     width: unset;
-    margin: 5px 0 0 10px;
+    margin: 5px 0 0 85px;
   }
 }

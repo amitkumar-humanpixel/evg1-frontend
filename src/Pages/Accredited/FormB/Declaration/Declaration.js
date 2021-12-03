@@ -6,18 +6,20 @@ import Input from '../../../../components/Input/Input';
 import { getFormBOtherDetails, updateAccreditedSubFormFields } from '../../redux/AccreditedReduxActions';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const Declaration = () => {
   const { id } = useQueryParams();
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
+
   const [isEditable, setIsEditable] = useState(true);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
-  const { reviewedBy, isAgree, recomendationPanel, summery, previousIssues, error } = useSelector(
-    ({ accreditedReducer }) => accreditedReducer?.formB?.otherDetails ?? {},
-  );
+  const { otherDetails, otherDetailsCopy } = useSelector(({ accreditedReducer }) => accreditedReducer?.formB ?? {});
+
+  const { reviewedBy, isAgree, recomendationPanel, summery, previousIssues, error } = otherDetails;
 
   const onInputChange = useCallback((name, value) => {
     dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', name, value));
@@ -49,6 +51,8 @@ const Declaration = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={otherDetails} dataCopy={otherDetailsCopy} />
+
       <section className="common-white-container">
         <div className="accredited-title mb-10">Previous Issue</div>
         <div className="form-b-single-record-grid">
@@ -98,7 +102,7 @@ const Declaration = () => {
             onChange={handleInputCheckChange}
             disabled={!isEditable}
           />
-          {error?.declarationStatus && <div className="form-error-message mt-10">{error?.declarationStatus}</div>}
+          {error?.isAgree && <div className="form-error-message mt-10">{error?.isAgree}</div>}
           <div className="mt-15">
             <div className="form-detail-title">Reviewed by:</div>
             <Input

@@ -11,63 +11,25 @@ import {
   updateAccreditedSubFormDataArrayFields,
   updateAccreditedSubFormFields,
 } from '../../redux/AccreditedReduxActions';
-import { useWindowWidth } from '../../../../hooks/useWindowWidth';
 import FileUploadButton from '../../../../components/FileUploadButton';
 import { fileNameExtension, fileNamePrefix } from '../../../../helpers/fileNameSplit';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
 import TriStateSwitch from '../../../../components/TriStateSwitch/TriStateSwitch';
 import { downloadAll } from '../../../../helpers/DownloadHelper';
 import { errorNotification } from '../../../../components/common/NotifyToaster';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
-const attachments = ['I have hospital clinical privileges - please attach evidence'];
 const A1Supervisor = () => {
   const dispatch = useDispatch();
   const { id, sid } = useQueryParams();
   const { step, subStep } = useParams();
-  const [isEditable, setIsEditable] = useState(true);
 
-  const isMobileWidth = useWindowWidth() < 1024;
+  const [isEditable, setIsEditable] = useState(true);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
 
   const supervisor = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}`] ?? {});
-
-  // const onHourDetailsInputChange = useCallback(
-  //   (day, name, value) => {
-  //     if (name === 'isChecked') {
-  //       if (value !== 'true') {
-  //         if (['Sunday', 'Saturday'].includes(day)) {
-  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'startTime', '00:00'));
-  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'finishTime', '00:00'));
-  //         } else {
-  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'startTime', '08:00'));
-  //           dispatch(updateA1SupervisorTimings(`${sid}`, day, 'finishTime', '17:00'));
-  //         }
-  //       }
-  //       dispatch(updateA1SupervisorTimings(`${sid}`, day, name, value));
-  //     } else {
-  //       const finalValue =
-  //         value === 'Invalid date'
-  //           ? moment(
-  //               moment()
-  //                 .hour(
-  //                   (!['Sunday', 'Saturday'].includes(day) && (name === 'startTime' ? 8 : 17)) || 0
-  //                 )
-  //                 .minutes(0)
-  //             ).format('HH:mm')
-  //           : value;
-  //       dispatch(
-  //         updateA1SupervisorTimings(
-  //           `${sid}`,
-  //           day,
-  //           name,
-  //           moment(finalValue, 'HH:mm').format('HH:mm')
-  //         )
-  //       );
-  //     }
-  //   },
-  //   [sid]
-  // );
+  const supervisorCopy = useSelector(({ accreditedReducer }) => accreditedReducer?.formA1?.[`${sid}copy`] ?? {});
 
   const handleStandardInputChange = useCallback(
     (index, name, value) => {
@@ -96,13 +58,14 @@ const A1Supervisor = () => {
   }, []);
 
   const handleFileDeletion = useCallback(
-    (index, fileArray, filePath) => {
+    (index, file, detail) => {
       if (isEditable) {
-        const files = fileArray?.filter(e => e?.fileUrl !== filePath);
-        dispatch(deleteFileFromA1Standards(index, `Files/${filePath?.split('/').pop()}`, files, id, sid, 'formA1'));
+        const files = detail?.filePath?.filter(e => e?.fileUrl !== file?.fileUrl);
+        const data = { elementId: detail?._id, fileId: file?._id, supervisorId: parseInt(sid, 10) };
+        dispatch(deleteFileFromA1Standards(index, data, files, sid));
       }
     },
-    [id, sid, isEditable],
+    [sid, isEditable],
   );
 
   useEffect(() => {
@@ -115,6 +78,8 @@ const A1Supervisor = () => {
 
   return (
     <>
+      <PromptOnRouteChange data={supervisor} dataCopy={supervisorCopy} />
+
       <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
         Please note that all questions must be answered for the application to be considered complete. You can save the
         answers and return to complete this section later, by clicking Save at bottom right and exiting the page. To
@@ -124,90 +89,76 @@ const A1Supervisor = () => {
       <div className="common-white-container">
         <SupervisorDetails data={supervisor} fromModule="formA1" isEditable={isEditable} />
       </div>
-      {/* <div className="accredited-title accredited-title-margin">Supervisor Hours – Opening & Closing Time</div> */}
-      {/* <div className="common-white-container"> */}
-      {/*  {!_.isEmpty(supervisor?.hours) && ( */}
-      {/*    <HoursTable hours={supervisor?.hours} onHourInputChange={onHourDetailsInputChange} isEditable={isEditable} /> */}
-      {/*  )} */}
-      {/* </div> */}
       <section>
-        <div className="accredited-title accredited-title-margin">
-          Standard Details (To be completed by {supervisor.username})
-        </div>
-        <div className="common-white-container">
-          <table className="standard-detail-table">
-            {supervisor?.standardsDetail?.map((detail, index) => (
-              <tr>
-                <td className="standard-detail-checkbox">
-                  <div className="standard-detail">
-                    <TriStateSwitch
-                      className="A1-checklist-checkmark"
-                      state={detail?.status}
-                      onChange={status => handleStandardInputChange(index, 'status', status)}
-                      disabled={!isEditable}
-                    />
-                    <div className="w-100">
-                      <span>{detail?.title}</span>
-                      <div className="form-error-message standard-error-message">{detail?.error}</div>
-                      {detail?.filePath?.length > 0 &&
-                        detail?.filePath?.map(file => (
-                          <div className="standard-attached-file">
-                            <span className="file-name">
-                              <span className="file-name-without-extension">
-                                <b>Uploaded File: </b>
-                                {fileNamePrefix(file?.fileName?.split('/').pop())}
-                              </span>
-                              <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
-                            </span>
-                            <div className="d-flex">
-                              <span
-                                className="material-icons-round download-file"
-                                title={`Download ${file?.fileName}`}
-                                onClick={() => handleFileDownload(file?.fileName)}
-                              >
-                                cloud_download
-                              </span>
-                              <span
-                                className="material-icons-round delete-file"
-                                onClick={() => handleFileDeletion(index, detail?.filePath, file?.fileUrl)}
-                              >
-                                delete
-                              </span>
-                            </div>
-                          </div>
+        <div className="accredited-title mb-10">Standard Details (To be completed by {supervisor.username})</div>
+        <div className="common-white-container standard-detail-table">
+          {supervisor?.standardsDetail?.map((detail, index) => (
+            <div className="standard-detail-row">
+              <TriStateSwitch
+                onChange={state => handleStandardInputChange(index, 'status', state)}
+                state={detail?.status}
+                className="mr-15"
+                disabled={!isEditable}
+              />
+              <div className="standard-detail">
+                <div className="standard-detail-container">
+                  <div className="standard-detail-point">
+                    {`${index + 1}. ${detail.title}`}
+                    {detail?.list && (
+                      <ul>
+                        {detail.list.map(point => (
+                          <li>{point}</li>
                         ))}
-                    </div>
-                    {isMobileWidth && attachments.includes(detail.title) && (
-                      <FileUploadButton
-                        formName="formA1"
-                        subFormName={`${sid}`}
-                        data={detail}
-                        index={index}
-                        subFormField="standardsDetail"
-                        isEditable={isEditable}
-                        isMulti
-                        existFiles={detail?.filePath ?? []}
-                      />
+                      </ul>
                     )}
                   </div>
-                </td>
-                <td className="standard-detail-button">
-                  {attachments.includes(detail.title) && (
-                    <FileUploadButton
-                      formName="formA1"
-                      subFormName={`${sid}`}
-                      data={detail}
-                      index={index}
-                      subFormField="standardsDetail"
-                      isEditable={isEditable}
-                      isMulti
-                      existFiles={detail?.filePath ?? []}
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
-          </table>
+                  {detail?.error && <div className="form-error-message standard-error-message">{detail?.error}</div>}
+                  {detail?.filePath?.length > 0 &&
+                    detail?.filePath?.map(file => (
+                      <div className="standard-attached-file">
+                        <span className="file-name">
+                          <span className="file-name-without-extension">
+                            <b>Uploaded File: </b>
+                            {fileNamePrefix(file?.fileName?.split('/').pop())}
+                          </span>
+                          <span>.{fileNameExtension(file?.fileName?.split('/').pop())}</span>
+                        </span>
+                        <div className="d-flex">
+                          <span
+                            className="material-icons-round download-file"
+                            title={`Download ${file?.fileName}`}
+                            onClick={() => handleFileDownload(file?.fileName)}
+                          >
+                            cloud_download
+                          </span>
+                          <span
+                            className="material-icons-round delete-file"
+                            title={`Delete ${file?.fileName}`}
+                            onClick={() => handleFileDeletion(index, file, detail)}
+                          >
+                            delete
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              {detail?.isFileUploadAllowed && (
+                <div className="standard-detail-button">
+                  <FileUploadButton
+                    formName="formA1"
+                    subFormName={`${sid}`}
+                    data={detail}
+                    index={index}
+                    subFormField="standardsDetail"
+                    isEditable={isEditable}
+                    isMulti
+                    existFiles={detail?.filePath ?? []}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
       <div className="mt-10">

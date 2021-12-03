@@ -29,7 +29,7 @@ export const PreviousRecommendationsValidation = async (
 
   if (validated) {
     try {
-      await dispatch(savePreviousRecommendationsData(id, finalData, accreditionId));
+      await dispatch(savePreviousRecommendationsData(id, finalData));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
       // history.push(`/accredited/formB/?id=${id}`);
     } catch (e) {

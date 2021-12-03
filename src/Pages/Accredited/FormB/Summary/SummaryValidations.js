@@ -14,24 +14,23 @@ export const summaryValidations = async (
   subStep,
 ) => {
   // const errors = {};
-  const validated = true;
-  if (validated) {
-    const finalData = {
-      accreditorId: data?.accreditorUserId ? parseInt(data?.accreditorUserId, 10) : undefined,
-      classification: data?.classification?.value,
-      dateOfVisit: data?.dateOfVisit,
-      dateOfReportComplete: data?.dateOfReportComplete,
-      assessment: [...data?.assessment],
-      applications: [...data?.applications],
-      practiceDetail: data?.practiceDetail,
-      accreditationWithEV: data?.accreditationWithEV,
-    };
-    try {
-      await dispatch(saveAccreditedSummaryDetails(id, finalData, accreditionId));
-      if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/accredited/formB/declaration/?id=${id}`);
-    } catch (e) {
-      /**/
+  // const validated = true;
+  const finalData = {
+    accreditorId: data?.accreditorUserId ? parseInt(data?.accreditorUserId, 10) : undefined,
+    classification: data?.classification?.value,
+    dateOfVisit: data?.dateOfVisit,
+    dateOfReportComplete: data?.dateOfReportComplete,
+    assessment: [...data?.assessment],
+    applications: [...data?.applications],
+    practiceDetail: data?.practiceDetail,
+    accreditationWithEV: data?.accreditationWithEV,
+  };
+  try {
+    await dispatch(saveAccreditedSummaryDetails(id, finalData, accreditionId, !isNextClick));
+    if (isNextClick) {
+      setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
     }
+  } catch (e) {
+    /**/
   }
 };

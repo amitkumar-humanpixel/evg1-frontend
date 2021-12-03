@@ -9,11 +9,13 @@ import {
 } from '../../redux/AccreditedReduxActions';
 import { AccreditedEditableHelper } from '../../../../helpers/AccreditedEditableHelper';
 import { useQueryParams } from '../../../../hooks/GetQueryParamHook';
+import PromptOnRouteChange from '../../../../components/PromptOnRouteChange';
 
 const AccreditorAssign = () => {
   const dispatch = useDispatch();
   const { step, subStep } = useParams();
   const { id } = useQueryParams();
+
   const [isEditable, setIsEditable] = useState(true);
 
   const { accreditionSideBar } = useSelector(({ accreditedReducer }) => accreditedReducer?.accreditedStepper ?? {});
@@ -22,9 +24,11 @@ const AccreditorAssign = () => {
     ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
   );
 
-  const { accreditorNameList, accreditorId, error } = useSelector(
-    ({ accreditedReducer }) => accreditedReducer?.formB?.accreditorAssign ?? {},
+  const { accreditorAssign, accreditorAssignCopy } = useSelector(
+    ({ accreditedReducer }) => accreditedReducer?.formB ?? {},
   );
+
+  const { accreditorNameList, accreditorId, error } = accreditorAssign;
 
   const handleSelectChange = useCallback(e => {
     dispatch(updateAccreditedSubFormFields('formB', 'accreditorAssign', 'accreditorId', e));
@@ -43,20 +47,24 @@ const AccreditorAssign = () => {
   }, [id]);
 
   return (
-    <section className="common-white-container practice-manager-basic-details-grid">
-      <span className="form-detail-title">Accreditor</span>
-      <ReactSelect
-        placeholder="Select Accreditor"
-        name="accreditorId"
-        options={accreditorNameList ?? []}
-        className="react-select-container"
-        classNamePrefix="react-select"
-        value={accreditorId ?? []}
-        onChange={handleSelectChange}
-        isDisabled={!isEditable}
-      />
-      {error?.toString()?.trim()?.length > 0 && <div className="form-error-message">{error}</div>}
-    </section>
+    <>
+      <PromptOnRouteChange data={accreditorAssign?.accreditorId} dataCopy={accreditorAssignCopy?.accreditorId} />
+
+      <section className="common-white-container practice-manager-basic-details-grid">
+        <span className="form-detail-title">Accreditor</span>
+        <ReactSelect
+          placeholder="Select Accreditor"
+          name="accreditorId"
+          options={accreditorNameList ?? []}
+          className="react-select-container"
+          classNamePrefix="react-select"
+          value={accreditorId ?? []}
+          onChange={handleSelectChange}
+          isDisabled={!isEditable}
+        />
+        {error?.toString()?.trim()?.length > 0 && <div className="form-error-message">{error}</div>}
+      </section>
+    </>
   );
 };
 

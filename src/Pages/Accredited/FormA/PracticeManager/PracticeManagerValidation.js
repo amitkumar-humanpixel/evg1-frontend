@@ -28,11 +28,12 @@ export const practiceManagerValidation = async (
     contactNumber: data?.contactNumber,
     hours: data?.hours.map(hour => ({
       ...hour,
-      hours: `${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .hours()}:${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .minutes()}`,
+      hours: moment(
+        `${moment.duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm'))).hours()}:${moment
+          .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+          .minutes()}`,
+        'HH:mm',
+      ).format('HH:mm'),
     })),
   };
 
@@ -57,7 +58,7 @@ export const practiceManagerValidation = async (
   }
 
   finalData?.hours?.forEach((hour, index) => {
-    if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+    if (hour?.isChecked === 'true' && hour?.hours === '00:00') {
       validated = false;
       dispatch(
         updateAccreditedSubFormDataArrayFields(
@@ -90,7 +91,7 @@ export const practiceManagerValidation = async (
 
   if (validated) {
     try {
-      await dispatch(saveAccreditedPracticeManagerDetails(id, finalData, accreditionId));
+      await dispatch(saveAccreditedPracticeManagerDetails(id, finalData, accreditionId, isNextClick));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
     } catch (e) {
       /**/

@@ -66,7 +66,7 @@ export const postDetailsValidation = async (
   dispatch(updateAccreditedFields('postDetails', 'errors', errors));
   if (validated) {
     try {
-      await dispatch(saveAccreditedPostDetails(finalData, accreditionId));
+      await dispatch(saveAccreditedPostDetails(finalData, accreditionId, isNextClick));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
     } catch (e) {
       /**/

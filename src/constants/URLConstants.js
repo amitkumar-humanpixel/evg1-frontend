@@ -33,9 +33,11 @@ export const REGISTRAR_URLS = {
 export const ACCREDITED_URLS = {
   GET_ACCREDITED_DETAILS: `${BASE_URL}accredited/`,
   GET_ACCREDITED_STEPPER: `${BASE_URL}accredited/accreditionSideBar/`,
-  UPLOAD_FILE: `${BASE_URL}fileUploader/file`,
+  UPLOAD_FORM_A__FILE: `${BASE_URL}formA/file/`,
+  UPLOAD_FORM_A1__FILE: `${BASE_URL}formA1/file/`,
   DOWNLOAD_FILE: `${BASE_URL}fileDownloader/`,
-  DELETE_FILE: `${BASE_URL}fileUploader/file/`,
+  DELETE_FORM_A_FILE: `${BASE_URL}formA/deleteStandardFile/`,
+  DELETE_FORM_A1_FILE: `${BASE_URL}formA1/deleteSupervisorStandardFile/`,
 
   RE_SUBMIT_ACCREDITED_FORM: `${BASE_URL}formA1/resubmitForm/`,
 
@@ -88,6 +90,7 @@ export const ACCREDITED_URLS = {
     GET_FORM_B_SUPERVISORS: `${BASE_URL}formB/supervisors/`,
     GET_FORM_B_ACCREDITORS: `${BASE_URL}formB/accreditor/`,
     GET_FORM_B_SELECTED_ACCREDITORS: `${BASE_URL}formB/getAccreditor/`,
+    SAVE_SUMMARY_DETAILS_PARTIALLY: `${BASE_URL}formB/submitTempSummary/`,
     SAVE_SUMMARY_DETAILS: `${BASE_URL}formB/submitSummary/`,
 
     // assign accreditor
@@ -96,5 +99,6 @@ export const ACCREDITED_URLS = {
     // declaration
     GET_FORM_B_OTHER_DETAILS: `${BASE_URL}formB/getOtherDetails/`,
     SAVE_DECLARATION_DETAILS: `${BASE_URL}formB/submitOtherDetails/`,
+    SAVE_DECLARATION_DETAILS_PARTIALLY: `${BASE_URL}formB/submitTempOtherDetails/`,
   },
 };

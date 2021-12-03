@@ -26,19 +26,21 @@ export const registrarValidation = async (
     note: e?.note,
     hoursDetails: e?.hoursDetails.map(hour => ({
       ...hour,
-      hours: `${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .hours()}:${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .minutes()}`,
+      hours: moment(
+        `${moment.duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm'))).hours()}:${moment
+          .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+          .minutes()}`,
+        'HH:mm',
+      ).format('HH:mm'),
     })),
     onCall: e?.onCall.map(hour => ({
       ...hour,
-      hours: `${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .hours()}:${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .minutes()}`,
+      hours: moment(
+        `${moment.duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm'))).hours()}:${moment
+          .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+          .minutes()}`,
+        'HH:mm',
+      ).format('HH:mm'),
     })),
     note1: e?.note1,
     note2: e?.note2,
@@ -49,10 +51,13 @@ export const registrarValidation = async (
       validated = false;
       errors.placementId = 'Please select name!';
       dispatch(updateAccreditedSubFormArrayFields('formA', 'registrars', index, 'errors', errors));
+    } else {
+      errors.placementId = undefined;
+      dispatch(updateAccreditedSubFormArrayFields('formA', 'registrars', index, 'errors', errors));
     }
 
     registrar?.hoursDetails?.forEach(hour => {
-      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+      if (hour?.isChecked === 'true' && hour?.hours === '00:00') {
         validated = false;
         dispatch(
           updateRegistrarTimings(index, 'hoursDetails', hour?.days, 'error', 'Please select opening & closing hours!'),
@@ -73,7 +78,7 @@ export const registrarValidation = async (
       }
     });
     registrar?.onCall?.forEach(hour => {
-      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+      if (hour?.isChecked === 'true' && hour?.hours === '00:00') {
         validated = false;
         dispatch(
           updateRegistrarTimings(index, 'onCall', hour?.days, 'error', 'Please select opening & closing hours!'),
@@ -91,9 +96,8 @@ export const registrarValidation = async (
 
   if (validated) {
     try {
-      await dispatch(saveAccreditedRegistrarDetails(id, finalData, accreditionId));
+      await dispatch(saveAccreditedRegistrarDetails(id, finalData, accreditionId, isNextClick));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/accredited/formA1/?id=${id}`);
     } catch (e) {
       /**/
     }

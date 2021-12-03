@@ -9,7 +9,10 @@ export const AccreditedApiServices = {
 
   getAccreditedSteps: accreditationId =>
     ApiService.getData(`${ACCREDITED_URLS.GET_ACCREDITED_STEPPER}${accreditationId}`),
-  uploadFile: (data, config) => ApiService.postData(ACCREDITED_URLS.UPLOAD_FILE, data, config),
+  uploadFormAFile: (id, data, config) =>
+    ApiService.postData(`${ACCREDITED_URLS.UPLOAD_FORM_A__FILE}${id}`, data, config),
+  uploadFormA1File: (id, data, sid, config) =>
+    ApiService.postData(`${ACCREDITED_URLS.UPLOAD_FORM_A1__FILE}${id}/${sid}`, data, config),
 
   resubmitAccreditedForm: accreditationId =>
     ApiService.postData(`${ACCREDITED_URLS.RE_SUBMIT_ACCREDITED_FORM}${accreditationId}`),
@@ -44,10 +47,10 @@ export const AccreditedApiServices = {
         method: 'GET',
         responseType: 'blob',
       }),
-    deleteAccreditedStandardFile: (file, accreditationId, fromModule) =>
+    deleteFormAStandardsFile: data =>
       ApiService.request({
-        url: `${ACCREDITED_URLS.DELETE_FILE}${accreditationId}`,
-        data: { path: file, status: fromModule },
+        url: `${ACCREDITED_URLS.DELETE_FORM_A_FILE}`,
+        data,
         method: 'delete',
       }),
 
@@ -79,6 +82,12 @@ export const AccreditedApiServices = {
         method: 'GET',
         responseType: 'blob',
       }),
+    deleteFormA1StandardsFile: data =>
+      ApiService.request({
+        url: `${ACCREDITED_URLS.DELETE_FORM_A1_FILE}`,
+        data,
+        method: 'delete',
+      }),
     saveAccreditedA1SupervisorDetailsPartially: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_A1.SAVE_A1_SUPERVISOR_DETAILS_PARTIALLY}${id}`, data),
 
@@ -97,6 +106,8 @@ export const AccreditedApiServices = {
     getFormBAccreditor: id => ApiService.getData(`${ACCREDITED_URLS.FORM_B.GET_FORM_B_ACCREDITORS}${id}`),
     getFormBSelectedAccreditor: id =>
       ApiService.getData(`${ACCREDITED_URLS.FORM_B.GET_FORM_B_SELECTED_ACCREDITORS}${id}`),
+    saveAccreditedSummaryDetailsPartially: (id, data) =>
+      ApiService.postData(`${ACCREDITED_URLS.FORM_B.SAVE_SUMMARY_DETAILS_PARTIALLY}${id}`, data),
     saveAccreditedSummaryDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_B.SAVE_SUMMARY_DETAILS}${id}`, data),
 
@@ -108,5 +119,7 @@ export const AccreditedApiServices = {
     getFormBOtherDetails: id => ApiService.getData(`${ACCREDITED_URLS.FORM_B.GET_FORM_B_OTHER_DETAILS}${id}`),
     saveDeclarationDetails: (id, data) =>
       ApiService.postData(`${ACCREDITED_URLS.FORM_B.SAVE_DECLARATION_DETAILS}${id}`, data),
+    saveDeclarationDetailsPartially: (id, data) =>
+      ApiService.postData(`${ACCREDITED_URLS.FORM_B.SAVE_DECLARATION_DETAILS_PARTIALLY}${id}`, data),
   },
 };

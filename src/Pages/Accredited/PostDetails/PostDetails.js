@@ -9,6 +9,7 @@ import {
 } from '../redux/AccreditedReduxActions';
 import { useQueryParams } from '../../../hooks/GetQueryParamHook';
 import { AccreditedEditableHelper } from '../../../helpers/AccreditedEditableHelper';
+import PromptOnRouteChange from '../../../components/PromptOnRouteChange';
 
 const PostDetails = () => {
   const { id } = useQueryParams();
@@ -22,6 +23,8 @@ const PostDetails = () => {
     ({ accreditedReducer }) => accreditedReducer?.accreditedDetails?.facilityId ?? '',
   );
 
+  const { postDetails, postDetailsCopy } = useSelector(({ accreditedReducer }) => accreditedReducer ?? {});
+
   const {
     facilityId,
     facilityName,
@@ -33,7 +36,7 @@ const PostDetails = () => {
     accreditationBody,
     address,
     errors,
-  } = useSelector(({ accreditedReducer }) => accreditedReducer?.postDetails ?? {});
+  } = useMemo(() => postDetails ?? {}, [postDetails]);
 
   const { postDetailsPracticeManagerOptions } = useSelector(({ accreditedReducer }) => accreditedReducer ?? []);
   const postDetailsFields = useMemo(
@@ -153,20 +156,23 @@ const PostDetails = () => {
   const onInputChange = useCallback((name, value) => dispatch(updateAccreditedFields('postDetails', name, value)), []);
 
   return (
-    <section>
-      <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
-        <p>
-          Please complete the details below completely. Some of the answers will be automatically populated from
-          Pivotal. If these need to be changed and you are not able to do this within the form, please contact EV for
-          assistance.
-        </p>
-      </div>
-      <div className="common-white-container policy-detail-content-container">
-        {postDetailsFields.map(input => (
-          <GetComponentByType input={input} onInputChange={onInputChange} />
-        ))}
-      </div>
-    </section>
+    <>
+      <PromptOnRouteChange data={postDetails} dataCopy={postDetailsCopy} />
+      <section>
+        <div className="common-white-container" style={{ 'margin-bottom': '20px' }}>
+          <p>
+            Please complete the details below completely. Some of the answers will be automatically populated from
+            Pivotal. If these need to be changed and you are not able to do this within the form, please contact EV for
+            assistance.
+          </p>
+        </div>
+        <div className="common-white-container policy-detail-content-container">
+          {postDetailsFields.map(input => (
+            <GetComponentByType input={input} onInputChange={onInputChange} />
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 

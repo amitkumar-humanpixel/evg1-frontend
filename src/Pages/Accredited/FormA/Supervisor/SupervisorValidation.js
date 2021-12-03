@@ -28,15 +28,16 @@ export const supervisorValidation = async (
     categoryOfSupervisor: e?.categoryOfSupervisor?.value,
     hours: e?.hours?.map(hour => ({
       ...hour,
-      hours: `${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .hours()}:${moment
-        .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
-        .minutes()}`,
+      hours: moment(
+        `${moment.duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm'))).hours()}:${moment
+          .duration(moment(hour?.finishTime, 'HH:mm').diff(moment(hour?.startTime, 'HH:mm')))
+          .minutes()}`,
+        'HH:mm',
+      ).format('HH:mm'),
     })),
   }));
 
-  data?.forEach((supervisor, index) => {
+  finalData?.forEach((supervisor, index) => {
     const errors = {};
     if (!supervisor?.userId || supervisor?.userId?.toString()?.trim()?.length === 0) {
       validated = false;
@@ -64,7 +65,7 @@ export const supervisorValidation = async (
     }
 
     supervisor?.hours?.forEach(hour => {
-      if (hour?.isChecked === 'true' && hour?.hours === '0:0') {
+      if (hour?.isChecked === 'true' && hour?.hours === '00:00') {
         validated = false;
         dispatch(
           updateSupervisorTimings(index, 'hours', hour?.days, 'error', 'Please select opening & closing hours!'),
@@ -84,9 +85,8 @@ export const supervisorValidation = async (
 
   if (validated) {
     try {
-      await dispatch(saveAccreditedSupervisorDetails(id, finalData, accreditionId));
+      await dispatch(saveAccreditedSupervisorDetails(id, finalData, accreditionId, isNextClick));
       if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/accredited/formA/registrar/?id=${id}`);
     } catch (e) {
       /**/
     }

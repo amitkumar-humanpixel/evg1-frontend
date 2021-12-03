@@ -16,19 +16,19 @@ export const declarationValidations = async (
   const errors = {};
   let validated = true;
 
-  if (!data?.isAgree) {
+  if (!data?.isAgree && isNextClick) {
     validated = false;
     errors.isAgree = 'Please check declaration to continue!';
     dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', 'error', errors));
   } else {
-    dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', 'error', {}));
+    dispatch(updateAccreditedSubFormFields('formB', 'otherDetails', 'error', undefined));
   }
-
   if (validated) {
     try {
-      await dispatch(saveAccreditedDeclarationDetails(id, data, accreditionId));
-      if (isNextClick) setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
-      // history.push(`/dashboard`);
+      await dispatch(saveAccreditedDeclarationDetails(id, data, accreditionId, !isNextClick));
+      if (isNextClick) {
+        setNextAccreditedItemUrl(history, accreditionSideBar, accreditionId, step, subStep);
+      }
     } catch (e) {
       /**/
     }

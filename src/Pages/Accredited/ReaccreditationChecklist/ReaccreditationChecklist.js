@@ -1,17 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
-import { useQueryParams } from '../../../hooks/GetQueryParamHook';
-import { getReAccreditedCheckList } from '../redux/AccreditedReduxActions';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 const ReaccreditationChecklist = () => {
-  const { id } = useQueryParams();
-  const dispatch = useDispatch();
-
   const { facilityName } = useSelector(({ accreditedReducer }) => accreditedReducer?.postDetails ?? {});
-
-  useEffect(() => {
-    if (id) dispatch(getReAccreditedCheckList(id));
-  }, [id]);
 
   return (
     <>

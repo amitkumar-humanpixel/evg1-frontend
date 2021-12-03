@@ -4,7 +4,9 @@ import { useWindowWidth } from '../../hooks/useWindowWidth';
 
 const TriStateSwitch = props => {
   const { className, onChange, state, disabled, title } = props;
-  const switchContainerClass = `${className} tri-state-switch-container`;
+  const switchContainerClass = `${className} tri-state-switch-container ${
+    disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+  }`;
 
   const [triState, setTriState] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
@@ -35,14 +37,12 @@ const TriStateSwitch = props => {
   }, [triState, isClicked]);
 
   return (
-    <div className={`d-flex align-center just-center ${useWindowWidth() < 640 && 'flex-column'}`}>
+    <div className={`d-flex just-center ${useWindowWidth() < 640 && 'flex-column'}`}>
       <div
-        className={`${switchContainerClass} ${triState === 1 && 'yes-switch'} ${triState === 2 && 'no-switch'} ${
-          disabled && 'cursor-not-allowed'
-        }`}
+        className={`${switchContainerClass} ${triState === 1 && 'yes-switch'} ${triState === 2 && 'no-switch'}`}
         onClick={() => !disabled && onTriStateChange()}
       >
-        <div className={`${disabled && 'cursor-not-allowed'}`} />
+        <div />
       </div>
       {title && <span>{title}</span>}
     </div>
